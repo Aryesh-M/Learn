@@ -1,5 +1,56 @@
-### Connecting to SQL Server using SSMS
 ### Creating altering and dropping a database
+* A SQL Server database can be created, altered and dropped
+ 1. Graphically using SQL Server Management Studio (SSMS) or
+ 2. Using a Query
+ 
+* To Create the database using a query
+
+  `
+  Create database DatabaseName
+  `
+* Whether, you create a database graphically using the designer or, using a query, the following 2 files gets generated
+
+  **.MDF file - Data File (Contains actual data)
+  .LDF file - Transaction Log File (Used to recover the database)**
+
+* To alter a database, once it's created
+  
+  `
+    Alter database DatabaseName Modify Name = NewDatabaseName
+  `
+
+* Alternatively, you can also use system stored procedure
+ Execute the following:
+ 
+ `
+  sp_renameDB 'OldDatabaseName','NewDatabaseName'
+ `
+ 
+ #### Deleting or Dropping a database
+ 
+ * To Delete or Drop a database
+
+`
+  Drop Database DatabaseThatYouWantToDrop
+`
+ 
+* Dropping a database, deletes the LDF and MDF files.
+* You cannot drop a database, if it is currently in use. You get an error starting - _Cannot drop because "NewDatabaseName" because it is currently in use._ 
+* So, if other users are connected, you need to put the database in single user mode and then drop the database.
+
+`
+  Alter Database DatabaseName Set SINGLE_USER With Rollback Immediate
+`
+
+* With Rollback Immediate option, will rollback all incomplete transactions and closes the connection to the database.
+* **Note: System databases cannot be dropped.**
+
+     ![image](https://user-images.githubusercontent.com/58625165/210257644-16d03262-b9e9-4c35-a895-88e41058ea75.png)
+    
+From GUI we can do it by checking _Close existing connections_ checkbox while deleting the database.
+![image](https://user-images.githubusercontent.com/58625165/210257920-86e01763-8042-4080-983e-a6327dda7a27.png)
+
+
 ### Creating and working with tables
 ### Adding a default constraint
 ### Cascading referential integrity constraint
