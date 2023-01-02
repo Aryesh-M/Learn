@@ -86,6 +86,40 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > ```
 
 ### Adding a default constraint
+> A column default can be specified using Default constraint. The DEFAULT constraint is used to insert a default value into a column. The default value will be added to all new records, if no other value is specified, including NULL.
+
+> **Altering an existing column to add a default constraint:**
+> ```sql
+> ALTER TABLE _tablename_  
+> ADD CONSTRAINT _constraint_name_  
+> DEFAULT _default_value_ FOR _existing_column_value_
+> ```
+> E.g.,
+> ```sql
+> ALTER TABLE tblPerson  
+> ADD CONSTRAINT DF_tblPerson_GenderId  
+> DEFAULT 3 FOR GENDERID
+> ```
+ 
+> **Altering an new column, with default value, to an existing table:**
+> ```sql
+> ALTER TABLE _tablename_  
+> ADD _column_name_ _data_type_ _NULL | NOT NULL_  
+> CONSTRAINT _constraint_name_ DEFAULT _default_value_
+> ```
+
+> **Dropping a constraint:**
+> ```sql
+> ALTER TABLE _tablename_  
+> DROP CONSTRAINT _constraint_name_
+> ```
+> E.g.,
+> ```sql
+> ALTER TABLE tblPerson  
+> DROP CONSTRAINT DF_tblPerson_GenderId
+> ```
+
+
 ### Cascading referential integrity constraint
 ### Identity Column in SQL Server
 ### How to get the last generated identity column value in SQL
