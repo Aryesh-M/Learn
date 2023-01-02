@@ -121,6 +121,22 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Cascading referential integrity constraint
+> _Cascading refential integrity constraint allows to define the actions Microsoft SQL Server should take when a user attempts to delete or update a key to which an existing foreign key points._
+> **For example,** If you delete row with ID = 1 from tblGender table, then row with ID = 3, from tblPerson table becomes an orphan record. You will not be able to tell the Gender for this row. So, Cascading referential integrity constraint can be used to define actions Microsoft SQL Server should take when this happens. By default, we get an error and the DELETE or UPDATE statement is rolled back.
+
+> * Options when setting up Cascading refrential integrity constraint:
+>
+>  **1. No Action:** This is the default behaviour. No Action specifies that if an attempt is made to delete or update a row with a key referenced by foreign keys in existing rows in other tables, an error is raised and the DELETE or UPDATE is rolled back.
+>  
+>  **2. Cascade:** Specifies that if an attempt is made to delete or update a row with a key referenced by foreign keys in existing rows in other tables, all rows containing those foreign keys are also deleted or updated.
+>
+> **3. Set NULL:** Specifies that if an attempt is made to delete or update a row with a key referenced by foreign key in existing rows in other tables, all rows containing those foreign keys are set to NULL.
+> 
+> **4. Set Default:** Specifies that if an attempt is made to delete or update a row with a key referenced by foreing key in existing rows in other tables, all rows containing those foreign keys are set to default values.
+> 
+> 
+
+
 ### Identity Column in SQL Server
 ### How to get the last generated identity column value in SQL
 ### Unique key constraint
