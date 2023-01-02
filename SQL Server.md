@@ -137,6 +137,25 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
 
+### Adding a check constraint
+> **DEF:** _CHECK constraint is used to limit the the range of the values, that can be entered for a column._
+> **The general formula for adding check constraint in SQL Server:**
+> ```sql
+> ALTER TABLE _table_name_
+> ADD CONSTRAINT _constraint_name_ CHECK _boolean_expression_
+> ```
+> If the BOOLEAN_EXPRESSION returns true, then the CHECK constraint allows the value, otherwise it doesn't. Since, AGE is a nullable column, it's possible to pass null for this column, when inserting a row. When you pass NULL for the AGE column, the boolean expression evaluates to UNKNOWN, and allows the value.
+> **To drop the CHECK constraint:**
+> ```sql
+> ALTER TABLE tblPerson  
+> DROP CONSTRAINT CK_tblPerson_Age
+> ```
+> E.g.,
+> ```sql
+> Alter Table tblPerson  
+> Add Constraint CK_tblPerson_Age CHECK (AGE > 0 AND AGE < 150)
+> ```
+
 ### Identity Column in SQL Server
 ### How to get the last generated identity column value in SQL
 ### Unique key constraint
