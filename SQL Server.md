@@ -55,6 +55,36 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Creating and working with tables
+
+##### The aim of this section is to create tblPerson and tblGender tables and establish primarykey and foreign key constraints
+
+![image](https://user-images.githubusercontent.com/58625165/210279960-2c4d9128-3118-4baa-b5ec-b8cacb093965.png)
+
+> **In SQL Server, tables can be created graphically using SQL Server Management Studio (SSMS) or using a query. Foreign key references can be added graphically using SSMS or using a query**
+
+>```sql
+> Alter table ForeignKeyTable add constraint ForeignKeyTable_ForeignKeyColumn_FK  
+> FOREIGN KEY (ForeignKeyColumn) references PrimaryKeyTable (PrimaryKeyColumn)
+>```
+>E.g.,
+>```sql
+>Alter table tblPerson add constraint tblPerson_GenderID_FK  
+>Foreign Key (GenderId) references tblGender (ID)
+>```
+
+>_Foreign keys are used to enforce **database integrity**. In layman's terms, a Foreign key in one table points to primary key in another table. The foreign key constraint prevents invalid data form being inserted into the foreign key column. The values that you enter into the foreign key column, has to be one of the values contained in the table it points to._
+
+>**For creating a table**
+> ```sql
+> Use [Sample]  
+> Go  
+> Create Table tblGender  
+> (  
+> ID int NOT NULL Primary Key,  
+> Gender nvarchar(50) NOT NULL  
+> )
+> ```
+
 ### Adding a default constraint
 ### Cascading referential integrity constraint
 ### Identity Column in SQL Server
