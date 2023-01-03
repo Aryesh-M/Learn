@@ -192,6 +192,16 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > ```
 
 ### How to get the last generated identity column value in SQL
+
+**From the previous session, we understood that identity column values are auto generated. There are several ways in SQL Server, to retrieve the last identity value that is generated. The most common ways is to use SCOPE_IDENTITY() built in function.**  
+
+**Note:** You can also use @@IDENTITY and IDENT_CURRENT('TableName')  
+
+**Difference:**  
+**SCOPE_IDENTITY()-** Same session and the same scope.  
+**@@IDENTITY-** Same session and across any scope.  
+**IDENT_CURRENT('TableName')-** Specific table across any session and any scope.
+
 ### Unique key constraint
 ### Select statment in sql server
 ### Group by in sql server
