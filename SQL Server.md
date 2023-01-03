@@ -348,9 +348,17 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
      ```
    **Def:** Cross Join produces the Cartesian product of the 2 tables involved in the join. For example, in the Employees table we have 10 rows and in the Department table we have 4 rows. So, a cross join between these 2 tables produce 40 rows.
 
-
-
 ### Advanced or intelligent joins in sql server
+  1. LEFT JOIN excluding common area  
+   ![image](https://user-images.githubusercontent.com/58625165/210453551-2e012882-e5f2-4a3d-8ab1-5ff5ba286e91.png)  
+
+  2. RIGHT JOIN excluding common area  
+   ![image](https://user-images.githubusercontent.com/58625165/210453597-faea5e65-0fa1-4aca-88b2-0b324867dcee.png)  
+  
+  3. LEFT and RIGHT JOIN excluding common area  
+    ![image](https://user-images.githubusercontent.com/58625165/210453626-9caf7d3b-fa0d-488a-8cdf-a2eb76e778cb.png)  
+**Note:** _To compare values with NULL in SQL Server we cannot use equal to operator (=) but instead we should use IS NULL_
+
 ### Self join in sql server
 ### Different ways to replace NULL in sql server
 ### Coalesce function in sql server
