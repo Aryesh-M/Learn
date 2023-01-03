@@ -157,6 +157,40 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > ```
 
 ### Identity Column in SQL Server
+> If we look GUI wise we have this option: 
+> ![image](https://user-images.githubusercontent.com/58625165/210294265-8843da32-8bcf-4d74-87ed-bd7110ccd07d.png)
+> So, in **Identity Specification** we have 2 properties: _Identity Increment_ (the value by which column value needs to be incremented) and _Identity Seed_ (the value by which column value needs to be started from).
+> An explicit value for the identity column in table 'dbo.tblPerson1' can only be specified when a column list is used and IDENTITY_INSERT is ON.
+> To turn IDENTITY_INSERT on, we can use the following command:
+> ```sql
+>  SET IDNTITY_INSERT tblPerson1 ON
+> ```
+
+> * If a column is marked as an identity column, then the values for this column are automatically generated, when you insert a new row into the table.
+> ```sql
+> Create Table tblPerson  
+> (  
+> PersonId int identity(1,1) Primary Key,  
+> Name nvarchar(20)  
+> )  
+> ```
+> **Note:** Seed and Increment values are optional. If you don't specify the identity and seed they both default to 1.
+
+>* To explicitly supply a value for identity column
+>  1. First turn on identity insert
+>  ```sql
+>   SET Identity_Insert tblPerson ON
+>  ```
+>  2. In the insert query specify the column list
+>  ```sql
+>   Insert into tblPerson(PersonId, Name) values(2, 'John')
+>  ```
+
+> * If you have deleted all the rows in a table, and you want to reset the identity column value, use **DBCC CHECKIDENT** command
+> ```sql
+>  DBCC CHECKIDENT ('tblPerson', RESEED, 0)
+> ```
+
 ### How to get the last generated identity column value in SQL
 ### Unique key constraint
 ### Select statment in sql server
