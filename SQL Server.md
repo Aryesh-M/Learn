@@ -262,7 +262,7 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Group by in sql server
-> **This is sample table tblEmployee:**
+**This is sample table tblEmployee:**  
 > ![image](https://user-images.githubusercontent.com/58625165/210435701-1f4de7e0-2711-48e8-bbca-99f12347b5ad.png)
 >###### The aggregate functions:
 >```sql
@@ -310,8 +310,46 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > Having SUM(Salary) > 5000; --- here we have used aggregate function (SUM) in HAVING clause, which we cannot do with WWHERE clause.
 > ``` 
 
-
 ### Joins in sql server
+*Join in SQL Server are used to retrieve data from 2 or more related tables. In general tables are related to each other using foreign key constraints.
+*In SQL server, there are different types of JOINS:
+ 1. INNER JOIN
+ 2. OUTER JOIN
+ 3. CROSS JOIN
+
+*Outer joins are again divided into:
+ 1. Left Join or Left Outer Join
+ 2. Right Join or Right Outer Join
+ 3. Full Join or Full Outer Join
+
+> *We have two tables:  
+> ![image](https://user-images.githubusercontent.com/58625165/210447384-7e10e754-4846-4585-b7ab-f6193bd11031.png)  
+> ![image](https://user-images.githubusercontent.com/58625165/210447414-478bd45a-d27c-4da8-bbfe-23ffdcecc61f.png)   
+
+*If we apply INNER JOIN on two tables then it only will select the columns that are NOT NULL. To include NULL columns as well we can use Outer JOIN.
+* LEFT JOIN- returns all the matching rows + non matching rows from the left table.
+* Let's see the outputs of these JOINS:
+  1. LEFT JOIN/ LEFT OUTER JOIN:  
+      ![image](https://user-images.githubusercontent.com/58625165/210450277-429d2fff-18ee-4113-a058-ab327f27d716.png)  
+   
+  2. RIGHT JOIN/ RIGHT OUTER JOIN:  
+     ![image](https://user-images.githubusercontent.com/58625165/210450365-c79a4906-c3a2-4f73-aab1-cdb18b5d6fd3.png)  
+     
+  3. FULL JOIN/ FULL OUTER JOIN:
+     ![image](https://user-images.githubusercontent.com/58625165/210450463-d5feff6e-caab-42dc-8da3-4dbadf55671c.png)  
+     _So, note that FULL JOIN will return matching records + non-matching records from the LEFT table + non-matching records from the RIGHT table_  
+  
+  4. CROSS JOIN:
+     *Cross join shouldn't have a ON clause.
+     ```sql
+     SELECT Name, Gender, Salary, DepartmentName  
+     FROM tblEmployee  
+     CROSS JOIN tblDepartment;
+     ```
+   **Def:** Cross Join produces the Cartesian product of the 2 tables involved in the join. For example, in the Employees table we have 10 rows and in the Department table we have 4 rows. So, a cross join between these 2 tables produce 40 rows.
+
+
+
 ### Advanced or intelligent joins in sql server
 ### Self join in sql server
 ### Different ways to replace NULL in sql server
