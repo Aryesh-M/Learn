@@ -262,6 +262,55 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Group by in sql server
+> **This is sample table tblEmployee:**
+> ![image](https://user-images.githubusercontent.com/58625165/210435701-1f4de7e0-2711-48e8-bbca-99f12347b5ad.png)
+>###### The aggregate functions:
+>```sql
+>Select SUM(Salary) from tblEmployee
+>Select MAX(Salary) from tblEmployee
+>Select MIN(Salary) from tblEmployee
+>
+>-- If we use Aggregate function with other column in a select query then its mandatory to use GROUP BY clause otherwise SQL Server will throw an error.
+>Select City, SUM(Salary) as TotalSalary FROM tblEmployee;   
+>-- this will throw an error: "Column 'tblEmployee.City' is invalid in the select list because it is not   
+>--contained in either an aggregate function or the GROUP BY clause."   
+>--In short, if used an aggregate function in a query then all the columns should either have  
+>--aggregate function applied on them or should be part of GROUP BY clause.   
+>--So, the correct form is:  
+> Select City, SUM(Salary) as TotalSalary FROM tblEmployee GROUP BY City;  
+> Select COUNT(*) FROM tblEmployee;  
+> Select COUNT(ID) FROM tblEmployee; --- This is better as compared to using * when look performance-wise.
+>```
+**Lets see an example for filtering the data:**
+>```sql
+>Select Gender, City, SUM(Salary) as TotalSalary, COUNT(ID) as [Total Employees]  
+>from tblEmployee  
+>Where Gender = 'Male'    
+>Group By Gender, City;    
+>```
+>or you can also use like this using "HAVING" clause:
+>```sql
+>
+>Select Gender, City, SUM(Salary) as TotalSalary, COUNT(ID) as [Total Employees]  
+>from tblEmployee      
+>Group By Gender, City  
+>Having Gender = 'Male'    
+>```
+*The difference between above two queries is: the having clause can only be used after "Group By" clause.
+*So with the "Where" query aggregations will be done only on the rows which have "Male" gender, where as in case of "Having" clause, aggregate functions will be applied all the records and then will be filtered by Gender (Male). 
+>*Difference between WHERE and HAVING clauses:
+> 1. WHERE clause can be used with - Select, Insert, and Update statements, where as HAVING clause can only be used with the Select statement.
+> 2. WHERE filters rows before aggregation (GROUPING), where as, HAVING filters groups, after the aggregations are performed.
+> 3. Aggregate functions cannot be used in the WHERE clause, unless it is in a sub query contained in a HAVING clause, whereas, aggregate functions can be used in  
+> HAVING clause. See below example:
+> ```sql
+> Select Gender, City, SUM(Salary) as TotalSalary, COUNT(ID) as TotalEmployees  
+> from tblEmployees  
+> Group By Gender, City  
+> Having SUM(Salary) > 5000; --- here we have used aggregate function (SUM) in HAVING clause, which we cannot do with WWHERE clause.
+> ``` 
+
+
 ### Joins in sql server
 ### Advanced or intelligent joins in sql server
 ### Self join in sql server
