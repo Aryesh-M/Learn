@@ -224,6 +224,43 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >```
 
 ### Select statment in sql server
+> **Using DISTINCT Keyword with multiple columns:**
+> ```sql
+>  Select DISTINCT City from tblPerson
+> ```
+> _The above query will return distinct city names_
+> On the other hand, the below query will return distinct values across given column names (not across same column)
+> ```sql
+>  Select DISTINCT Name, City from tblPerson
+> ```
+> ![image](https://user-images.githubusercontent.com/58625165/210430722-93231a13-1fee-4215-abeb-80db7ff11318.png)
+
+>**Not equal to operator: <> or != in SQL Server:** 
+>```sql
+> Select * from tblPerson Where City != 'London';
+> Select * from tblPerson Where City <> 'London'; 
+>```
+
+###### Operators and Wild cards:
+>![image](https://user-images.githubusercontent.com/58625165/210431457-ca974a1e-2447-42ea-baa0-65102192f7d1.png)
+
+>```sql
+> Select * from tblPerson Where Age IN (20,23,29);
+> Select * from tblPerson Where Age BETWEEN 20 AND 25;
+> --- The boundary conditions in above BETWEEN query has 20 and 25 inclusive.
+> --- Now, let's see the LIKE operator use:
+> Select * from tblPerson Where City LIKE 'L%'; --- Which means that select all the cities which starts from the letter "L", and "%" is called a Wild Card
+> Select * from tblPerson Where Email LIKE '_@_.com'
+> Select * from tblPerson Where Name LIKE '[MST]%' -- The chracters in bracket means either M or S or T - is the first letter and then % means that there are letters > > ---after either of these three. 
+> ---to get opposite of the above query, which is to get all the names doesn't start with letters M, S or T:
+> Select * from tblPerson Where Name LIKE '[^MST]%' --- We have added the negate symbol (^);
+> Select top 10 * from tblPerson; --- it will select first 10 records from the table (just change num in "top num")
+> Select top 1 Percent * from tblPerson; --- it will select first 1 percent rows from the table 
+>  Select top 1 * from tblPerson Order By Age DESC; --- it will return the person with the highest age (can be asked in an interview) 
+>```
+***Note:***_Any character value or a string value used in SQL Server should be wrapped inside single quote('')_
+
+
 ### Group by in sql server
 ### Joins in sql server
 ### Advanced or intelligent joins in sql server
