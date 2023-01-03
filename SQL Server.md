@@ -362,10 +362,30 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 ### Self join in SQL Server  
  **Def:** _Joining a table with itself is called **Self Join.**_  
 >* Self JOIN is **not** a different type of JOIN.  
+>* The demo tables
 >* It can be classified under any type of JOIN:  
 >  1. INNER,  
 >  2. OUTER (LEFT, RIGHT, FULL)  
 >  3. CROSS Joins  
+>  ```sql
+>  -- Left Outer Self Join
+>  SELECT E.Name AS Employee, M.Name AS Manager  
+>  FROM tblEmployee E  
+>  LEFT JOIN tblEmployee M  
+>  ON E.ManagerId = M.EmployeeId
+>  
+>  -- Inner Self Join
+>  SELECT E.Name AS Employee, M.Name AS Manager  
+>  FROM tblEmployee E  
+>  INNER JOIN tblEmployee M  
+>  ON E.ManagerId = M.EmployeeId
+>  ```
+>  
+>  -- Cross Self Join
+>  SELECT E.Name AS Employee, M.Name AS Manager  
+>  FROM tblEmployee E  
+>  CROSS JOIN tblEmployee M  
+>  ```
  
 
 
