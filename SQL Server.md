@@ -359,124 +359,133 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
     ![image](https://user-images.githubusercontent.com/58625165/210453626-9caf7d3b-fa0d-488a-8cdf-a2eb76e778cb.png)  
 **Note:** _To compare values with NULL in SQL Server we cannot use equal to operator (=) but instead we should use IS NULL_
 
-### Self join in sql server
-### Different ways to replace NULL in sql server
-### Coalesce function in sql server
-### Union and union all in sql server 
-### Stored procedures in sql server
+### Self join in SQL Server  
+ **Def:** _Joining a table with itself is called **Self Join.**_  
+>* Self JOIN is **not** a different type of JOIN.  
+>* It can be classified under any type of JOIN:  
+>  1. INNER,  
+>  2. OUTER (LEFT, RIGHT, FULL)  
+>  3. CROSS Joins  
+ 
+
+
+### Different ways to replace NULL in SQL Server
+### Coalesce function in SQL Server
+### Union and union all in SQL Server 
+### Stored procedures in SQL Server
 ### Stored procedures with output parameters
 ### Stored prodedures output paramerters or return values
 ### Advantages of stored procedures
-### Built in string functions in sql server 
+### Built in string functions in SQL Server 
 ### LEFT, RIGHT, CHARINDEX and SUBSTRING function
 ### Replicate, space, Patindex, Replace and Stuff string functions
-### DateTime funcitons in SQL SERVER
-### IsDate, Day, Month, Year and DateName DateTime functions in SQL SERVER
-### DatePart, DateAdd and DateDiff funcitons in SQL SERVER
-### Cast and Convert functions in SQL SERVER
-### Mathematical funcitons in SQL SERVER
-### Scalar user defined functions in SQL SERVER
-### Infinite table valued funcitons in SQL SERVER
-### Multi statement table valued functions in SQL SERVER
-### Important concepts related to functions in SQL SERVER
-### Temporary tables in SQL SERVER
-### Indexes in SQL SERVER
-### Clustered and nonclustered indexes in SQL SERVER
-### Unique and Non Unique Indexes in SQL SERVER
-### Advantages and disadvantages of indexes in SQL SERVER
-### View in SQL SERVER
-### Updatable views in SQL SERVER
-### Indexed views in SQL SERVER
-### View limitations in SQL SERVER
-### DML triggers in SQL SERVER
+### DateTime funcitons in SQL Server
+### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server
+### DatePart, DateAdd and DateDiff funcitons in SQL Server
+### Cast and Convert functions in SQL Server
+### Mathematical funcitons in SQL Server
+### Scalar user defined functions in SQL Server
+### Infinite table valued funcitons in SQL Server
+### Multi statement table valued functions in SQL Server
+### Important concepts related to functions in SQL Server
+### Temporary tables in SQL Server
+### Indexes in SQL Server
+### Clustered and nonclustered indexes in SQL Server
+### Unique and Non Unique Indexes in SQL Server
+### Advantages and disadvantages of indexes in SQL Server
+### View in SQL Server
+### Updatable views in SQL Server
+### Indexed views in SQL Server
+### View limitations in SQL Server
+### DML triggers in SQL Server
 ### After update trigger
 ### Instead of insert trigger 
-### Instead of update trigger in SQL SERVER
-### Instead of delete trigger in SQL SERVER
-### Derived tables and common table expressions in SQL SERVER
-### CTE in SQL SERVER
-### Updatable common table expressions in SQL SERVER
-### Recursive CTE in SQL SERVER
+### Instead of update trigger in SQL Server
+### Instead of delete trigger in SQL Server
+### Derived tables and common table expressions in SQL Server
+### CTE in SQL Server
+### Updatable common table expressions in SQL Server
+### Recursive CTE in SQL Server
 ### Database normalization
 ### Second normal form and third normal fom
-### Pivot in SQL SERVER
-### Error handling in SQL SERVER
-### Transactions in SQL SERVER
-### Transactions in SQL SERVER and ACID Tests
-### Subqueries in SQL SERVER
-### Correlated subquery in SQL SERVER
+### Pivot in SQL Server
+### Error handling in SQL Server
+### Transactions in SQL Server
+### Transactions in SQL Server and ACID Tests
+### Subqueries in SQL Server
+### Correlated subquery in SQL Server
 ### Creating a large table with random data for performance testing
 ### What to choose for performance SubQuery or Joins
-### Cursors in SQL SERVER
-### Replacing cursors using joins in SQL SERVER
-### List all tables in a SQL SERVER database using a query
-### Writing a runnable SQL SERVER scripts
+### Cursors in SQL Server
+### Replacing cursors using joins in SQL Server
+### List all tables in a SQL Server database using a query
+### Writing a runnable SQL Server scripts
 ### After database table columns without dropping table
 ### Optional parameters in SQL SERVER stored procedures
-### Merge in SQL SERVER
+### Merge in SQL Server
 ### SQL SERVER concurrent transactions
 ### SQL SERVER dirty read example
 ### SQL SERVER lost update
-### Non repeatable read example in SQL SERVER
-### Phantom reads example in SQL SERVER
-### Snapshot isolation level in SQL SERVER
-### Read committed snapshot isolation level in SQL SERVER
+### Non repeatable read example in SQL Server
+### Phantom reads example in SQL Server
+### Snapshot isolation level in SQL Server
+### Read committed snapshot isolation level in SQL Server
 ### Difference between snapshot isolation and read committed
 ### SQL Server deadlock example
 ### SQL SERVER Deadlock victim selection
-### Logging deadlocks in SQL SERVER
+### Logging deadlocks in SQL Server
 ### SQL SERVER deadlock analysis and prevention
-### Capturing deadlocks in SQL SERVER
+### Capturing deadlocks in SQL Server
 ### SQL SERVER deadlock error handling
 ### Handling deadlocks in ADO NET
 ### Retry logic for deadlock exceptions
-### How to find blocking queries in SQL SERVER
+### How to find blocking queries in SQL Server
 ### SQL SERVER except operator
-### Difference between EXCEPT and NOT in SQL SERVER
-### Intsect operator in SQL SERVER
-### Difference between UNION, INTERSECT, and EXCEPT in SQL SERVER
-### Cross apply and outer apply in SQL SERVER
-### DDL Triggers in SQL SERVER
+### Difference between EXCEPT and NOT in SQL Server
+### Intsect operator in SQL Server
+### Difference between UNION, INTERSECT, and EXCEPT in SQL Server
+### Cross apply and outer apply in SQL Server
+### DDL Triggers in SQL Server
 ### Server scoped DDL triggers
 ### SQL SERVER trigger execution order
-### Audit table changes in SQL SERVER
-### Logon Triggers in SQL SERVER
-### Select into in SQL SERVER
-### Difference between wehre and having in SQL SERVER
-### Table valued parameteres in SQL SERVER
+### Audit table changes in SQL Server
+### Logon Triggers in SQL Server
+### Select into in SQL Server
+### Difference between wehre and having in SQL Server
+### Table valued parameteres in SQL Server
 ### Send datatable as parameter to stored procedure
-### Grouping Sets in SQL SERVER
-### Rollup in SQL SERVER
-### Cube in SQL SERVER
-### Difference between cube and rollup in SQL SERVER
-### Grouping function in SQL SERVER
-### grouping ID funciton in SQL SERVER
-### Debugging SQL SERVER stored procedures
-### Over clause in SQL SERVER
-### Row number function in SQL SERVER
-### Rank and Dense Rank in SQL SERVER
-### Difference between rank dense rand and row number in SQL SERVER
-### Calculate running total in SQL SERVER 
-### NTLE function in SQL SERVER
-### Lead and Lag functions in SQL SERVER 2012
-### FIRST VALUE function in SQL SERVER
-### Window funcitons in SQL SERVER
+### Grouping Sets in SQL Server
+### Rollup in SQL Server
+### Cube in SQL Server
+### Difference between cube and rollup in SQL Server
+### Grouping function in SQL Server
+### grouping ID funciton in SQL Server
+### Debugging SQL Server stored procedures
+### Over clause in SQL Server
+### Row number function in SQL Server
+### Rank and Dense Rank in SQL Server
+### Difference between rank dense rand and row number in SQL Server
+### Calculate running total in SQL Server 
+### NTLE function in SQL Server
+### Lead and Lag functions in SQL Server 2012
+### FIRST VALUE function in SQL Server
+### Window funcitons in SQL Server
 ### Difference between row and range
-### LAST VALUE function in SQL SERVER
-### UNPIVOT in SQL SERVER
-### Reverse PIVOT table in SQL SERVER
-### Choose function in SQL SERVER
-### IIF function in SQL SERVER
-### TRY PARSE FUNCTION IN SQL SERVER 2012
-### TRY CONVERT funciton in SQL SERVER 2012
-### EOMONTH funciton in SQL SERVER 2012
-### DATAEFROMPARTS fucntion in SQL SERVER
-### Difference between DatTime and SmallDateTime in SQL SERVER
-### DateTime2FromParts function in SQL SERVER
-### Difference between DateTime and DateTime2 in SQL SERVER
-### Offset fetch next in SQL SERVER 2012
+### LAST VALUE function in SQL Server
+### UNPIVOT in SQL Server
+### Reverse PIVOT table in SQL Server
+### Choose function in SQL Server
+### IIF function in SQL Server
+### TRY PARSE FUNCTION IN SQL Server 2012
+### TRY CONVERT funciton in SQL Server 2012
+### EOMONTH funciton in SQL Server 2012
+### DATAEFROMPARTS fucntion in SQL Server
+### Difference between DatTime and SmallDateTime in SQL Server
+### DateTime2FromParts function in SQL Server
+### Difference between DateTime and DateTime2 in SQL Server
+### Offset fetch next in SQL Server 2012
 ### Identifying object dependencies in SQL SERVER
 ### Sys DM SQL referencing entities in SQL SERVER
-### SP depends in SQL SERVER
-### Sequence object in SQL SERVER 2012
-### Difference between sequence and identity in SQL SERVER
+### SP depends in SQL Server
+### Sequence object in SQL Server 2012
+### Difference between sequence and identity in SQL Server
