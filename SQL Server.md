@@ -203,6 +203,26 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 **IDENT_CURRENT('TableName')-** Specific table across any session and any scope.
 
 ### Unique key constraint
+> ##### We use UNIQUE constraint to enforce uniqueness of a column i.e. the column shouldn't allow any duplicate values. We can add a Unique constraint through the designer or using a query.
+>* To create the unique key using a query:
+>```sql
+>Alter Table Table_Name  
+>Add Constraint Constraint_Name Unique(Column_Name)
+>```
+
+> ##### Both primary key and unique key are used to enforce, the uniqueness of a column. So, when do you choose one over the other?
+> * A table can have, only one primary key. If you want to enforce uniqueness on 2 or more columns, then we use unique key constraint.
+
+> ##### What is the difference between Primary key constraint and Unique key constraint?
+> 1. A table can have only one primary key, but more than one unique key
+> 2. Primary key does not allow nulls, where as unique key allows one null (only one)
+
+>**Syntax:**
+>```sql
+>Alter Table tblPerson  
+>Add Constraint UQ_tblPerson_Email Unique(Email)
+>```
+
 ### Select statment in sql server
 ### Group by in sql server
 ### Joins in sql server
