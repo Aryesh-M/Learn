@@ -420,10 +420,33 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >ON            E.ManagerID = M.EmployeeID;                      
 >```
 
+### COALESCE function in SQL Server
+* **COALESCE() Function:-** Returns the first NON NULL value  
+* The sample table:  
+![image](https://user-images.githubusercontent.com/58625165/210463764-6b686ae7-a7b9-456c-92ac-8a80d57efdff.png)  
+> ```sql
+> SELECT  Id, COALESCE(FirstName, MiddleName,LastName) as Name  
+> FROM    tblEmployee; 
+> ```
+
+### Union and union all in SQL Server
+> * **Difference between UNION and UNION ALL**  
+>  1. UNION removes duplicate rows, where as UNION ALL does not  
+>  2. UNION has to perform distinct sort to remove duplicates, which makes it less faster than UNION ALL  
+> Note: Estimated query execution plan - CTRL + L  
+ 
+ >* **Sorting results of a UNION or UNION ALL**  
+ > _ORDER BY clause should be used only on the last SELECT statement in the UNION query_  
+ 
+ >* **Difference between UNION and JOIN**  
+ > UNION combines the result-set of two or more select queries into a single result-set which includes  
+ > all the rows from all the queries in the UNION, whereas JOINS, retrieve data from two or more tables  
+ > based on logical relationships between the tables.  
+ > 
+ > In short, UNION combines rows from 2 or more tables, where JOINS combine columns from 2 or more tables.  
 
 
-### Coalesce function in SQL Server
-### Union and union all in SQL Server 
+
 ### Stored procedures in SQL Server
 ### Stored procedures with output parameters
 ### Stored prodedures output paramerters or return values
