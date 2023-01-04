@@ -335,12 +335,12 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
   2. RIGHT JOIN/ RIGHT OUTER JOIN:  
      ![image](https://user-images.githubusercontent.com/58625165/210450365-c79a4906-c3a2-4f73-aab1-cdb18b5d6fd3.png)  
      
-  3. FULL JOIN/ FULL OUTER JOIN:
+  3. FULL JOIN/ FULL OUTER JOIN:  
      ![image](https://user-images.githubusercontent.com/58625165/210450463-d5feff6e-caab-42dc-8da3-4dbadf55671c.png)  
      _So, note that FULL JOIN will return matching records + non-matching records from the LEFT table + non-matching records from the RIGHT table_  
   
-  4. CROSS JOIN:
-     *Cross join shouldn't have a ON clause.
+  4. CROSS JOIN:  
+     *Cross join shouldn't have a ON clause.  
      ```sql  
      SELECT Name, Gender, Salary, DepartmentName    
      FROM tblEmployee  
@@ -521,6 +521,54 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Stored procedures with output parameters
+* **To create  an SP with output parameter, we use the keywords OUT or OUTPUT.**  
+  ![image](https://user-images.githubusercontent.com/58625165/210635893-fd6590bc-6104-4a50-a2bc-b93e6f20b7aa.png)  
+  
+> ```sql 
+> Create Procedure spGetEmployeeCountByGender  
+> @Gender nvarchar(20),  
+> @EmployeeCount int Output  -- notice this "Output" option   
+> as  
+> Begin  
+>     Select  @EmployeeCount  = COUNT(Id)   
+>     from    tblEmployee  
+>     where   Gender = @Gender 
+> End      
+> ```  
+> 
+> * **To execute the stored procedure with output parameters**    
+> ```sql  
+>  Declare     @EmployeeTotal int  
+>  Execute     spGetEmployeeCountByGender 'Male',  @EmployeeTotal Output  
+>  Print       @EmployeeTotal  
+> ```
+> 
+> ```sql   
+>  Declare     @EmployeeTotal int  
+>  Execute     spGetEmployeeCountByGender @EmployeeCount = @EmployeeTotal OUT, @Gender = 'Male'  
+>  Print       @EmployeeTotal  
+> ```   
+> _If you don't specify the OUTPUT keyword, when executing the stored procedure, the   
+> @EmployeeTotal variable will be NULL._  
+> 
+> * **Useful system stored procedures:**   
+> 1. **sp_help procedure_name**  View the information about the stored procedure, like   
+> parameter names, their datatypes etc. _sp_help_  can be used with any database object,  
+> like tables, views, SP's, triggers etc. Alternatively, you can also press ALT+F1, when  
+> the name of the object is highlighted.  
+> ![image](https://user-images.githubusercontent.com/58625165/210639575-cb455459-dd05-4f4a-be22-455b5b7785e1.png)  
+> 
+> 2. **sp_helptext procedure_name**  View the text of the stored procedure  
+> ![image](https://user-images.githubusercontent.com/58625165/210639842-cc3c861b-58e2-4464-ab8f-1bee7441b141.png)  
+> 
+> 3. **sp_depends procedure_name**  View the dependencies of the stored procedure.  
+> This system SP is is very useful, especially if you want to check, if there are  
+> any procedures that are referencing table that you are about to drop. sp_depends   
+> can also be used with other database objects like tables etc.   
+> ![image](https://user-images.githubusercontent.com/58625165/210639937-5a8c5f6e-3a77-4307-a888-e965a998e69c.png)  
+
+ 
+
 ### Stored prodedures output paramerters or return values
 ### Advantages of stored procedures
 ### Built in string functions in SQL Server 
