@@ -445,9 +445,81 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
  > 
  > In short, UNION combines rows from 2 or more tables, where JOINS combine columns from 2 or more tables.  
 
+### Stored procedures in SQL Server  
+> * **Def:** _A stored procedure is group of T-SQL (Transact SQL) statements If you have a situation,   
+>where you write the same query over and over again, you can save that specific query as a stored  
+>procedure and call it by it's name._   
+
+> 1. Use CREATE PROCEDURE or CREATE PROC statment to create SP  
+> **Note:** When naming user defined stored procedures, Microsoft recommends not to use **sp_** as a prefix.   
+> All system stored procedures, are prefixed with **sp_**. This avoids any ambiguity between user defined and     
+> system defined stored procedures and any conflicts, with some future system procedure.  
+
+> * **To execute the stored procedure**  
+>   1. spGetEmployees  
+>   2. EXEC spGetEmployees  
+>   3. Execute spGetEmployees  
+> **Note:** You can also right click on the procedure name, in object explorer in SQL Server Management Studio and select EXECUTE STORED PROCEDURE.
+
+>* The syntax of Store Procedure:  
+> ```sql
+>  CREATE PROCEDURE spProcedureName  
+>  AS  
+>  BEGIN  
+>      Query Definition goes here...
+>  END    
+> ``` 
+
+> ```sql
+>  CREATE PROCEDURE spGetEmployees  
+>  AS  
+>  BEGIN  
+>     Select Name, Gender from tblEmployee  
+>  END    
+> ```   
+> And to execute it just write name of the SP or with EXEC or EXECUTE command:   
+> ```sql   
+> spGetEmployees  --or  
+> EXEC spGetEmployees  --or  
+> EXECUTE spGetEmployees  
+> ```    
+
+> * **Stored Procedure with Parameters:**  
+> - Parameters and variables have an @ prefix in their name.   
+> 
+> * **To view the text, of the stored procedure**   
+>   1. Use system stored procedure sp_helptext 'SPName'  
+>                     OR                    
+>   2. Right Click the SP in Object Explorer -> Scrip Procedure as -> Create To -> New Query Editor Window   
+
+> * The SQL query can be defined as:  
+> ```sql   
+> Create Proc spGetEmployeesByGenderAndDepartment   
+> @Gender nvarchar(20),  
+> @DepartmentId int   
+> as   
+> Begin   
+>      Select Name, Gender, DepartmentId from tblEmployee Where Gender = @Gender  
+>      and DepartmentId = @DepartmentId  
+> End        
+> ```                     
+> 
+> To Execute:   
+> ```sql  
+>  EXECUTE spGetEmployeesByGenderAndDepartment 'Male',1     --- the order matters if don't using param names  
+>  EXECUTE spGetEmployeesByGenderAndDepartment @DepartmentId=1, @Gender = 'Male'     --- the order doesn't matter if passing params with param names  
+> ```   
+
+>* To change the stored procedure, use ALTER PROCEDURE statment.  
+>* To delete the SP, use DROP PROC 'SPName' or DROP PROCEDURE 'SPName'  
+>* To encrypt the text of the SP, use WITH ENCRYPTION option. It is not possible to view the text of an encrypted SP.   
+>```sql
+>  Alter Proc spGetemployeesByGenderAndDepartment   
+>  @Gender nvarchar(20),  
+>  @DepartmentId int   
+>```
 
 
-### Stored procedures in SQL Server
 ### Stored procedures with output parameters
 ### Stored prodedures output paramerters or return values
 ### Advantages of stored procedures
