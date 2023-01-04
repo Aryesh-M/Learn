@@ -341,14 +341,16 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
   
   4. CROSS JOIN:
      *Cross join shouldn't have a ON clause.
-     ```sql
-     SELECT Name, Gender, Salary, DepartmentName  
+     ```sql  
+     SELECT Name, Gender, Salary, DepartmentName    
      FROM tblEmployee  
-     CROSS JOIN tblDepartment;
+     CROSS JOIN tblDepartment;  
      ```
-   **Def:** Cross Join produces the Cartesian product of the 2 tables involved in the join. For example, in the Employees table we have 10 rows and in the Department table we have 4 rows. So, a cross join between these 2 tables produce 40 rows.
+   **Def:** Cross Join produces the Cartesian product of the 2 tables involved in the join.  
+   For example, in the Employees table we have 10 rows and in the Department table we have  
+   4 rows. So, a cross join between these 2 tables produce 40 rows.  
 
-### Advanced or intelligent joins in sql server
+### Advanced or intelligent joins in sql server  
   1. LEFT JOIN excluding common area  
    ![image](https://user-images.githubusercontent.com/58625165/210453551-2e012882-e5f2-4a3d-8ab1-5ff5ba286e91.png)  
 
@@ -357,39 +359,69 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
   
   3. LEFT and RIGHT JOIN excluding common area  
     ![image](https://user-images.githubusercontent.com/58625165/210453626-9caf7d3b-fa0d-488a-8cdf-a2eb76e778cb.png)  
-**Note:** _To compare values with NULL in SQL Server we cannot use equal to operator (=) but instead we should use IS NULL_
+**Note:** _To compare values with NULL in SQL Server we cannot use equal to operator (=) but instead we should use IS NULL_  
 
 ### Self join in SQL Server  
- **Def:** _Joining a table with itself is called **Self Join.**_  
->* Self JOIN is **not** a different type of JOIN.  
->* The demo tables
->* It can be classified under any type of JOIN:  
+ **Def:** _Joining a table with itself is called **Self Join.**_    
+>* Self JOIN is **not** a different type of JOIN.    
+>* The demo tables  
+>* It can be classified under any type of JOIN:    
 >  1. INNER,  
->  2. OUTER (LEFT, RIGHT, FULL)  
->  3. CROSS Joins  
->  ```sql
->  -- Left Outer Self Join
->  SELECT E.Name AS Employee, M.Name AS Manager  
+>  2. OUTER (LEFT, RIGHT, FULL)    
+>  3. CROSS Joins    
+>  ```sql  
+>  -- Left Outer Self Join  
+>  SELECT E.Name AS Employee, M.Name AS Manager    
 >  FROM tblEmployee E  
 >  LEFT JOIN tblEmployee M  
->  ON E.ManagerId = M.EmployeeId
+>  ON E.ManagerId = M.EmployeeId  
 >  
->  -- Inner Self Join
->  SELECT E.Name AS Employee, M.Name AS Manager  
+>  -- Inner Self Join  
+>  SELECT E.Name AS Employee, M.Name AS Manager    
 >  FROM tblEmployee E  
 >  INNER JOIN tblEmployee M  
->  ON E.ManagerId = M.EmployeeId
->  ```
+>  ON E.ManagerId = M.EmployeeId  
+>  ```  
 >  
->  -- Cross Self Join
->  SELECT E.Name AS Employee, M.Name AS Manager  
+>  -- Cross Self Join  
+>  SELECT E.Name AS Employee, M.Name AS Manager    
 >  FROM tblEmployee E  
 >  CROSS JOIN tblEmployee M  
->  ```
+>  ```  
  
+### Different ways to replace NULL in SQL Server  
+> ```sql
+> Select     E.name as Employee, ISNULL(M.Name, 'No Manager') as Manager  
+> from       tblEmployee E    
+> LEFT JOIN  tblEmployee M  
+> ON         E.ManagerID = M.EmployeeID      
+> ```
+> It will output the following:  
+> ![image](https://user-images.githubusercontent.com/58625165/210460861-dbb1ba45-3dd3-4ca2-b304-50f6dcf68ded.png)    
+> * So, ISNULL('expression', 'replacement value') accepts two params: expression and replacement value  
+> There's same function exists like ISNULL():  
+> 
+> ```sql
+> Select     E.name as Employee, COALESCE(M.Name, 'No Manager') as Manager  
+> from       tblEmployee E    
+> LEFT JOIN  tblEmployee M  
+> ON         E.ManagerID = M.EmployeeID      
+> ```
+> 
+* The alternative way is to use THEN ELSE condition in query:
+>```sql
+>SELECT        E.Name as Employee,  
+>              CASE  
+>                   WHEN M.Name IS NULL THEN 'No Manager' ELSE M.Name  
+>              END   
+>              as Manager  
+>FROM          tblEmployee E  
+>LEFT JOIN     tblEmployee M  
+>ON            E.ManagerID = M.EmployeeID;                      
+>```
 
 
-### Different ways to replace NULL in SQL Server
+
 ### Coalesce function in SQL Server
 ### Union and union all in SQL Server 
 ### Stored procedures in SQL Server
