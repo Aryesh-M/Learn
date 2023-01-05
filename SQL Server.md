@@ -680,7 +680,17 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 ### LEFT, RIGHT, CHARINDEX and SUBSTRING function  
 * String functions:   
 ![image](https://user-images.githubusercontent.com/58625165/210699759-a1f50d43-d7a2-4af5-92a5-b99e9aad5411.png)   
->  
+>  ```sql
+>   Select SUBSTRING(Email, CHARINDEX('@', Email) + 1,  
+>   LEN(Email) - CHARINDEX('@', Email)) as EmailDomain,  
+>   COUNT(Email)  as Total  
+>   from tblEmployee    
+>   Group By SUBSTRING(Email, CHARINDEX('@', Email) + 1,  
+>   LEN(Email) - CHARINDEX('@', Email))  
+>  ```  
+>  The output will be:  
+>  ![image](https://user-images.githubusercontent.com/58625165/210825194-8a26413d-4df2-4084-9bf2-b73313130b27.png)  
+
 
 
   
