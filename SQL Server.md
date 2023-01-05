@@ -692,10 +692,56 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  ![image](https://user-images.githubusercontent.com/58625165/210825194-8a26413d-4df2-4084-9bf2-b73313130b27.png)  
 
 
-
-  
-  
 ### Replicate, space, Patindex, Replace and Stuff string functions
+> * **Syntax:**   
+>   REPLICATE(String_To_Be_Replicated, Number_Of_Times_To_Replicate)   
+>   _Repeats the given string, for the specified number of times._   
+>   ![image](https://user-images.githubusercontent.com/58625165/210826399-6f4f1a31-52e0-4011-b074-eeda9674ae9d.png)   
+>   ```sql
+>     Select   FirstName, LastName,   
+>              SUBSTRING(Email, 1, 2) + REPLICATE('*', 5)  +   
+>              SUBSTRING(Email, CHARINDEX('@', Email),  LEN(Email)  - CHARINDEX('@', Email) + 1)  as Email   
+>     from     tblEmployee            
+>   ```  
+
+>   SPACE(Number_Of_Spaces)     
+>   _Returns number of spaces, specified by the Number_Of_Spaces argument._     
+>   ![image](https://user-images.githubusercontent.com/58625165/210827187-a8261132-32a6-48e2-8577-21c0f4aa79e0.png)  
+>   ```sql
+>     Select   FirstName, SPACE(5) + LastName as FullName       
+>     from     tblEmployee              
+>   ```  
+
+>   PATINDEX('%Pattern%', Expression)       
+>   _Returns the starting position of the first occurences of a pattern in a specified expression. It takes two arguments, the pattern to be searched and the expression. PATINDEX() is similar to CHARINDEX(). With CHARINDEX() we cannot use wildcards, where as PATINDEX() provides this capability. If the specified pattern is not found, PATINDEX() returns ZERO._ 
+>       
+>   ![image](https://user-images.githubusercontent.com/58625165/210828294-b8501d81-4a66-4b0d-9d2b-49db4f1a91c3.png)    
+>   ```sql
+>     Select   Email, PATINDEX('%@aaa.com', Email) as FirstOccurence          
+>     from     tblEmployee   
+>     Where    PATINDEX('%@aaa.com', Email) > 0                
+>   ```  
+
+>   REPLACE(String_Expression_Pattern, Replacement_Value)         
+>   _Replaces all occurences of a specified string value with another string value._   
+>       
+>   ![image](https://user-images.githubusercontent.com/58625165/210829497-1a556762-80dc-4ac2-bf9a-ffecf2224263.png)       
+>   ```sql
+>     Select   Email, REPLACE (Email, '.com', '.net') as ConvertedEmail            
+>     from     tblEmployee                   
+>   ```    
+
+>   STUFF(Original_Expression, Start, Length, Replacement_expression)             
+>   _STUFF() function inserts Replacement_expression, at the start position specified, along with removing the characters specified using Length parameter._   
+>       
+>   ![image](https://user-images.githubusercontent.com/58625165/210830420-c8ff231e-849d-45dd-b306-f6af791a93f3.png)          
+>   ```sql
+>     Select   FirstName, LastName, Email,   
+>              STUFF(Email, 2, 3, '*****')  as StuffedEmail               
+>     from     tblEmployee                   
+>   ```    
+
+
 ### DateTime funcitons in SQL Server
 ### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server
 ### DatePart, DateAdd and DateDiff funcitons in SQL Server
