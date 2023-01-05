@@ -913,9 +913,90 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >        
 
     
+### Mathematical functions in SQL Server
+> * ABS( numeric_expression ) - 
+> _ABS stands for absolute and returns, the absolute (positive) number._   
+> ```sql  
+>  Select ABS(-101.5)   -- Returns 101.5, without the - sign  
+      
+> ```
+> * CEILING( numeric_expression ) and FLOOR( numeric_expression ) -   
+> _CEILING and FLOOR functions accept a numeric expression as a single parameter. CEILING() returns the smallest and integer value greater than or equal to the parameter, whereas FLOOR() returns the largest integer less than or equal to parameter._   
+> ```sql  
+>   Select CEILING(15.2)  -- Returns 16  
+>   Select CEILING(-15.2) -- Returns 15  
+>      
+>   Select FLOOR(15.2)    -- Returns 15    
+>   Select FLOOR(-15.2)   -- Returns -16
+> ```   
+
+> * POWER(expression, power) -  
+> _Returns the power value of the specified expression to the specified power._   
+>      
+> ```sql  
+>   Select POWER(2, 3)    -- Returns 8  
+> ```  
+   
+> * SQUARE( Number ) -    
+> _Returns the square of the given number._         
+> ```sql  
+> Select SQUARE(9)        -- Returns 81        
+> ```
+
+> * SQRT( Number ) -   
+> _Returns the square root of the given number._    
+> ```sql  
+> Select SQRT(81)        -- Returns 9        
+> ```  
+
+> * RAND([Seed_Value]) -   
+> _Returns a random float number between 0 and 1. Rand() function takes an optional seed parameter. When seed value is supplied the RAND() function always returns the same value of the same seed._    
+> ```sql  
+> Select RAND(1)        -- Always returns the same value           
+> ```
+> * Generate a random number between 1 and 100:    
+> ```sql  
+>   Select  FLOOR(RAND() * 100 )  
+> ```  
+> * Print 10 random numbers between 1 and 100:  
+> ```sql  
+>    Declare   @Counter  INT  
+>    Set       @Counter = 1   
+>    While(@Counter <= 10)  
+>    Begin   
+>        Print  FLOOR(RAND() * 100 )  
+>        Set    @Counter = @Counter + 1  
+>    End      
+> ```  
+
+> * ROUND() -   
+> _Rounds the given numeric expression based on the given length. This function takes 3 parameters._   
+>  1. **Numeric_Expression**  is the number that we want to round.  
+>  2. **Length**  parameter, specifies the number of digits that we want to round to. If the length is a positive number, then the rounding is applied for the decimal part, where as if the length is negative, then the rounding is applied to the number before the decimal.   
+>  3. **The optional function parameter**, is used to indicate or truncation operations. 0 indicates rounding, non-zero indicates trucation. Default, if not specified is 0.   
+>  ```sql   
+>  -- Round to 2 places after (to the right) the decimal point  
+>    Select ROUND(850.556, 2)      -- Returns 850.560   
+>       
+>  -- Truncate anything after 2 places, after (to the right) the decimal point  
+>     Select ROUND(850.556, 2, 1)  -- Returns 850.550   
+>        
+>  -- Round to 1 place after (to the right) the decimal point   
+>     Select ROUND(850.556, 1)  -- Returns 850.600     
+>     
+>  -- Truncate anything after 1 place, after (to the right) the decimal point  
+>     Select ROUND(850.556, 1, 1)  -- Returns 850.500           
+>         
+>  -- Round the last 2 places before (to the left) the decimal point  
+>     Select ROUND(850.556, -2)  -- Returns 900.000      
+>         
+>  -- Round the last 1 place before (to the left) the decimal point  
+>     Select ROUND(850.556, -1)  -- Returns 850.000      
+>  ```
+>  
 
 
-### Mathematical funcitons in SQL Server
+
 ### Scalar user defined functions in SQL Server
 ### Infinite table valued funcitons in SQL Server
 ### Multi statement table valued functions in SQL Server
