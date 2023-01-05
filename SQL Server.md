@@ -677,10 +677,14 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > * The LEN() counts all white spaces of a word/string which are in the beggining or in the middle of it, but it excludes the spaces at the end of the word/string.  
 > 
 
+### LEFT, RIGHT, CHARINDEX and SUBSTRING function  
+* String functions:   
+![image](https://user-images.githubusercontent.com/58625165/210699759-a1f50d43-d7a2-4af5-92a5-b99e9aad5411.png)   
+>  
 
 
-
-### LEFT, RIGHT, CHARINDEX and SUBSTRING function
+  
+  
 ### Replicate, space, Patindex, Replace and Stuff string functions
 ### DateTime funcitons in SQL Server
 ### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server
