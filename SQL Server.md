@@ -867,6 +867,54 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### Cast and Convert functions in SQL Server
+>* **To convert one data type to another, CAST and CONVERT functions can be used.**  
+>* _Syntax:_    
+>  ```sql  
+>   CAST(expression AS data_type[(length)])   
+>   CONVERT( data_type [(length)], expression [, style] )   
+>   So, above syntax is from MSDN documentation, the square brackets means the argument is _optional._   
+>  ``` 
+>  So, for example we have two tables given below, we have to convert 1st into 2nd with additional **ConvertDOB** column:  
+>  ```sql  
+>  Select Id, Name, DateOfBirth, CAST(DateOfBirth as nvarchar)  as ConvertedDOB from tblEmployees   -- either CAST()        
+>  Select Id, Name, DateOfBirth, CONVERT(nvarchar, DateOfBirth)  as ConvertedDOB from tblEmployees  -- or we can use CONVERT() as alternative  
+>  ```   
+>  So, we can use following query to get desired output table:   
+>  ```sql  
+>   Select Id, Name, DateOfBirth,    
+>   Convert(nvarchar, DateOfBirth, 103)  as ConvertedDOB   -- note the 3rd argument is 103(style), which can be well understood by following table   
+>   from tblEmployees     
+>  ```  
+>  Refer the following **style**  table:   
+>  ![image](https://user-images.githubusercontent.com/58625165/210868226-e2840e88-3217-4ff9-b7c1-78c9ffc60e80.png)   
+>  And the final output of the above query will be as follows:   
+>  ![image](https://user-images.githubusercontent.com/58625165/210868337-d0983a5b-b533-481d-8e87-4c93b67ffd44.png)   
+>  So, for converting a date into other "date format", we can only use CONVERT() but we cannot use the CAST() for it :).   
+>  Note: Don't memorize the styles as MSDN has around 20 styles but few are listed in above picture. (If you will memorize the styles, then what's the use of Google then? :D ).   
+>  Practical Example:   
+>  We need to convert the following left table into the right table:   
+>  ![image](https://user-images.githubusercontent.com/58625165/210877295-f1ea797d-2ab9-47e3-9bc7-0fdd2b8347b4.png)   
+>  ```sql  
+>  Select     CAST(RegisteredDate as DATE) as RegistrationDate, COUNT(ID) as TotalRegistrations   
+>  from       tblRegistrations   
+>  Group By   CAST(RegisteredDate as DATE)     
+>  ```
+>  What should not be done? See the following query:    
+>  Select     RegisteredDate as RegistrationDate, COUNT(ID) as TotalRegistrations   
+>  from       tblRegistrations   
+>  Group By   RegisteredDate        
+>  ```    
+>   The above query will have output like this:    
+>   ![image](https://user-images.githubusercontent.com/58625165/210877911-0adb7b1c-7bff-4af9-9d1e-7e79a2f46d3f.png)   
+>   **Differences between CAST() and CONVERT() :**  
+>       1. CAST is based on ANSI standard and Convert is specific to SQL Server. So, if portability is a concern and if you want to use the script with other database applications, use CAST().   
+>       2. CONVERT provides more flexibility than CAST. For example, it's possible to control how you want DateTime datatypes to be converted using styles with convert function.   
+>       **Note:**  _The general guideline is to use CAST(), unless you want to take advantage of style functionality in CONVERT()._   
+>        
+
+    
+
+
 ### Mathematical funcitons in SQL Server
 ### Scalar user defined functions in SQL Server
 ### Infinite table valued funcitons in SQL Server
