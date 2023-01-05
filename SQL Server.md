@@ -742,8 +742,18 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   ```    
 
 
-### DateTime funcitons in SQL Server
-### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server
+### DateTime functions in SQL Server    
+
+![image](https://user-images.githubusercontent.com/58625165/210834251-3e71c2cc-c325-4673-91e7-441151e5b4c8.png)   
+
+> * UTC stands for Coordinated Universal Time, based on which, the world regulates clocks and time. There are slight differences between GMT and UTC, but for most common purposes, UTC is synonymous with GMT.   
+> ![image](https://user-images.githubusercontent.com/58625165/210839078-a44a2772-17fa-465b-b435-251946feb5a9.png)   
+> 
+
+
+### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server  
+
+
 ### DatePart, DateAdd and DateDiff funcitons in SQL Server
 ### Cast and Convert functions in SQL Server
 ### Mathematical funcitons in SQL Server
