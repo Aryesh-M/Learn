@@ -633,9 +633,24 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > * Difference between Return Status Value and Output Parameters:  
 > ![image](https://user-images.githubusercontent.com/58625165/210694455-0aae1624-51b1-4951-b3f6-e8418aba3c39.png)   
 
-
-
 ### Advantages of stored procedures
+> * The following are advantages of Stored Procedures:  
+>   1.  Execution plan retention and reusability  
+>   2.  Reduces network traffic  
+>   3.  Code reusability and better maintainability (in case of ad-hoc queries we have same queries in 1000 places, and we want to change the logic of those queries, as they are designed to used for the same thing, we need to make changes in 1000 place which is not good maintainability)    
+>   4.  Better Security  
+>   5.  Avoids SQL Injection attack  
+
+> * When we issue a query to SQL Server, 3 things happen:  
+>   1. It checks the syntax of the query,  
+>   2. It compiles that query,  
+>   3. It generates an execution plan   
+>   - The execution plan means for the query to retrieve the data what is the best possible way available.  
+>   - When next time we issue the query, since the execution plan is already generated it will be cached by SQL Server so Next time when you run the query, it's gonna reuse that execution plan. The same thing happens with SP.  
+>   - When executing simple queries more than once, the SQL Server will use already generated execution plan, but if minor change like change in parameter or a space will generate new execution plan when we re-issue query next time.    
+>   The simple query also called as ad-hoc SQL Query :)      
+>   
+
 ### Built in string functions in SQL Server 
 ### LEFT, RIGHT, CHARINDEX and SUBSTRING function
 ### Replicate, space, Patindex, Replace and Stuff string functions
