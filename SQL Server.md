@@ -568,8 +568,73 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > ![image](https://user-images.githubusercontent.com/58625165/210639937-5a8c5f6e-3a77-4307-a888-e965a998e69c.png)  
 
  
-
 ### Stored prodedures output paramerters or return values
+* Whenever you executes a stored procedure, it returns an integer status variable. Usually, zero indicates success, and non-zero indicates failure.   
+![image](https://user-images.githubusercontent.com/58625165/210689501-35c3ceaf-e431-4598-8998-c63618c9f210.png)  
+> ```sql
+>  Create Procedure spGetTotalCountOfEmployees1  
+>  @TotalCount int output  
+>  as  
+>  Begin  
+>     Select   @TotalCount = COUNT(ID) from tblEmployee   
+>  End       
+> ```
+> 
+> ```sql  -- call the stored procedure  
+> Declare  @TotalEmployees int  
+> Execute  spGetTotalCountOfEmployees  @TotalEmployees Output  
+> Select   @TotalEmployees
+> ```
+> * So, the above SP is with Output params and the below is using return values:   
+> ```sql  
+>  Create Procedure spGetTotalCountOfEmployees2     
+>  as   
+>  Begin    
+>    return  (Select COUNT(ID) from Employees)     
+>  End    
+> ```   
+>   
+> ```sql  -- call the stored procedure    
+> Declare  @TotalEmployees int  
+> Execute  @TotalEmployees = spGetTotalCountOfEmployees2    
+> Select   @TotalEmployees  
+> ```  
+> * See the following table:  
+> ![image](https://user-images.githubusercontent.com/58625165/210691884-76eb32fb-a33e-4179-bc87-afe0f732f94b.png)  
+> ```sql  
+> Create Procedure spGetNameById1  
+> @Id int,   
+> as   
+> Begin   
+>   Select  @Name = Name  from  tblEmployee Where  Id= @Id  
+> End     
+> ```  
+> ```sql  -- call the stored procedure    
+> Declare  @EmployeeName nvarchar(20)  
+> Execute  spGetNameById1 3, @EmployeeName Out  
+> Print   'Name of the Employee = ' +  @EmployeeName  
+> ```  
+> 
+> ```sql
+>   Create Procedure spGetNameById2  
+>   @Id int  
+>   as   
+>   Begin  
+>       return  (Select Name from tblEmployee Where Id = @Id)  
+>   End  
+> ```
+> ```sql  -- call the stored procedure  
+> Declare  @EmployeeName nvarchar(20)  
+> Execute  @EmployeeName = spGetNameById2 1  
+> Print    'Name of the Employee = ' + @EmployeeName    
+> ```    
+> * _Executing spGetNameById2 returns an error stating 'Conversion failed when converting the nvarchar value 'Sam' to data type int.'_   
+> * So, keep in mind we can only use "return values" only to return an integer value, it fails for non-integer values.   
+> * Difference between Return Status Value and Output Parameters:  
+> ![image](https://user-images.githubusercontent.com/58625165/210694455-0aae1624-51b1-4951-b3f6-e8418aba3c39.png)   
+
+
+
 ### Advantages of stored procedures
 ### Built in string functions in SQL Server 
 ### LEFT, RIGHT, CHARINDEX and SUBSTRING function
