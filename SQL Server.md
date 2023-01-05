@@ -995,9 +995,47 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  ```
 >  
 
+### Scalar user defined functions in SQL Server  
+>* **In SQL there are 3 types of User Defined Functions:**  
+>  1. Scalar functions  
+>  2. Inline table-valued functions   
+>  3. Multi-statement table-valued functions  
+
+> **Scalar functions** may or may not have parameters, but always return a single(scalar) value. The returned value can be of any data type, except **text, ntext, image, cursor, and timestamp**.   
+> ```sql  
+>    CREATE FUNCTION Function_Name(@Parameter1 DataType, @Parameter2 DataType, ..., @ParameterN DataType)   
+>    RETURNS  Return_Datatype   
+>    AS   
+>    BEGIN  
+>        --- Function Body  
+>            Return  Return_Datatype  
+>    END          
+> ```  
+> An example of function:   
+> ```sql  
+>   CREATE FUNCTION CalculateAge(@DOB Date)   
+>   RETURNS INT  
+>   AS  
+>   BEGIN   
+>      
+>   DECLARE  @DOB DATE   
+>   DECLARE  @Age INT   
+>   SET      @DOB = '11/08/2011'   
+>      
+>   SET      @Age = DATEDIFF(YEAR, @DOB, GETDATE())  -   
+>                CASE   
+>                   WHEN  (MONTH(@DOB)  > MONTH(GETDATE()) )  OR   
+>                         (MONTH(@DOB)  = MONTH(GETDATE())  AND DAY(@DOB) > DAY(GETDATE()) )   
+>                   THEN  1   
+>                   ELSE  0  
+>                END   
+>                   
+>  SELECT  @Age   
+>  END  
+>                             
+> ```
 
 
-### Scalar user defined functions in SQL Server
 ### Infinite table valued funcitons in SQL Server
 ### Multi statement table valued functions in SQL Server
 ### Important concepts related to functions in SQL Server
