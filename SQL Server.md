@@ -775,7 +775,7 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  Select Month('01/31/2012') -- Returns 1  
 >  
 > ```  
-> DateName(DatePart, Date) - Returns a string, that represents a part of the given date. This functions takes 2 parameters. The first parameter DatePart specifies, the part of the date, we want. The second parameter, is the actual date, from which we want the part of the date.  
+> **DateName(DatePart, Date):** - Returns a string, that represents a part of the given date. This functions takes 2 parameters. The first parameter DatePart specifies, the part of the date, we want. The second parameter, is the actual date, from which we want the part of the date.  
 > ``sql
 > Select DATENAME(Day, '2012-09-30 12:43:46.837')     -- Returns 30     
 > Select DATENAME(WEEKDAY, '2012-09-30 12:43:46.837') -- Returns Sunday  
@@ -787,6 +787,85 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### DatePart, DateAdd and DateDiff funcitons in SQL Server
+> * **DatePart(DatePart, Date):** - Retuns an integer representing the specified DatePart. This function is similar to DateName(). DateName() returns nvarchar, where as DatePart() returns an integer.  
+> ```sql  
+>   Select   DATEPART(WEEKDAY, '2012-08-30 19:45:31.793')   -- Returns 5  
+>   Select   DATENAME(WEEKDAY, '2012-08-30 19:45:31.793')   -- Returns Thursday   
+> ``` 
+> 
+> * **DATEADD(DatePart, NumberToAdd, date):**  - Returns the DateTime, after adding specified NumberToAdd, to the datepart specified of the given date.  
+> ```sql  
+> Select    DATEADD(DAY, 20,  '2012-08-30 19:45:31.793')  -- Returns 2012-09-19 19:45:31.793  
+> Select    DATEADD(DAY, -20,  '2012-08-30 19:45:31.793')  -- Returns 2012-08-10 19:45:31.793      
+> ```  
+>   
+> * **DATEDIFF(DatePart, StartDate, EndDate):**  - Returns the count of the specified datepart boundaries crossed between the specified startdate and enddate.  
+> ```sql  
+> Select DATEDIFF(MONTH, '11/30/2005', '01/31/2006')    -- Returns 2   
+> Select DATEDIFF(DAY, '11/30/2005', '01/31/2006')    -- Returns 62   
+> ```  
+> **Calculating the age:** -  
+> The DATEDIFF() function fails to calculate the actual diffence between some dates:  
+> ```sql  
+> Select DATEDIFF('11/30/2005','01/31/2006') -- The actual difference is 31 days but it will return 62 (see below):      
+> ![image](https://user-images.githubusercontent.com/58625165/210860054-c776134b-42f9-40f7-a1c8-d8ee1f488034.png)     
+> ```  
+> The other example is:  
+> ```sql  
+> Select DATEDIFF('11/30/2005','01/31/2006')  -- returns 1,but the actual difference is 0 years and 2 months   
+> ![image](https://user-images.githubusercontent.com/58625165/210860418-5460469d-4ef4-4cc7-8a8c-65606fcef18c.png)       
+> ```   
+> So, to keep in mind above miscalculations of DATEDIFF(), we have to add a CASE. See below example, (Note that we have used function here):      
+> ```sql  
+>    Create function fnComputeAge(@DOB  DateTime)  
+>    retuns nvarchar(50)   
+>    as   
+>    Begin   
+>      
+>    DECLARE @tempdate datetime, @years int, @months int, @days int       
+>      
+>    SELECT @tempdate = @DOB  
+>      
+>    SELECT @years = DATEDIFF( YEAR, @tempdate, GETDATE() )  -  
+>                    CASE   
+>                        WHEN  (MONTH(@DOB) > MONTH(GETDATE())) OR  
+>                        (MONTH(@DOB) = MONTH(GETDATE())  AND DAY(@DOB) > DAY(GETDATE())  
+>                        THEN 1 ELSE 0   
+>                    END   
+>    SELECT @tempdate =  DATEADD(YEAR, @years, @tempdate)   
+>      
+>    SELECT @months = DATEDIFF(MONTH, @tempdate, GETDATE())  -  
+>                     CASE   
+>                         WHEN  DAY(@DOB)  > DAY(GETDATE())  
+>                         THEN 1 ELSE 0  
+>                     END   
+>    SELECT @tempdate = DATEADD(YEAR, @years, @tempdate)   
+>       
+>    SELECT @months = DATEDIFF(MONTH, @tempdate, GETDATE())  -   
+>                     CASE   
+>                         WHEN DAY(@DOB)  > DAY(GETDATE())  
+>                         THEN 1 ELSE 0 
+>                     END   
+>    SELECT @tempdate = DATEADD(MONTH, @months, @tempdate)   
+>       
+>    SELECT @days = DATEDIFF(DAY, @tempdate, GETDATE())  
+>    
+>       DECLARE @Age nvarchar(50)  
+>       Set     @Age = Cast(@years as nvarchar(4)) + ' Years' + Cast(@months as nvarchar(2)) + ' Months' + Cast(@days as nvarchar(2) + ' Days Old'   
+>       
+>       return  @Age      
+>    END                                                                  
+> ```  
+> To call the function we can do it as follows:   
+> ```sql  
+> Select dbo.fnComputAge('11/30/2005')     
+> ```  
+> Or, we can use the function in a query like follows:   
+> ```sql  
+>  Select Id, Name, DateOfBirth, dbo.fnComputeAge(DateOfBirth) as Age from tblEmployees    -- note that we have passed name of column (DateOfBirth) as param  
+> ```
+
+
 ### Cast and Convert functions in SQL Server
 ### Mathematical funcitons in SQL Server
 ### Scalar user defined functions in SQL Server
