@@ -752,6 +752,38 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 
 ### IsDate, Day, Month, Year and DateName DateTime functions in SQL Server  
+* **ISDATA()** - _Checks if the given value, is a valid date, time, or datetime. Returns 1 for success, 0 for failure._  
+> * **Examples:**  
+> ```sql
+> Select   ISDATE('PRAGIM')  -- returns 0  
+> Select   ISDATE(Getdate())  -- retuns 1  
+> Select   ISDATE('2012-08-31 21:02:04.167')  -- returns 1  
+> Select   ISDATE('2012-09-01 11:34:21.1918447')  -- returns 0  
+> **Note:** _For datetime2 values, IsDate returns ZERO for valid dates._  
+> ```
+
+> * **Day, Month, Year:**
+> Day() - Returns the 'Day number of the month' of the given date  
+> Month() - Returns the 'Month number of the year' of the given date  
+> Year() - Returns the 'Year number' of the given date     
+> _Examples:_  
+> ```sql
+>  Select DAY(GETDATE())      -- Returns the current date day number of the month  
+>  Select DAY('01/31/2012')   -- Returns 31 
+>   
+>  Select Month(GETDATE())    -- Returns the current date, Month number of the year  
+>  Select Month('01/31/2012') -- Returns 1  
+>  
+> ```  
+> DateName(DatePart, Date) - Returns a string, that represents a part of the given date. This functions takes 2 parameters. The first parameter DatePart specifies, the part of the date, we want. The second parameter, is the actual date, from which we want the part of the date.  
+> ``sql
+> Select DATENAME(Day, '2012-09-30 12:43:46.837')     -- Returns 30     
+> Select DATENAME(WEEKDAY, '2012-09-30 12:43:46.837') -- Returns Sunday  
+> Select DATENAME(MONTH, '2012-09-30 12:43:46.837')   -- Returns Sepetember   
+> ```  
+> The other datepart and its abbreviations are listed below:  
+> ![image](https://user-images.githubusercontent.com/58625165/210854924-5e8cea91-12e9-49d7-818d-226c55052b04.png)  
+> 
 
 
 ### DatePart, DateAdd and DateDiff funcitons in SQL Server
