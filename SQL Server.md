@@ -1034,9 +1034,25 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  END  
 >                             
 > ```
+> To invoke the above function:  
+>  ```sql  
+>    Select CalculateAge('10/08/1982')  -- this won't work and will throw an error (see below)
+>  ```      
+>  ![image](https://user-images.githubusercontent.com/58625165/210890047-a9130644-7a80-4d8d-9425-18378d1af313.png)  
+>  To invoke user-defined functions we call it in two parts (the first part is dbo) : 
+>   ```sql   
+>      Select dbo.CalculateAge('10/08/1982')   
+>   ```
+> The created functions stored in database folder (see below):   
+> ![image](https://user-images.githubusercontent.com/58625165/210888885-218cbf16-bae5-4319-bafa-a8413e654b17.png)    
+> * A stored procedure also can accept **DateOfBirth** and **return Age**, but you cannot use stored procedures in a select or where clause. This is just one difference between a function and a stored procedure. There are several other differences, which we will talk about in a later section.  
+> * To alter a function we use **ALTER FUNCTION FunctionName** statement and to delete it, we use **DROP FUNCTION FunctionName**.   
+>  
 
 
-### Infinite table valued funcitons in SQL Server
+### Infinite table valued funcitons in SQL Server    
+
+
 ### Multi statement table valued functions in SQL Server
 ### Important concepts related to functions in SQL Server
 ### Temporary tables in SQL Server
