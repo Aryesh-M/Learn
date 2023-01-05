@@ -649,9 +649,37 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   - When next time we issue the query, since the execution plan is already generated it will be cached by SQL Server so Next time when you run the query, it's gonna reuse that execution plan. The same thing happens with SP.  
 >   - When executing simple queries more than once, the SQL Server will use already generated execution plan, but if minor change like change in parameter or a space will generate new execution plan when we re-issue query next time.    
 >   The simple query also called as ad-hoc SQL Query :)      
->   
 
-### Built in string functions in SQL Server 
+### Built in string functions in SQL Server  
+> * String Functions:  
+> ![image](https://user-images.githubusercontent.com/58625165/210697203-3f80e957-e69b-47e3-b3f7-737110aaeeff.png)   
+> ```sql
+> Select ASCII('ABC')
+> ```  
+> The above query will return the output:   
+> ![image](https://user-images.githubusercontent.com/58625165/210697476-3086bb51-eced-456a-ace7-987cb5ca1f8a.png)  
+> * Let's print A to Z by looping and using CHAR():   
+> ```sql  
+>  Declare @Start int  
+>  Set     @Start = 65  
+>  While(@Start <= 90)  
+>  Begin   
+>     Print  CHAR(@Start)  
+>     Set    @Start = @Start + 1  
+>  End   
+> ```
+> * We can use LTRIM and RTRIM to remove white spaces on left and right sides respectively. If we want to remove the spaces from both the sides then we can combine/concat them like:  
+> ```sql 
+> Select LTRIM(FirstName) as FirstName, MiddleName, LastName,  
+> RTRIM(LTRIM(FirstName)) + ' ' + MiddleName + ' ' + LastName as FullName  
+> from tblEmployee   
+> ```
+> * The LEN() counts all white spaces of a word/string which are in the beggining or in the middle of it, but it excludes the spaces at the end of the word/string.  
+> 
+
+
+
+
 ### LEFT, RIGHT, CHARINDEX and SUBSTRING function
 ### Replicate, space, Patindex, Replace and Stuff string functions
 ### DateTime funcitons in SQL Server
