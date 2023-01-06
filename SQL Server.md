@@ -1344,9 +1344,43 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >    
 
 
+### Unique and Non Unique Indexes in SQL Server   
+> * **Unique index is used to enforce uniqueness of key values in the index**   
+> ```sql   
+>     CREATE TABLE [tblEmployee]   
+>     (     
+>          [Id] int Primary Key,       
+>          [FirstName] nvarchar(50),   
+>          [LastName] nvarchar(50),   
+>          [Salary] int,   
+>          [Gender] nvarchar(10),   
+>          [City] nvarchar(50),   
+>     )       
+> ```   
+> **Note:** By default, PRIMARY KEY constraint, creates a unique clustered index.   
+> - **UNIQUENESS is a property of an index**, and both CLUSTERED and NON-CLUSTERED indexes can be UNIQUE.   
+> ```sql   
+>     Create Unique NonClustered Index   
+>     UIX_tblEmployee_FirstName_LastName   
+>     ON   tblEmployee(FirstName, LastName)     
+> ```     
+> * **Differences between Unique Constraint and Unique Index**   
+> _There are no major differences between a unique constraint and a unique index. In fact, when you add a unique constraint, a unique index gets created behind the scenes._
+> For adding a unique constraint to a table:     
+> ```sql  
+>       ALTER TABLE    tblEmployee   
+>       ADD CONSTRAINT UQ_tblEmployee_City  
+>       UNIQUE CLUSTERED(City)   -- or you can pass NONCLUSTERED flag to create the non-clustered constraint      
+> ```      
 
-   
-### Unique and Non Unique Indexes in SQL Server
+>* **When should you be creating a Unique constraint over a unique index?**   
+>_To make our intentions clear, create a unique constraint, when data integrity is objective. This makes the objective of the index very clear. In either cases, the data is validated in the same manner, and the query optimizer does not differentiate between a unique created by a unique constraint or manually created._  
+>    
+>  - **Useful pointers to remember:**   
+>  **1. By default,** a PRIMARY KEY constraint, creates a unique clustered index, where as a UNIQUE constraint creates a unique Non-Clustered index. These defaults can be changed if you wish to.   
+>  **2. A UNIQUE constraint or a UNIQUE index** cannot be created on an existing table, if the table contains duplicate values in the key columns. Obviously, to solve this, remove the key columns from the index definition or delete or update the duplicate values.   
+>  
+
 ### Advantages and disadvantages of indexes in SQL Server
 ### View in SQL Server
 ### Updatable views in SQL Server
