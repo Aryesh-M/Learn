@@ -1410,9 +1410,95 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 > **What is a covering query:**  If all the columns that you have requested in the SELECT clause of query, are present in the index, then there is no need to lookup in the table again. The requested column data can simply be returned from the index.  
 > **A clustered index, always covers a query**,  since it contains all of the data in a table. A composite index is an index on two or more columns. Both clustered and non-clusered indexes can be composite indexes. To a certain extent, a composite index, can cover a query.   
-> 
+>
 
-### View in SQL Server
+
+### View in SQL Server  
+> * **What is a View?**   
+> _A view is nothing more than a saved SQL query. A view can also be considered as a virtual table._  
+> ![image](https://user-images.githubusercontent.com/58625165/211096763-e0cbad8b-2752-4ba9-9c32-0e1a6b9f6f21.png)  
+> ```sql  
+>   Select Id, Name, Salary, Gender, DeptName  
+>   from   tblEmployee   
+>   join   tblDepartment  
+>   on     tblEmployee.DepartmentId = tblDepartment.DeptId      
+> ```  
+> Now, to create a view we can issue this query:    
+> ```sql   
+>    Create View vWEmployeesByDepartment  
+>    as   
+>    Select Id, Name, Salary, Gender, DeptName   
+>   from   tblEmployee   
+>   join   tblDepartment  
+>   on     tblEmployee.DepartmentId = tblDepartment.DeptId        
+> ```    
+> To execute the view, we can use the following query:    
+> ```sql   
+>       Select * from vWEmployeesByDepartment   
+> ```    
+> **Note:**  _A view don't store data, but it stores a SQL query._   
+> ```sql  
+>   sp_helptext  vWEmployeesByDepartment  
+> ```  
+> This will output the following:    
+> ![image](https://user-images.githubusercontent.com/58625165/211098010-08987ea2-cdd6-4f12-a76f-16de5dd1ec9d.png)   
+
+* **Advantages of Views**   
+* - Views can be used to reduce the **complexity of the database schema.**     
+* - Views can be used as a mechanism to implement **row and column level security.**      
+* - views can be used to **present aggregate data** and hide detailed data.    
+  
+* **To modify a view-** ALTER VIEW statement
+* **To drop a view-**  DROP VIEW vWName    
+> Other thing is that view can be used to limit the access to data. Let's say we need to provide limited access to a person that can only see IT department's data, (In this we gonna implement **row-level security**):   
+> ```sql   
+>    Create View vWITEmployees   
+>    as    
+>    Select   Id, Name, Salary, Gender, DeptName   
+>    from     tblEmployee   
+>    join     tblDepartment   
+>    on       tblEmployee.DepartmentId = tblDepartment.DeptId   
+>    Where    tblDepartment.DeptName   = 'IT'       
+> ```  
+> Then you can issue a Select query to see the data for IT department via this view:   
+> ```sql   
+>     Select * from vWITEmployees     
+> ```  
+> The other case is to hide some specific columns (**column-level security**):      
+> ```sql    
+>    Create View vWNonConfidentialData   
+>    as   
+>    Select Id, Name, Gender, DeptName   
+>    from   tblEmployee    
+>    join   tblDepartment   
+>    on     tblEmployee.DepartmentId =  tblDepartment.DeptId    
+> ```   
+> Then, we can have only 4 columns displayed, other columns will be hidden(here, Salary is hidden column):    
+> ```sql  
+>    Select * from vWNonConfidentialData       
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/211100141-a637bdb9-c21a-4311-96d6-9afd29806de4.png)     
+> Now, to **present aggregate data** only, we can have following view:    
+> ```sql    
+>    Create View vWSummerizedData   
+>    as   
+>    Select   DeptName, COUNT(Id) as TotatlEmployees     
+>    from     tblEmployee    
+>    join     tblDepartment   
+>    on       tblEmployee.DepartmentId =  tblDepartment.DeptId      
+>    Group by DeptName  
+> ```      
+> And select the view:   
+> ```sql  
+>   Select * from  vWSummerizedData  
+> ```  
+> ![image](https://user-images.githubusercontent.com/58625165/211100586-f5eb4b51-694b-4442-8ec6-483526f0014b.png)  
+
+
+
+
+
+
 ### Updatable views in SQL Server
 ### Indexed views in SQL Server
 ### View limitations in SQL Server
