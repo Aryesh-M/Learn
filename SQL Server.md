@@ -1381,7 +1381,37 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  **2. A UNIQUE constraint or a UNIQUE index** cannot be created on an existing table, if the table contains duplicate values in the key columns. Obviously, to solve this, remove the key columns from the index definition or delete or update the duplicate values.   
 >  
 
+
 ### Advantages and disadvantages of indexes in SQL Server
+**1. Advantages:**    
+> The following operations benefited by indexes:   
+> ```sql   
+>       --SELECT statement with a WHERE clause   
+>       Select * from tblEmployee where Salary > 4000 and Salary < 8000 
+>         
+>       -- DELETE and UPDATE statement    
+>       Delete from tblEmployee where Salary = 2500  
+>       Update tblEmployee Set Salary = 9000 where Salary = 7500    
+>         
+>       -- ORDER BY ASCENDING  
+>       Select * from tblEmployee order by Salary Desc   
+>          
+>       -- GROUP BY    
+>       Select Salary, COUNT(Salary) as Total   
+>       from tblEmployee  
+>       Group By Salary     
+> ```     
+> So, while performing the above operations, SQL will only scan the index table and from the **row addresses** it will get respective data from the main tblEmployee table     
+
+**2. Disadvantages:**     
+> **Additional Disk Space:**  Clustered Index does not, require any additional storage. Every non-clustered index require additional space as it is stored separately from the table. The amount of the space required will depend on the size of the table, and the number and types of the columns used in the index.    
+> **Insert Update and Delete statements becomes slow:**  When DML(Data Manipulation Language) statements (INSERT, UPDATE, DELETE) modifies data in a table, the data in all the indexes also needs to be updated. Indexes can help, to search and locate the rows, that we want to delete, but too many indexes to update can actually hurt the performance of data modifications.     
+
+
+> **What is a covering query:**  If all the columns that you have requested in the SELECT clause of query, are present in the index, then there is no need to lookup in the table again. The requested column data can simply be returned from the index.  
+> **A clustered index, always covers a query**,  since it contains all of the data in a table. A composite index is an index on two or more columns. Both clustered and non-clusered indexes can be composite indexes. To a certain extent, a composite index, can cover a query.   
+> 
+
 ### View in SQL Server
 ### Updatable views in SQL Server
 ### Indexed views in SQL Server
