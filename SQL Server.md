@@ -1538,7 +1538,43 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >
 
 
-### Indexed views in SQL Server
+### Indexed views in SQL Server   
+> * **What is an Indexed View?**  or **What happens when you create an index on a view?**   
+> _A standard or Non-indexed view, is just a stored SQL query. When, we try to retrieve data from the view, the data is actually retrieved form the underlying tables._  
+> - So, a view is just a virtual table, it does not store any data, by default.  
+> - However, when you create an index, on a view, the view gets materialized. This means, the view is now, capabe of storing data.  
+> - In SQL server, we call them Indexed views and in Oracle, Materialized views.   
+> ![image](https://user-images.githubusercontent.com/58625165/211104637-0b3b9796-c9c4-4e16-813b-791161a8adea.png)   
+> We have ProductDetails and ProductSales tables:   
+> ```sql   
+>    Create View vWTotalSalesByProduct  
+>    With SchemaBinding   
+>    as   
+>    Select Name,  
+>    SUM(ISNULL((QuauntitySold * UnitPrice), 0)) as TotalSales,  
+>    COUNT_BIG( * ) as TotalTransactions  
+>    from  dbo.tblProductSales  
+>    join  dbo.tblProduct  
+>    on    dbo.tblProduct.ProductId = dbo.tblProductSales.ProductId   
+>    Group By Name   
+> ```    
+
+>  **Guidelines for creating Indexed Views:**  
+>  1. The view should be created with SchemaBinding option  
+>  2. If an Aggregate function in the SELECT LIST, references an expression, and if there is a possibility for that **expression to become NULL**, then, a replacement value should be specified.  
+>  3. If GROUP BY is specified, the view select list must contain a COUNT_BIG( * ) expression.   
+>  4. The base tables in the view, should be referenced with 2 part name.   
+>  ```sql    
+>   Create Unique Clustered Index UIX_vWTotalSalesByProduct_Name   
+>   on     vWTotalSalesByProduct_Name   
+>  ```   
+>  ```sql  
+>   Create Unique Clustered Index UIX_vWTotalSalesByProduct_Name    
+>   on     vWTotalSalesByProduct(Name)     
+>  ```   
+ 
+
+
 
 ### View limitations in SQL Server
 ### DML triggers in SQL Server
