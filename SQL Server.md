@@ -1050,8 +1050,39 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  
 
 
-### Infinite table valued funcitons in SQL Server    
-
+### Infinite table-valued functions in SQL Server    
+> * **SCALAR function**   
+> _Returns a Scalar value_   
+> * **INLINE TABLE VALUED function**     
+> _Returns a table_   
+> ![image](https://user-images.githubusercontent.com/58625165/210892245-6450b450-8be9-4149-9bb0-806a9983cfaa.png)   
+>  ```sql  
+>    CREATE FUNCTION fn_EmployeesByGender(@Gender nvarchar(10))   
+>    RETURNS TABLE   
+>    AS   
+>    RETURN   (Select   Id, Name, DateOfBirth, Gender, DepartmentId   
+>              from     tblEmployees   
+>              Where    Gender = @Gender)   
+>  ```    
+>  1.  We specify TABLE as the return type, instead of any scalar data type  
+>  2.  The function body is not enclosed between BEGIN and END block.   
+>  3.  The structure of the table that gets returned, is determined by the SELECT statement with in the function.  
+> Now, to call/invoke this function we use the following command:   
+> ```sql  
+>  Select * from fn_EmployeesByGender('Male')    
+> ```  
+> * Where can we  use inline Table Valued functions:       
+>     1. Inline Table Valued functions can be used to achieve the functionality of parameterized views. We will talk about views, in a letter section.   
+>     2. The table returned by the table valued function, can also be used in joins with other tables.   
+> * Using an inline function with Join:   
+> ```sql   
+>     SELECT    Name,  Gender,  DepartmentName   
+>     FROM      fn_EmployeesByGender('Male')    E  
+>     JOIN      tblDepartment  D   
+>     ON  D.Id = E.DepartmentId     
+> ```       
+> _Why it's possible to use inline function with join?  Because the inline functions return a table and on a table we can perform a join :D._  
+> 
 
 ### Multi statement table valued functions in SQL Server
 ### Important concepts related to functions in SQL Server
