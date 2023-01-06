@@ -1275,8 +1275,77 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
 
- 
-### Clustered and nonclustered indexes in SQL Server
+### Clustered and nonclustered indexes in SQL Server   
+> * The types of Index:       
+>  1. Clustered   
+>  2. Nonclustered     
+>  3. Unique    
+>  4. Filtered    
+>  5. XML    
+>  6. Full text    
+>  7. Spatial    
+>  8. Columnstore    
+>  9. Index with included columns    
+>  10.Index on computed columns  
+>  _In this section, we will see Clustered and Nonclustered index_      
+
+> * A _Clustered index_ determines the physical order of data in a table. For this reason, a table can have only one clustered index.   
+
+**1. Clustered Index:**    
+> ```sql  
+>    CREATE TABLE [tblEmployee]  
+>    (   
+>     [Id] int Primary Key,     
+>     [Name] nvarchar(50),   
+>     [Salary]  int,  
+>     [Gender]  nvarchar(10),  
+>     [City] nvarchar(50)  
+>    )     
+> ```       
+> Note, that Id column is marked as primary key. Primary key, constraint create clustered indexes automatically if no clustered index already exists on the table.  
+> To confirm:   
+> ```sql  
+>   Execute sp_helpindex  tblEmployee     
+> ```  
+> _Note that, the values for Id column are not in a sequential order:_  
+> ```sql   
+>    Insert into tblEmployee Values(3, 'John', 4500, 'Male', 'New York')     
+>    Insert into tblEmployee Values(1, 'Sam', 'Male', 'London')    
+>    Insert into tblEmployee Values(4, 'Sara', 'Female', 'Tokyo')     
+>    Insert into tblEmployee Values(5, 'Todd', 'Male', 'Toronto')     
+>    Insert into tblEmployee Values(2, 'Pam', 'Female', 'Sydney')       
+> ```   
+> It will result into this table:   
+> ![image](https://user-images.githubusercontent.com/58625165/211082879-78c8f3bf-a6f8-4af4-8a70-a0d546ce60ad.png)   
+> _A Clustered Index is analogous to a telephone directory, where the data is arranged by the last name. We just learnt that, a table can have only one clustered index. However, the index can contain multiple columns (a composite index), like the way a telephone directory is organized by last name and first name._  
+> Create a composite clustered index on the Gender and Salary columns   
+> ```sql   
+>   Create Clustered Index IX_tblEmployee_Gender_Salary   
+>   ON tblEmployee(Gender DESC, Salary ASC)      
+> ```   
+> And the employee table is as follows:   
+> ![image](https://user-images.githubusercontent.com/58625165/211086235-6e9aa0d8-d35a-4639-b479-86d096dac848.png)   
+> So, clustered index also affects how the table will be displayed. See, it is now not sorted ID wise.   
+
+**2. Nonclustered Index:**   
+>  ```sql   
+>     Create NonClustered Index IX_tblEmployee_Name   
+>     ON tblEmployee(Name)     
+>  ```   
+>  ![image](https://user-images.githubusercontent.com/58625165/211087107-4d195bd8-c01c-4255-811e-7b5b3640460a.png)    
+>  - A nonclustered index is analogous to an index in a textbook. The data is stored in one place, the index in another place. The index will have pointers to the storage location of the data.    
+>  - Since, the nonclustered index is stored separately from the actual data, a table can have more than one non cluster index, just like how a book can have an index by common terms at the end.  
+>  - In the index itself, the data is stored in an ascending or descending order of the index key, which doesn't in any way influence the storage of data in the table.   
+
+> * **Difference b/w Clustered and NonClustered:**    
+>   1. **Only one clustred index** per table, where as you can have more than one non clustered index   
+>   2. **Clustered index is faster** than a non-clustered index, because, the clustered index has to refer back to the table, if the selected column is not present in the index.  
+>   3. **Clustered index determines the storage order** of rows in the table, and hence doesn't require additional disk space, but where as NonClustered index is stored separately from the table, additional storage space is required.  
+>    
+
+
+
+   
 ### Unique and Non Unique Indexes in SQL Server
 ### Advantages and disadvantages of indexes in SQL Server
 ### View in SQL Server
