@@ -1170,8 +1170,74 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   
 
  
-  
 ### Temporary tables in SQL Server
+>* **What are temporary tables?**   
+> _Temporary tables, are very similar to the permanent tables. Permanenet tables get created in the database you specify, and remain in the database permanently, until you delete(drop) them. On the other hand, temporary tables get created in the TempDB and are automatically deleted, when they are no longer used._  
+> **Different Types of Temporary Tables:**  
+>  1. Local Temporary Tables  
+>  2. Global Temporary Tables  
+
+> * **Local Temporary Tables**   
+>  ```sql  
+>       -- Create Local Temporary Table (use # for creating temporary table)   
+>          CREATE Table #PersonDetails(Id int, Name nvarchar(20))   
+>       -- Insert Data into the Temporary Table  
+>          Insert into   #PersonDetails Values (1, 'Mike')  
+>          Insert into   #PersonDetails Values (2, 'John')    
+>          Insert into   #PersonDetails Values (3, 'Todd')    
+>       -- Select data from the Temporary Table:   
+>          Select * from #PersonDetails      
+>  ``` 
+
+> * Check if the local temporary table is created:  
+> Temporary tables are created in the TEMPDB. Query the sysobjects system table in TEMPDB. The name of the table, is suffixed with lot of underscores and a random number. For this reason you have to use the LIKE operator in the query.  
+> ```sql  
+>   Select   name from tempdb..sysobjects  
+>   Where    name LIKE '#PersonDetails%'   
+> ```  
+> A local temporary table is available, only for the connection that has created the table.   
+> A local temporary table is automatically dropped, when the connection that has created it, is closed.  
+> If the user wants to explicitly drop the temporary table, he can do so using:   
+> ```sql   
+>    DROP TABLE #Persondetails    
+> ``` 
+> With GUI, we can check temporary table through database folders(see below image):      
+> ![image](https://user-images.githubusercontent.com/58625165/211072044-dc983207-fd0c-46d6-9f3c-b96ff120a706.png)   
+
+>  **If the temporary table, is created inside the stored procedure, it get's dropped automatically upon the completion of stored procedure execution.**  
+>  ```sql  
+>     Create Procedure spCreateLocalTempTable   
+>     as   
+>     Begin   
+>     Create Table   #PersonDetails(Id int, Name nvarchar(20))   
+>       
+>     Insert into #PersonDetails  Values(1,  'Mike')   
+>     Insert into #PersonDetails  Values(2,  'John')   
+>     Insert into #PersonDetails  Values(3,  'Todd')   
+>        
+>     Select * from #PersonDetails   
+>     End     
+>  ```   
+>  -It is also possible for different connections, to create a local temporary table with the same name.  
+>  -For example, User1 and User2, both can create a local temporary table with the same name #PersonDetails   
+
+> * **Global Temporary Tables**   
+> _To create a Global Temporary Table, prefix the name of the table with 2 pound(##) symbols._   
+> * **Global temporary tables are visible to all the connections** of the sql server, and are only destroyed when the last connection referencing the table is closed.   
+> ```sql  
+>    Create Table ##EmployeeDetails(Id int, Name nvarchar(20));           
+> ```   
+> **Multiple users, across multiple connections** can have local temporary tables with the same name, but, a global temporary table name has to be unique, and if you inspect to the name of the global temp table, in the object explorer, there will be no random numbers suffixed at the end of the table name.   
+
+> * **Difference Between Local and Global Temporary Tables:**   
+>   1. **Local Temp Tables** are prefixed with single pound(#) symbol, where as global temp tables are prefixed with 2 pound(##) symbols.  
+>   2. **SQL Server appends some random numbers** at the end of the local temp table name, where this is not done for global temp table names.  
+>   3. **Local temporary tables are only visible** to that session of the SQL Server which has created it, where as Global tables are visible to all the SQL server sessions.  
+>   4. **Local temporary tables are automatically dropped**, when the session that created the temporary table is closed, where as Global temporary tables are destroyed when the last connection that is referencing the global temp table is closed.   
+>   
+>    
+ 
+
 ### Indexes in SQL Server
 ### Clustered and nonclustered indexes in SQL Server
 ### Unique and Non Unique Indexes in SQL Server
