@@ -1493,14 +1493,53 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   Select * from  vWSummerizedData  
 > ```  
 > ![image](https://user-images.githubusercontent.com/58625165/211100586-f5eb4b51-694b-4442-8ec6-483526f0014b.png)  
+>
 
 
+### Updatable views in SQL Server   
+>* Is it possible to update a view?   **YES**    
+>- This is underlying table tblEmployee for the view we created in previous section   
+>![image](https://user-images.githubusercontent.com/58625165/211101187-783cba41-4ecf-4d85-a7ae-c765bd458e04.png)   
+>```sql  
+>   Update  vWEmployeesDataExceptSalary  
+>   Set     Name = 'Mikey'  
+>   Where   Id = 2;    
+>```    
+> So, the above query will update both the view and the underlying table:   
+> ```sql  
+>    Select  * from vWEmployeesDataExceptSalary  
+>    Select  * from tblEmployee   
+> ```   
+> The updated view will be like:   
+> ![image](https://user-images.githubusercontent.com/58625165/211101724-77cac46f-63aa-4b14-b602-e71854f70c3a.png)   
+> And, the updated table will be:   
+> ![image](https://user-images.githubusercontent.com/58625165/211101769-c521c3f9-6892-4fc0-b260-5351f1403143.png)   
+> Same we can execute the following queries and it will update both the view(vWEmployeesDataExceptSalary) and the underlying table(tblEmployee)  
+> ```sql   
+>       Delete from vWEmployeesDataExceptSalary Where Id = 2  
+>       Insert into vWEmployeesDataExceptSalary Values (2, 'Mikey', 'Male', 2)  
+> ```   
+> So, even though a view is not a table and only stores a SQL query, but by these behaviours it is considered as a **Virtual table**.   
+> Behind the scenes, if we update a view it updates the underlying table(s). And sometime in weird way:   
+> ```sql    
+>   Update  vwEmployeeDetailsByDepartment  
+>   Set     DeptName = 'IT'  
+>   Where   Name  = 'John'  
+> ```   
+> Then then if we select the tables:   
+> ```sql  
+>   Select * from tblEmployees   
+>   Select * from tblDepartment         
+> ```
+> It will output the following:   
+> ![image](https://user-images.githubusercontent.com/58625165/211103335-2626e9a6-c93f-4cd3-b1b0-c0ae144d98df.png)   
+> So, we wanted to update John's department from "HR" to "IT", but it has updated "Ben" department also. :)   
+> So, the updating the view has also updated department table where ID = 3 from "HR" to "IT" and it affects all the employees which has DepartmentId as 3 :D.
+>
 
 
-
-
-### Updatable views in SQL Server
 ### Indexed views in SQL Server
+
 ### View limitations in SQL Server
 ### DML triggers in SQL Server
 ### After update trigger
