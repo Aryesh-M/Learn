@@ -1084,7 +1084,43 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > _Why it's possible to use inline function with join?  Because the inline functions return a table and on a table we can perform a join :D._  
 > 
 
-### Multi statement table valued functions in SQL Server
+### Multi statement table valued functions in SQL Server   
+> * "Multi statement table valued functions" are very similar to Inline Table valued functions, with a few differences.   
+> ![image](https://user-images.githubusercontent.com/58625165/211051545-3a3d0a5f-96b6-45f4-96bd-50db6e1e9ece.png)   
+> ```sql  
+>   -- Inline Table Valued Function  
+>      CREATE    Function fn_ILTVF_GetEmployees()  
+>      Returns   Table   
+>      as   
+>      Return    (Select Id, Name, Cast(DateOfBirth as Date) as DOB From tblEmployees)      
+>        
+>   -- Multi-statement Table Valued Function   
+>      CREATE    Function fn_MSTVF_GetEmployees()   
+>      Returns   @Table Table (Id int, Name nvarchar(20), DOB Date)  
+>      as    
+>      Begin     
+>           Insert into @Table  
+>           Select Id, Name, Cast(DateOfBirth as Date)  From tblEmployees  
+>              
+>           Return  
+>      End  
+> ```        
+> So, the main difference between Inline and multi statement- table valued function is:   
+>   1.  In an Inline Table Valued function, the RETURNS clause cannot contain the structure of the table, the function returns. Where as, with the multi-statement table valued function, we specify the structure of the table that gets returned.      
+>   2.  Inline Tabe Valued function cannot have BEGIN and END block, where as the multi-statement table valued function can have.   
+>   3.  Inline Tabe Valued functions are better for performance, than multi-statement table valued functions. If the given task, can be acheieved using an inline table valued function, always prefer to use them, over multi-statement table valued functions.  
+>   4.  It's possible to update the underlying table, using an inline valued function, but not possible using multi-statement table valued function.      
+>  * Reason for improved performance for an inline table valued function:   
+>  Internally, SQL Server treats an inline table valued function much like it would a view and treats a multi-statement table valued function similar to how it would a stored procedure.   
+>  ```sql  
+>   -- issue an update query against ILTVF:   
+>      Update fn_ILTVF_GetEmployees() set Name = 'Sam'  Where Id = 1;   -- this will udpate the record as expected   
+>   -- now issue an update query against MSTVF:   
+>      Update fn_MSTVF_GetEmployees() set Name = 'Sam 1'  Where Id = 1; -- it will throw an error     
+>  ```  
+>  ![image](https://user-images.githubusercontent.com/58625165/211062335-e29daba8-0010-4f89-ae3f-e20c3953e106.png)   
+>       
+
 ### Important concepts related to functions in SQL Server
 ### Temporary tables in SQL Server
 ### Indexes in SQL Server
