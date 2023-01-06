@@ -1121,7 +1121,56 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  ![image](https://user-images.githubusercontent.com/58625165/211062335-e29daba8-0010-4f89-ae3f-e20c3953e106.png)   
 >       
 
-### Important concepts related to functions in SQL Server
+
+### Important concepts related to functions in SQL Server   
+> * **Deterministic functions**  
+>   DFs always return the same function at any time they are called with a specific set of input values and give the same state of the database.  
+>   **Examples:**  Square(), Power(), Sum(), AVG(), and Count()    
+>      
+>   **Note:**  _All aggregate functions are deterministic functions._   
+
+> * **Nondeterministic functions:**   
+>   It may return different results each time they are called with a specific set of input values even if the database state that they access remain the same.  
+>   **Examples:**  GetDate() and CURRENT_TIMESTATMP   
+>   **Rand() Function**  is a Non-deterministic function, but if you provide the seed value, the function becomes deterministic, as the same value gets returned for the same seed value.  
+
+> * **Encrypting a function definition using WITH ENCRYPTION OPTION:**    
+> We have learnt how to encrypt Stored procedure text using WITH ENCRYPTION OPTION in former section. Along the same lines, you can also encrypt a function text. Once, encrypted, you cannot view the text of the function, using **sp_helptext**  system stored procedure. If you try to, you will get a message stating '_The text for object is encrypted._'  There are ways to decrypt, which is beyond the scope of this section.  
+> 
+>   USE **WITH ENCRYPTION**    
+>   
+>   ```sql  
+>    Alter function fn_GetNameById(@Id int)   
+>    Returns nvarchar(30)  
+>    WITH ENCRYPTION       --- this is the flag   
+>    as  
+>    Begin   
+>        Return (Select Name from tblEmployees Where Id = @Id )  
+>    End        
+>   ```        
+>   To remove encryption issue above query by removing WITH ENCRYPTION statement/flag and then you can see the function by **sp_helptext**   
+>   
+      
+>   **Creating a function WITH SCHEMABINDING option:**     
+>     Schemabinding, specifies that the function is bound to the database that it references. When SCHEMABINDING is specified, the base objects cannot be modified in any way that would affect the function definition. The function definition itself must first be modified or dropped to remove dependencies on the object that is to be modified.   
+>        
+>   USE **WITH SCHEMABINDING**
+>   ```sql  
+>    Alter function fn_GetNameById(@Id int)   
+>    Returns nvarchar(30)  
+>    WITH SCHEMABINDING       --- this is the flag   
+>    as  
+>    Begin   
+>        Return (Select Name from dbo.tblEmployees Where Id = @Id )  --note, here we have to use two part name (dbo.tblEmployee)       
+>    End        
+>   ```   
+>   The SCHEMABINDING specifies that the function fn_GetNameById() is bound with the table tblEmployees in **dbo** schema   
+>   After executing schemabinding query, if you try to drop the tblEmployees table it will throw an error:   
+>   ![image](https://user-images.githubusercontent.com/58625165/211068884-628d3b30-aba2-4ba2-9faf-4fc3611b90f7.png)   
+>   
+
+ 
+  
 ### Temporary tables in SQL Server
 ### Indexes in SQL Server
 ### Clustered and nonclustered indexes in SQL Server
