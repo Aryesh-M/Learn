@@ -1234,11 +1234,48 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   2. **SQL Server appends some random numbers** at the end of the local temp table name, where this is not done for global temp table names.  
 >   3. **Local temporary tables are only visible** to that session of the SQL Server which has created it, where as Global tables are visible to all the SQL server sessions.  
 >   4. **Local temporary tables are automatically dropped**, when the session that created the temporary table is closed, where as Global temporary tables are destroyed when the last connection that is referencing the global temp table is closed.   
->   
->    
+>       
  
 
-### Indexes in SQL Server
+### Indexes in SQL Server   
+* **Why Indexes?**  
+- _Indexes are used by queries to find data from tables quickly. Indexes are created on tables and views. Index on a table or a view, is very similar to an index that we find in a book._  
+- If you don't have an index, and I ask you to locate a specific chapter in the book, you will have to look at every page starting from the first page of the book.  
+- On, the other hand, if you have the index, you lookup the page number of the chapter in the index, and then directly go to that page number to locate the chapter.  
+- Obviously, the book index is helping to drastically reduce the time it takes to find the chapter.  
+- In a similar way, Table and View indexes, can help the query to find data quickly.  
+- In fact, the existence of the right indexes, can drastically improve the performance of the query. If there is no index to help the query, then the query engine, will check every row in the table from beginning to the end. This is called a Table Scan. Table Scan is bad for performance.   
+
+> * Let's see why we need index in action. The following is a problem:    
+> ![image](https://user-images.githubusercontent.com/58625165/211077934-ff69bcde-9028-443d-8318-cf32cc42423a.png)  
+> At the moment, the Employees table, does not have an index on SALARY column.  
+> ```sql  
+>   Select * from tblEmployee   
+>   Where  Salary > 5000 and Salary < 7000   
+> ```   
+> _To find all the employees, who has salary between 5000 and 7000, the query engine has to check each and every row in the table, resulting in a table scan, which can adversely affect the performance, especially if the table is large. Since there is no index to help the query, the query engine performs an entire table scan._   
+
+> * To create an index:   
+> ```sql   
+>    CREATE INDEX  IX_tblEmployee_Salary   
+>    ON     tblEmployee  (SALARY ASC)      
+> ```   
+> **The index stores salary of each employee, in the ascending order as shown below. The actual index may look slightly different.**   
+> ![image](https://user-images.githubusercontent.com/58625165/211078748-e3880896-eafb-472c-8ea7-98e571292acd.png)   
+> (_The main table(on the left side) and the index(on the right side)_)   
+> - Now, when the SQL Server has to execute the same query, it has an index on the salary column to help this query. Salaries between the range of 5000 and 7000 are usually present at the bottom, since the salaries are arranged in an ascending order. SQL server picks up the row addresses from the index and directly fetch the records from the table, rather than scanning each row in the table. This is called as Index Seek.  
+> To see the created index, we use the **sp_Helpindex**:   
+> ```sql  
+>  sp_HelpIndex tblEmployee  -- note, here we have to use the name of the table, "tblEmployee"         
+> ```   
+> To delete/drop the index:    
+> ```sql   
+>    drop index tblEmployee.IX_tblEmployee_Salary   -- note, we have to provide "table name.indexName"       
+> ```   
+> 
+
+
+ 
 ### Clustered and nonclustered indexes in SQL Server
 ### Unique and Non Unique Indexes in SQL Server
 ### Advantages and disadvantages of indexes in SQL Server
