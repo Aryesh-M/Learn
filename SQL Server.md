@@ -1899,8 +1899,75 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
    
-   
-### Updatable common table expressions in SQL Server
+### Updatable common table expressions in SQL Server    
+**Is it possible to UPDATE a CTE- Yes & No**   
+* **Case 1: CTE on 1 base table:**     
+> - So, if a CTE is created on _one base table,_then **it is possible to UPDATE the CTE,** which in turn will update the underlying base table.   
+> - In this case, UPDATING _Employees_Name_Gender_ CTE, updates tblEmployee table.    
+> ```sql    
+>        With Employees_Name_Gender    
+>        as    
+>         (    
+>            Select Id, Name, Gender from tblEmployee    
+>         )      
+>         Update Employees_Name_Gender   
+>         Set    Gender = 'Female'  Where Id = 1   
+> ```     
+> 
+
+* **Case 2: CTE on 2 base tables:**    
+>```sql  --CTE  on 2 base table, Update affecting only one base table         
+>      With EmployeesByDepartment     
+>      as    
+>      (   
+>         Select    Id, Name, Gender, DeptName   
+>         from      tblEmployee    
+>         join      tblDepartment   
+>         on        tblDepartment.DeptId = tblEmployee.DepartmentId    
+>      )       
+>      Update EmployeesByDepartment Set Gender = 'Female'  Where Id =  1   
+>```        
+>**Note:**  _If a CTE is based on more than one table, and if the UPDATE affects only one base table, then the UPDATE is allowed._    
+>![image](https://user-images.githubusercontent.com/58625165/211416396-3d183034-9c8f-4220-bd75-b3a0443281e3.png)    
+>  ```sql   --CTE  on 2 base table, Update affecting more than one base table          
+>      With EmployeesByDepartment     
+>      as    
+>      (   
+>         Select    Id, Name, Gender, DeptName   
+>         from      tblEmployee    
+>         join      tblDepartment   
+>         on        tblDepartment.DeptId = tblEmployee.DepartmentId    
+>      )       
+>      Update EmployeesByDepartment Set Gender = 'Female', DeptName = 'IT'    
+>      Where Id =  1     
+>```    
+>**Note:**   _If a CTE is based on multiple tables, and if the UPDATE statement affects more than 1 base table, then the UPDATE is not allowed._   
+>**Note:**   _A CTE is based on more than one base table, and if the UPDATE affects only one base table, the UPDATE succeeds (but not as expected always)_   
+>```sql  --see here the CTE is based on only one table but it updates the Department table directly,    
+>        --- so, if we only update John's dept it will change Ben's dept (FROM HR to IT)   
+>        With   EmployeesByDepartment    
+>        as      
+>        (   
+>            Select     Id, Name, Gender, DeptName   
+>            from       tblEmployee   
+>            join       tblDepartment  
+>            on        tblDepartment.DeptId = tblEmployee.DepartmentId     
+>        )     
+>        Update EmployeesByDepartment   
+>        DeptName = 'IT'  Where Id = 1    
+>```   
+> ![image](https://user-images.githubusercontent.com/58625165/211419336-3da5886c-e768-45c9-8ebc-c94dd4a3eebd.png)    
+>  ![image](https://user-images.githubusercontent.com/58625165/211419301-d6a18cf8-15eb-4280-bc5e-7b12ed960c4d.png)     
+
+>  **In short,**   
+>    1. If a CTE is based on a single base table, then the UPDATE succeeds and works as expected.   
+>    2. If a CTE is based on more than one base table, and if the UPDATE affects multiple base tables, the update is not allowed and the statement terminates  with an error.   
+>    3. If a CTE is based on more than one base table, and if the UPDATE affects only one base table, the UPDATE succeeds (but not as expected always)   
+>    
+
+
+
+
 ### Recursive CTE in SQL Server
 ### Database normalization
 ### Second normal form and third normal fom
