@@ -1787,8 +1787,62 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  **Note:** _In most cases JOINs are faster than SUB-QUERIEs. However, in cases, where you only need a subset of records from a table that you are joining with, sub-queries can be faster._    
  
 
+### Derived tables and common table expressions in SQL Server   
+* Table variable:   
+> ```sql   
+>  Declare @tblEmployeeCount table(DeptName nvarchar(20), DepartmenetId int, TotalEmployees int)   
+>  
+>  Insert    @tblEmployeeCount   
+>  Select    DeptName, DepartmentId, COUNT( * ) as TotalEmployees  
+>  from      tblEmployee   
+>  join      tblDepartment   
+>  on        tblEmployee.DepartmentId = tblDepartment.DeptId   
+>  group by  DeptName, DepartmentId   
+>  
+>  Select    DeptName, TotalEmployees  
+>  From      @tblEmployeeCount      
+>  Where     TotalEmployees >= 2   
+> ``    
+> **Note:**   Just like TempTables, a table variable is also created in TempDB. The scope of a table variable is the batch, stored procedure, or statement block in which it is declared. They can be passed as parameters between procedures.   
+> 
 
-### Derived tables and common table expressions in SQL Server
+* Derived Tables:   
+>```sql  
+>    Select DeptName, TotalEmployees   
+>    from     
+>          (     
+>             Select    DeptName, DepartmentId, COUNT( * ) as TotalEmployees    
+>             from      tblEmployee    
+>             join      tblDepartment   
+>             on        tblEmployee.DepartmentId = tblDepartment.DeptId   
+>             group by  DeptName, DepartmentId   
+>          )    
+>     as EmployeeCount   
+>     Where TotalEmployees >= 2             
+>```    
+>**Note:**   Derived Tables are available only in the context of the current query.    
+> 
+
+* CTE-Common Table Expression:    
+> ```sql    
+>     With        EmployeeCount(DeptName, DepartmentId, TotalEmployees)    
+>     as     
+>     (    
+>     Select DeptName, DepartmentId, COUNT( * ) as TotalEmployees    
+>     from        tblEmployee   
+>     join        tblDepartment    
+>     on          tblEmployee.DepartmentId = tblDepartment.DeptId  
+>     group by    DeptName, DepartmentId 
+>     ) 
+>        
+>   Select     DeptName, TotalEmployees   
+>   from       EmployeeCount   
+>   Where      TotalEmployees >= 2              
+> ```    
+> **Note:**  A CTE can be thought of as a temporary result set that is defined within the execution scope of a single SELECT, INSERT, UPDATE, DELETE, or CREATE VIEW statement. A CTE is similar to a derived table in that it is not stored as an object and lasts only for the duration of the query.   
+> 
+
+
 ### CTE in SQL Server
 ### Updatable common table expressions in SQL Server
 ### Recursive CTE in SQL Server
