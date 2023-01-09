@@ -1697,12 +1697,73 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >     End          
 > ```      
 > 
+ 
+
+### Instead of update trigger in SQL Server   
+* If we update the view (vWEmployeeDetails, from previous section), in such a way that, it affects, both the underlying tables.      
+>```sql   
+> Update vWEmployeeDetails set Name = 'Johny', DeptName = 'IT' Where Id = 1        
+>```      
+>![image](https://user-images.githubusercontent.com/58625165/211386672-95543e77-7fbc-4e00-a91c-d65db314d55f.png)    
+> So, for this we have other work around using INSTEAD OF UPDATE trigger   
+> ```sql   
+>       Create Trigger tr_vWEmployeeDetails_InsteadOfUpdate   
+>       on     vWEmployeeDetails   
+>       instead of update     
+>       as    
+>       Begin    
+>            --  if EmployeeId is updated   
+>            if(Update(Id))   
+>            Begin   
+>                 Raiserror('Id cannot be changed', 16, 1)  
+>                 Return   
+>            End  
+>                
+>            -- If DeptName is updated   
+>            if(Update(DeptName))   
+>            Begin    
+>                 Declare @DeptId int
+>                    
+>                 Select  @DeptId = DeptId   
+>                 from    tblDepartment  
+>                 join    inserted   
+>                 on      inserted.DeptName =  tblDepartment.DeptName   
+>                 
+>                 if(@DeptId is NULL)      
+>                 Begin   
+>                      Raiserror('Invalid Department Name', 16, 1)  
+>                 End               
+>                 
+>            Update tblEmployee set DepartmentId = @DeptId   
+>            from   inserted  
+>            join   tblEmployee   
+>            on     tblEmployee.Id = inserted.Id   
+>            End               
+>            
+>            -- If gender is updated      
+>            if(Update(Gender))   
+>            Begin   
+>                 Update tblEmployee set Gender = inserted.Gender   
+>                 from   inserted   
+>                 join   tblEmployee  
+>                 on     tblEmployee.Id = inserted.Id    
+>            End   
+>            
+>            -- If Name is updated    
+>            if(Update(Name))   
+>            Begin   
+>                 Update tblEmployee set Name = inserted.Name   
+>                 from   inserted   
+>                 join   tblEmployee   
+>                 on     tblEmployee.Id = inserted.Id        
+>            End   
+>       End                       
+> ```        
+> 
 > 
 
-
-
-
-### Instead of update trigger in SQL Server
+    
+    
 ### Instead of delete trigger in SQL Server
 ### Derived tables and common table expressions in SQL Server
 ### CTE in SQL Server
