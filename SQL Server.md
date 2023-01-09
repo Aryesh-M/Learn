@@ -1574,9 +1574,15 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  ```   
  
 
+### View limitations in SQL Server    
+>  1. You cannot pass parameters to a view. Table Valued functions are an excellent replacement for parameterized views.  
+>  2. Rules and Defaults cannot be associated with views.     
+>  3. The ORDER BY clause is invalid in views unless TOP or FOR XML is also specified.    
+>  4. Views cannot be based on temporary tables.   
+>  
 
 
-### View limitations in SQL Server
+
 ### DML triggers in SQL Server
 ### After update trigger
 ### Instead of insert trigger 
