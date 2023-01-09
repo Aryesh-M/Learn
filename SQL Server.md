@@ -1641,7 +1641,20 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
 
-### After update trigger
+### After update trigger    
+>  ```sql   
+>    CREATE TRIGGER tr_tblEmployee_ForUpdate   
+>    ON     tblEmployee   
+>    FOR    UPDATE   
+>    AS  
+>    BEGIN
+>       select * from deleted   
+>       select * from inserted      
+>    END    
+>  ```     
+>  **Note:**   In DELETED table we will have old data before the update and in INSERTED we will have new updated data.    
+>  
+
 ### Instead of insert trigger 
 ### Instead of update trigger in SQL Server
 ### Instead of delete trigger in SQL Server
