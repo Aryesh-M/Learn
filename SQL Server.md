@@ -1966,9 +1966,51 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >    
 
 
+### Recursive CTE in SQL Server   
+* The below is self join:   
+>  ![image](https://user-images.githubusercontent.com/58625165/211419878-7aa9a7ae-707c-4be8-a7ba-a22af2045375.png)    
+> ```sql   
+>    -- A simple self join   
+>    Select      Employee.Name as [Employee Name],    
+>    ISNULL      (Manager.Name, 'Super Boss') as [Manager Name]   
+>    from        tblEmployee Employee   
+>    left join   tblEmployee Manager    
+>    on          Employee.ManagerId = Manager.EmployeeId    
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/211420433-4a2f851f-f0d0-4248-8ef4-bd369b9c8a83.png)    
+> So, we have to display a table which gives Employee, Manager and Level in output:    
+>  ```sql   
+>      With    
+>         EmployeesCTE     (EmployeeId, Name, ManagerId, [Level])  
+>         as   
+>         (       
+>            Select      EmployeeId, Name, ManagerId, 1   
+>            from        tblEmployee    
+>            Where       ManagerId    IS NULL     
+>            
+>            UNION ALL     
+>            
+>            Select      tblEmployee.EmployeeId, tblEmployee.Name,    
+>            tblEmployee.ManagerId, EmployeesCTE.[Level]  +  1   
+>            from        tblEmployee    
+>            join        EmployeeCTE    
+>            on          tblEmployee.ManagerId  = Employee.EmployeeId    
+>         )       
+>      Select     EmpCTE.Name  as  Employee, IsNull(MgrCTE.Name, 'Super Boss') as Manager,   
+>      EmpCTE.[Level]    
+>      from       EmployeesCTE EmpCTE    
+>      left join  EmployeesCTE MgrCTE    
+>      on         EmpCTE.ManagerId = MgrCTE.EmployeeId    
+>  ```    
+>  _If a CTE reference itself is called Recursive CTE._   
+>  **_Note_: Level is a reserved keyword in SQL Server, so we have used [Level] here.**    
+> - **To use reserved keyword as User Defined variable we have to wrap it inside square brackets.**   
+> Note: in above query, when we use UNION we should provide same column names in both of the queries.   
+>     
 
-
-### Recursive CTE in SQL Server
+ 
+ 
+ 
 ### Database normalization
 ### Second normal form and third normal fom
 ### Pivot in SQL Server
