@@ -2033,7 +2033,31 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   
 
 
-### Second normal form and third normal fom
+### Second normal form and third normal form   
+> * **2NF:**    
+> _A table is said to be in 2NF, if_     
+>    1. The table meets **all the conditions of 1NF**   
+>    2. Move **redundant data** to a separate table  
+>    3. Create **relationship** between these tables using foreign keys.    
+>    ![image](https://user-images.githubusercontent.com/58625165/211424785-373a55c7-878a-4f8e-8823-4f50f4adb93e.png)    
+>    ![image](https://user-images.githubusercontent.com/58625165/211424810-562889fd-b343-47f4-b32c-5023f777167d.png)   
+
+> * **3NF:**    
+> _A table is said to be in 3NF, if the table_   
+>   1. Meets all the conditions of 1NF and 2NF   
+>   2. Does not contain colums (attributes) that are **not fully dependent** upon the **primary key**    
+>   ![image](https://user-images.githubusercontent.com/58625165/211425679-54250c1a-1432-40d7-9c29-68d504ab9cae.png)    
+>   All the columns EmployeeName, Gender, Salary and DeptId are fully dependent on Primary Key (EmpId) but AnnualSalary is not fully depend on EmpId but it depends on Salary column, so the above table in not in 3NF.    
+>   ![image](https://user-images.githubusercontent.com/58625165/211426149-8970dd45-db0d-47b3-8841-586147b08b8d.png)   
+>   ![image](https://user-images.githubusercontent.com/58625165/211426171-27b10ea3-669a-46dc-86b4-d604c99380d4.png)    
+>   So, the table had DeptHead column which was not fully dependent on Primary Key(EmpId) as it also depends on DeptName :).   
+>   
+ 
+  
+
+
+
+   
 ### Pivot in SQL Server
 ### Error handling in SQL Server
 ### Transactions in SQL Server
