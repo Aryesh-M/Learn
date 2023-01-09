@@ -1843,7 +1843,63 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
 
-### CTE in SQL Server
+### CTE in SQL Server   
+**Common Table Expression(CTE)**  is introduced in SQL Server 2005. A CTE is a temporary result set, that can be referenced within a SELECT, INSERT, UPDATE, or DELETE statement, that _immediately follows_ the CTE.   
+> ![image](https://user-images.githubusercontent.com/58625165/211411629-79667dea-3d65-4717-b8f8-3717698eeed7.png)   
+> - Let's say we have to achieve the above table as a result by using CTE:    
+> ```sql    
+>      --Syntax   
+>      WITH    cte_name (Column1, Column2, ...)    
+>      AS      
+>      (CTE_query)       
+> ```    
+> Let's see an example:   
+> ```sql   
+>     WITH    EmployeeCount(DeptId, Total)  
+>     as      
+>      (   
+>           Select    DepartmentId, COUNT( * )  as TotalEmployees    
+>           from      tblEmployee   
+>           group by  DepartmentId     
+>      )   
+> Select    DeptName, TotalEmployees    
+> from      tblDepartment   
+> join      EmployeeCount    
+> on        tblDepartment.DeptId  = EmployeeCount.DeptId   
+> order by  Total         
+> ```      
+> ![image](https://user-images.githubusercontent.com/58625165/211413436-74a9ca51-95cf-4af3-9fb2-32e9c6f31d6c.png)   
+> Note: _There should not be anything in between CTE and the query which uses the CTE._    
+> You can use single WITH and specify multiple CTEs separated by comma:   
+> ```sql   
+>     With EmployeeCountBy_Payroll_IT_Dept (DepartmentName, Total)   
+>     as   
+>       (  
+>         Select    DeptName, COUNT(Id) as TotalEmployees    
+>         from      tblEmployee    
+>         join      tblDepartment   
+>         on        tblEmployee.DepartmentId = tblDepartment.DeptId   
+>         Where     DeptName  IN ('Payroll', 'IT')    
+>         group by  DeptName    
+>       ),    
+>       EmployeesCountBy_HR_Admin_Dept (DepartmentName, Total)    
+>     as   
+>       (  
+>         Select    DeptName, COUNT(Id) as TotalEmployees    
+>         from      tblEmployee    
+>         join      tblDepartment   
+>         on        tblEmployee.DepartmentId = tblDepartment.DeptId   
+>         Where     DeptName  IN ('HR', 'Admin')    
+>         group by  DeptName    
+>       )    
+>       Select * from EmployeesCountBy_HR_Admin_Dept    
+>       UNION     
+>       Select * from EmployeeCountBy_Payroll_IT_Dept                   
+> ```    
+> 
+
+   
+   
 ### Updatable common table expressions in SQL Server
 ### Recursive CTE in SQL Server
 ### Database normalization
