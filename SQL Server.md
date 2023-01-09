@@ -2009,9 +2009,30 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >     
 
  
- 
- 
-### Database normalization
+### Database normalization     
+> **Def:** Database Normalization is the process of organizing data to minimize data redudancy (data duplication), which in turn ensures data consistency.  
+> Let's say we have following table:   
+> ![image](https://user-images.githubusercontent.com/58625165/211422642-79b979e4-abca-4c10-b339-3f184a200887.png)    
+> * **Problems of data redudancy:**   
+> 1. Disk space wastage  
+> 2. Data inconstistency   
+> 3. DML queries can becomes slow    
+
+> * The below tables are normalized from the table given above:     
+> ![image](https://user-images.githubusercontent.com/58625165/211422792-b340b9d1-0424-4502-8c22-5cd62e5dcd5a.png)    
+> - DB Normalization is a step by step process. There are 6 normal forms, First Normal Form (1NF) thru Sixth Normal Form (6NF). 
+> - Most database are in third normal form (3NF). There are certain rules, that each normal form should follow.    
+
+>  * **1NF:**  
+>  1. The data in each column **should be atomic**. No **multiple values,** separated by comma.   
+>  2. The data does not contain any **repeating column groups**   
+>  3. Identify each record uniquely using **primary key.**   
+>  ![image](https://user-images.githubusercontent.com/58625165/211423966-a436ce2e-886d-4025-9f00-6628ae350ae9.png)   
+>  ![image](https://user-images.githubusercontent.com/58625165/211423987-9576822c-19a9-426b-bb22-864dbd285994.png)   
+>  ![image](https://user-images.githubusercontent.com/58625165/211424087-a5b53321-a043-4341-bbbe-bc085d5d9c8c.png)    
+>   
+
+
 ### Second normal form and third normal fom
 ### Pivot in SQL Server
 ### Error handling in SQL Server
