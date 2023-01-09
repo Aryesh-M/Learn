@@ -1760,11 +1760,34 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >       End                       
 > ```        
 > 
-> 
 
     
-    
-### Instead of delete trigger in SQL Server
+### Instead of delete trigger in SQL Server     
+* If we perform a DELETE action on the view then it will throw an error:    
+> ```sql   
+>       DELETE FROM vWEmployeeDetails Where Id = 1      
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/211391146-a353437d-2a23-463e-9b3c-2fd34124f270.png)    
+> ```sql      
+>    Create Trigger tr_vWEmployeeDetails_InsteadOfDelete     
+>    ON     vWEmployeeDetails   
+>    INSTEAD OF DELETE    
+>    AS    
+>    BEGIN   
+>         Delete tblEmployee    
+>         from   tblEmployee  
+>         join   deleted   
+>         on     tblEmployee.Id = deleted.Id        
+>         
+>         --  Subquery   
+>         --  Delete form tblEmployee    
+>         --  Where Id in (Select Id from deleted)    
+>    END     
+>  ```   
+>  **Note:** _In most cases JOINs are faster than SUB-QUERIEs. However, in cases, where you only need a subset of records from a table that you are joining with, sub-queries can be faster._    
+ 
+
+
 ### Derived tables and common table expressions in SQL Server
 ### CTE in SQL Server
 ### Updatable common table expressions in SQL Server
