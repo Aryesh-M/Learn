@@ -1655,7 +1655,53 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  **Note:**   In DELETED table we will have old data before the update and in INSERTED we will have new updated data.    
 >  
 
-### Instead of insert trigger 
+
+### Instead of insert trigger   
+![image](https://user-images.githubusercontent.com/58625165/211381768-6b8d6662-0303-4ddb-b8df-2c4ccb6e406d.png)    
+> ```sql  -- let's create the above view     
+>      Create view vWEmployeeDetails   
+>      as   
+>      Select  Id, Name, Gender, DeptName     
+>      from    tblEmployee    
+>      join    tblDepartment   
+>      on      tblDepartment.DeptId = tblEmployee.DepartmentId   
+> ```   
+> Now, we gonna create the INSTEAD OF trigger:   
+> ```sql   
+>     Create trigger tr_vWEmployeeDetails_InsteadOfInsert   
+>     on     vWEmployeeDetails   
+>     Instead Of Insert      
+>     as   
+>     Begin    
+>         Declare @DeptId int    
+>         
+>         --Check if there is a valid DepartmentId   
+>         --for the given DepartmentName   
+>         Select  @DeptId = DeptId   
+>         from    tblDepartment  
+>         join    inserted   
+>         on      inserted.DeptName  = tblDepartment.DeptName    
+>         
+>         --If DepartmentId is null throw an error  
+>         --and stop processing   
+>         if(@DeptId is null)  
+>         Begin  
+>              Raiserror('Invalid Department Name. Statement terminated', 16, 1)   
+>              return
+>         End
+>             
+>         --Finally insert into tblEmployee table   
+>         Insert into tblEmployee(Id, Name, Gender, DepartmentId)   
+>         Select Id, Name, Gender, @DeptId    
+>         from   inserted            
+>     End          
+> ```      
+> 
+> 
+
+
+
+
 ### Instead of update trigger in SQL Server
 ### Instead of delete trigger in SQL Server
 ### Derived tables and common table expressions in SQL Server
