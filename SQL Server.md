@@ -1581,9 +1581,66 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >  4. Views cannot be based on temporary tables.   
 >  
 
-
-
 ### DML triggers in SQL Server
+* **Triggers**   
+> **In SQL server there are 3 types of triggers:**    
+> 1. DML triggers   
+> 2. DDL triggers   
+> 3. Logon trigger   
+> - DML triggers are fired automatically in response to DML events (INSERT, UPDATE & DELETE)  
+> - DML triggers can be again classified into 2 types:    
+> 1.  After triggers (Sometimes called as FORtriggers)  
+> 2.  Instead of triggers   
+> **After triggers, fires after the triggering action.**  The INSERT, UPDATE & DELETE statements, causes an after trigger to fire after the respective statements complete execution.   
+> **INSTEAD of triggers, fires instead of the triggering action.**  The INSERT, UPDATE, and DELETE statements, causes an INSTEAD OF trigger to fire INSTEAD OF the respective statement execution.   
+> ```sql   
+>      CREATE TRIGGER tr_tblEmployee_ForInsert   
+>      ON tblEmployee   
+>      FOR INSERT   
+>      AS    
+>      BEGIN   
+>            Declare @Id int   
+>            Select  @Id = Id from inserted    
+>                  
+>            insert into tblEmployeeAudit   
+>            values ('New employee with Id = ' +   
+>                     Cast(@Id as nvarchar(5))  +   
+>                     '  is added at ' +   
+>                     cast(Getdate() as nvarchar(20))   
+>            )   
+>      END         
+> ```    
+> The above query will be triggered when insert operation will be performed on tblEmployee.    
+> It will receive column values from **inserted**  
+> So, for the following query it will receive ID - 8 from **inserted**:    
+> ```sql    
+>       Insert into tblEmployee values  (8, 'Ben', 4800, 'Male', 3)       
+> ```      
+> ```sql     
+>      CREATE TRIGGER tr_tblEmployee_ForDelete      
+>      ON tblEmployee   
+>      FOR DELETE     
+>      AS    
+>      BEGIN   
+>            Declare @Id int   
+>            Select  @Id = Id from deleted       
+>                  
+>            insert into tblEmployeeAudit   
+>            values ('An existing employee with Id = ' +   
+>                     Cast(@Id as nvarchar(5))  +   
+>                     '  is deleted at ' +   
+>                     cast(Getdate() as nvarchar(20))   
+>            )   
+>      END
+> ```   
+> Same as for the INSERT operation, the below DELETE query will trigger the above trigger (tr_tblEmployee_ForDelete)   
+> ```sql    
+>   Delete from tblEmployee where Id = 3     
+> ```     
+> **Note:**  _inserted_ table will only available in scope of a trigger.   
+> 
+
+
 ### After update trigger
 ### Instead of insert trigger 
 ### Instead of update trigger in SQL Server
