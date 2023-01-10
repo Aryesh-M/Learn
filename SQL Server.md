@@ -2054,11 +2054,34 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   
  
   
+### Pivot in SQL Server     
+* **Pivot is a SQL server operator** that can be used to turn unique values from one column, into **multiple columns in the output**, there by effectively rotating a table.   
+![image](https://user-images.githubusercontent.com/58625165/211449082-cb8b4df3-19bb-4dd7-9ee8-d3b1926ea4d4.png)   
+```sql   
+  SELECT SalesCountry, SalesAgent,   
+  SUM(SalesAmount) AS Total   
+  FROM   tblProductSales   
+  GROUP BY  SalesCountry, SalesAgent  
+  ORDER BY  SalesCountry, SalesAgent
+```   
+![image](https://user-images.githubusercontent.com/58625165/211449507-1867e7f0-7b42-45b9-b647-ab23a2164f82.png)   
+```sql     
+   -- Query using Pivot operator   
+   SELECT    SalesAgent, India, US, UK   
+   FROM      tblProductSales    
+   PIVOT  
+   (   
+        SUM(SalesAmount)   
+        FOR  SalesCountry   
+        IN   ([India], [US], [UK])  
+   )    
+   AS PivotTable   
+```   
 
 
 
-   
-### Pivot in SQL Server
+
+
 ### Error handling in SQL Server
 ### Transactions in SQL Server
 ### Transactions in SQL Server and ACID Tests
