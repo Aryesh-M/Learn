@@ -2078,11 +2078,42 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
    AS PivotTable   
 ```   
 
+### Error handling in SQL Server   
+* **With the introduction of Try/Catch blocks in SQL Server 2005**, error handling in sql server, is now similar to programming languages like C#, and java.    
+* **Error handling in SQL Server 2000-** @@Error      
+* **Error handling in SQL Server 2005 & later-** @@Try...Catch   
+**Note:**  Sometimes, system functions that begin with two at signs(@@), are called as global variables. They are not variables and do not have the same behaviour as variables, instead they are very similar to functions.   
+![image](https://user-images.githubusercontent.com/58625165/211701766-1b33dc87-9209-4329-9466-63dd02caabdd.png)    
+
+> **RAISERROR('Error Message', ErrorSeverity, ErrorState)**   
+> Create and return custom errors   
+> **Severity level=16** (indicates general errors that can be corrected by the user)   
+> **State=Number between 1 & 255.** RAISERROR only generates errors with state from 1 through 127.   
+
+> @@Error returns a NON-ZERO value, if there is an error, otherwise ZERO, indicating that the previous SQL statement encountered no errors.  
+> **Note:** @@ERROR is cleared and reset on each statement execution. Check it immediately following the statement being verified, or save it to a local variable that can be checked later.   
+> ```sql   
+>     Insert into tblProduct values (2, 'Mobile Phone', 1500, 100)    
+>     if(@@ERROR <> 0)    
+>         Print  'Error Occured'   
+>     Else         
+>         Print  'No Errors'      
+> ```   
+> ```sql   
+>      Insert into tblProducts values(2, 'Mobile Phones', 1500, 100)   
+>      -- At this point @@ERROR will have a NON ZERO value   
+>      Select * from tblProduct    
+>      -- At this point @@ERROR get reset to ZERO, because the select   
+>      -- statement successfully executed   
+>      if(@@ERROR <>  0)    
+>          Print 'Error Occured'   
+>      Else   
+>          Print 'No errors'         
+> ```    
+> 
 
 
 
-
-### Error handling in SQL Server
 ### Transactions in SQL Server
 ### Transactions in SQL Server and ACID Tests
 ### Subqueries in SQL Server
