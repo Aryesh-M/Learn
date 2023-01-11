@@ -2334,9 +2334,25 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > 
 
 
+### Correlated subquery in SQL Server   
+> **If the subquery depends on the outer query for its values,** then that sub query is called as correlated subquery.   
+> 
+> **In the where clause of the subquery below,** "ProductId" column get it's value from tblProducts table that is present in the outer query.   
+> ```sql   
+>    Select     [Name],   
+>               (Select SUM(QuantitySold) from tblProductSales   
+>               Where ProductId = tblProducts.Id) as TotalQuantity   -- here we have used tblProduct.Id (so subquery depends on outer query)  
+>    from       tblProducts  
+>    Order By   Name       
+> ```   
+> **So, here the subquery is dependent on the outer query for it's value,** hence this subquery is a correlated subquery.    
+> 
+> **Correlated subqueries get executed,** once for every row that is selected by the outer query.   
+> 
+> **Correlated subquery,** cannot be executed independently of the outer query.    
+> 
 
 
-### Correlated subquery in SQL Server
 ### Creating a large table with random data for performance testing
 ### What to choose for performance SubQuery or Joins
 ### Cursors in SQL Server
