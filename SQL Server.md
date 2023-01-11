@@ -2508,8 +2508,109 @@ The following repacement query for cursors will be executed in 2 seconds only in
 >   
 
 
-
 ### Writing a runnable SQL Server scripts
+* **Re-runnable SQL Server Scripts**   
+> **What is a re-runnable SQL Script?**   
+> - _A re-runnable script is a script, that, when run more than once, will not throw errors._    
+> ```sql   
+>     --This script is not re-runnable    
+>     USE [Sample]   
+>     Create table tblEmployee    
+>     (   
+>         ID          int      identity primary key,   
+>         Name        nvarchar(100),     
+>         Gender      nvarchar(10),   
+>         DateOfBirth DateTime     
+>     )       
+> ```   
+> To make above script re-runnable:    
+>  1. Check for the existence of the table   
+>  2. Create the table if it does not exist   
+>  3. Else print a message stating, the table already exists   
+>  ```sql   
+>       Use [Sample]  
+>       If NOT EXISTS (Select * from information_schema.tables where table_name = 'tblEmployeee')   
+>       Begin   
+>           Create table tblEmployee   
+>           (     
+>               ID          int      identity primary key,   
+>               Name        nvarchar(100),     
+>               Gender      nvarchar(10),   
+>               DateOfBirth DateTime     
+>           )      
+>           Print 'Table tblEmployee successfully created'   
+>       End     
+>       Else  
+>          Begin  
+>             Print 'Table tblEmployee already exists'     
+>          End    
+>  ```         
+>  Otherwise, SQL server built-in function OBJECT_ID(), can also be used to check for the existence:      
+>  ```sql   
+>        IF OBJECT_ID('tblEmployee')  IS NULL   
+>        Begin  
+>           -- Create Table Script   
+>           Print  'Table tblEmployee created'     
+>        End   
+>        Else  
+>        Begin  
+>           Print  'Table tblEmployee already exists'     
+>        End   
+>  ```     
+
+
+>  Drop (if the table already exists) and re-create   
+>  ```sql   
+>  Use [Sample]   
+>  IF OBJECT_ID('tblEmployee')  IS NOT NULL   
+>  Begin   
+>    Drop Table tblEmployee     
+>  End    
+>  Create Table tblEmployee   
+>  (       
+>      ID int indentity primary key,   
+>      Name nvarchar(100),   
+>      Gender nvarchar(10),  
+>      DateOfBirth DateTime    
+>  )       
+>  ```
+> * The following script is not re-runnable because, if the column exists we get a script error.  
+> ```sql   
+>        Use [Sample]   
+>        ALTER TABLE tblEmployee  
+>        ADD   EmailAddress nvarchar(50)   
+> ```     
+
+
+> * To make this script re-runnable, check for the column existence   
+> ```sql   
+>     Use [Sample]   
+>     if not exists(Select * from INFORMATION_SCHEMA.COLUMNS where column_name = 'EmailAddress' and TABLE_NAME = 'tblEmployee' and TABLE_SCHEMA = 'dbo') 
+>     Begin   
+>         ALTER TABLE tblEmployee    
+>         ADD   EmailAddress nvarchar(50)     
+>     End    
+>     Else  
+>     Begin   
+>         Print 'Column EmailAddress already exists'   
+>     End   
+> ```  
+
+
+> * Col_length() function can also be used to check for the existence of a column    
+> ```sql   
+>       If col_length('tblEmployee', 'EmailAddress') IS NOT NULL   
+>       Begin    
+>           Print 'Column already exists'   
+>       End    
+>       Else   
+>       Begin 
+>           Print 'Column does not exist'     
+>       End      
+> ```   
+> 
+
+
 ### After database table columns without dropping table
 ### Optional parameters in SQL SERVER stored procedures
 ### Merge in SQL Server
