@@ -2481,7 +2481,34 @@ The following repacement query for cursors will be executed in 2 seconds only in
     Where  (Name = 'Product - 55' or Name = 'Product - 65' or Name LIKE 'Product - 100%')           
 ```   
 
-### List all tables in a SQL Server database using a query
+
+### List all tables in a SQL Server database using a query   
+>  **Object explorer with in SQL Server Management Studio can be used to get the list of talbes in a specific database.** However, if we have to write a query to achieve the same, there are 3 system views that we can use.   
+>   **1. SYSOBJECTS** -  SQL Server 2000, 2005 & 2008   
+>   **2. SYS. TABLES** - SQL Server 2005 & 2008   
+>   **3. INFORMATION_SCHEMA.TABLES** - SQL Server 2005 & 2008       
+>   ```sql   
+>       -- Gets the list of tables only   
+>       Select * from SYSOBJECTS Where XTYPE = 'U'  ---for other filters see below the query   
+>       
+>       -- Gets the list of tables only   
+>       Select * from SYS.TABLES      -- we can replace table by procedures, views to get respective items    
+>       
+>       -- Gets the list of tables and views   
+>       Select * from INFORMATION_SCHEMA.TABLES        
+>   ```       
+>   **Note:**  XTYPE can be filtered by:      
+>   IT - Internal Table  
+>   P  - Stored Procedure  
+>   PK - PRIMARY KEY constraint  
+>   S  - System table  
+>   U  - User table  
+>   V  - View    
+>   ... and much more
+>   
+
+
+
 ### Writing a runnable SQL Server scripts
 ### After database table columns without dropping table
 ### Optional parameters in SQL SERVER stored procedures
