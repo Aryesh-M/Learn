@@ -2307,7 +2307,35 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >     
     
   
-### Subqueries in SQL Server
+### Subqueries in SQL Server   
+**Let us understand subqueries with an example.**   
+
+> **Example 1:**  
+>  Write a query to retrieve products that are not at all sold?   
+> **Example 2:**   
+> Write a query to retrieve the NAME and TOTALQUANTITY sold?   
+> 
+> **From these examples, it should be very clear that,** a subquery is simply a select statement, that returns a single value and can be nested inside a SELECT, UPDATE, INSERT, or DELETE statement. It is also possible to nest a subquery inside another subquery. According to MSDN, subqueries can be nested upto 32 levels.   
+> 
+> Subqueries are always enclosed in parenthesis and are also called as inner queries, and the query containing the subquery is called as outer query. The columns from a table that is present only inside a subquery, cannot be used in SELECT list of the outer query.   
+> In the following example, we have used subquery in **Where** clause:    
+> ```sql    
+>     Select    Id, Name, [Description]  
+>     from      tblProducts   
+>     Where     Id NOT IN (Select distinct ProductId from tblProductSales)          
+> ```   
+> In the following example, we have used subquery in **Select** clause:   
+> ```sql   
+>      Select     Name,   
+>                 (Select SUM(QuantitySold) from tblProductSales Where ProductId = tblProducts.Id) as QtySold   
+>      From       tblProducts      
+>      Order By   Name  
+> ```  
+> 
+
+
+
+
 ### Correlated subquery in SQL Server
 ### Creating a large table with random data for performance testing
 ### What to choose for performance SubQuery or Joins
