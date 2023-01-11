@@ -2235,9 +2235,50 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 > ```   
 
 
-
-
-### Transactions in SQL Server and ACID Tests
+### Transactions in SQL Server and ACID Tests   
+> **What is a transaction?**    
+>  A transaction is a group of commands that change the data stored in a database. A transaction, **is treated as a single unit.** A transaction ensures that, either all of the commands succeed, or none of them. If one of the commands in the transaction fails, all of the commands fail, and any data that was modified the database is rolled back. In this way, transactions **maintain the integrity of data** in a database.   
+>  
+>  **Transaction processing follows these steps:**   
+>  1. Begin a transaction.  
+>  2. Process database commands.  
+>  3. Check for errors.   
+>     If errors occured,  
+>        rollback the transaction,   
+>     else,  
+>        commit the transaction  
+>        
+>  **Note:**  NOT able to see the un-committed changes (SQL server defaults to show only committed data, if want to change so that it shows uncommitted data as well then apply following statement)   
+>      
+>  ```sql   
+>       SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED      
+>  ```  
+>  So, let's say that one connection has initiated the transaction, but hasn't ended or committed the transaction yet, and if a new user connection tries to see the data from the table which is used in first connection's transaction, the 2nd user cannot see the data as the transaction is not committed/rolled back yet.   
+>  To overcome this we can use above line.   
+>  ![image](https://user-images.githubusercontent.com/58625165/211889885-0762b6a6-f966-4dda-b253-485ed846c61c.png)   
+>  ```sql   
+>       Create Procedure spUpdateAddress  
+>       as   
+>       Begin   
+>          Begin Try   
+>              Begin Transaction   
+>                   Update tblMailingAddress set City = 'LONDON1'   -- This will pass/execute but if the 2nd update is gonna failed then it will rollback
+>                   Where  AddressId = 1 and EmployeeNumber = 101   -- this change as well.        
+>                   
+>                   Update tblPhysicalAddress set City = 'LONDON LONDON' -- City name will be more than 10 nvarchar, so this is gonna failed   
+>                   Where  AddressId = 1 and EmployeeNumber = 101  
+>              Commit Transaction   
+>              Print  'Transaction Committed'   
+>          End Try  
+>          Begin Catch   
+>               Rollback Transaction   
+>               Print 'Transaction Rolled Back'   
+>          End Catch 
+>       End                    
+>  ```
+>              
+  
+  
 ### Subqueries in SQL Server
 ### Correlated subquery in SQL Server
 ### Creating a large table with random data for performance testing
