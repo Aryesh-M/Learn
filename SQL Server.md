@@ -2461,11 +2461,26 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >   -2 (The row fetched is missing.)     
 >   -9 (The cursor is not performing a fetch operation.)   
 > **Note:**  The cursors will loop thorugh each row in tblProductSales table. As there are 600,000 rows, to be processed on a row-by-row basis, it takes around 40-45 seconds on my machine. We can achieve this very easily using a join, and this will significantly increase the performance. We will discuss about this in our next video session.      
->        
+>       
 
+### Replacing cursors using joins in SQL Server   
+The following repacement query for cursors will be executed in 2 seconds only instead of 40+ seconds.    
+```sql    
+    Update tblProductSales   
+    set    UnitPrice = Case   
+                           When Name = 'Product - 55' Then 55    
+                           When Name = 'Product - 65' Then 65    
+                           When Name LIKE 'Product - 100%' Then 1000     
+                           Else   
+                             UnitPrice   -- This else statement is mandatory, without it every column that doesn't match with above conditions:   
+                                         -- 55,65 and 100.. will be updated by NULL and those column will lost their original unitprice value :)   
+                       End   
+    from   tblProductSales  
+    join   tblProducts   
+    on     tblProducts.Id = tblProductSales.ProductId   
+    Where  (Name = 'Product - 55' or Name = 'Product - 65' or Name LIKE 'Product - 100%')           
+```   
 
-
-### Replacing cursors using joins in SQL Server
 ### List all tables in a SQL Server database using a query
 ### Writing a runnable SQL Server scripts
 ### After database table columns without dropping table
