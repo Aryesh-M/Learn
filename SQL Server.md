@@ -2402,11 +2402,69 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >     on        tblProducts.Id = tblProductSales.ProductsId   
 >     Where     tblProducts.ProductId IS NULL        
 >  ```      
->  
->   
+>    
 
 
-### Cursors in SQL Server
+### Cursors in SQL Server   
+**Relational Database Management Systems, including sql server** are very good at handling data in SETs. For example, the following 'UPDATE' query, updates a set of rows that matches the condition in the 'WHERE' clause at the same time.    
+```sql   
+    Update tblProductSales Set UnitPrice = 50 Where ProductId = 101     
+```    
+![image](https://user-images.githubusercontent.com/58625165/211908712-bb91ef74-76e7-4a00-82bf-db63c3a0c2a6.png)    
+**However, if there is ever a need to process the rows, on a row-by-row basis,** then cursors are your choice. Cursors are very bad for performance, and should be avoided always. Most of the time, cursors can be very easily replaced using joins.    
+
+> **There are different types of cursors in sql server as listed below.**  We will talk about the differences between these cursor types in a later video session.    
+> 1. Forward-Only   
+> 2. Static 
+> 3. Keyset 
+> 4. Dynamic   
+> Let us see cursor in action: 
+> Note, we have written select cursor for a select query which will return this resultset:   
+> ![image](https://user-images.githubusercontent.com/58625165/211913982-88baa47a-76e1-4c34-9238-721a25b31179.png)     
+> ```sql   
+>     Declare @ProductId int  
+>     Declare @ProductName nvarchar(30)  
+>     
+>     Declare ProductCursor CURSOR FOR    
+>     Select Id, Name from tblProducts Where Id <= 1000      
+>     
+>     Open ProductCursor   
+>     
+>     Fetch Next from ProductCursor into @ProductId, @Name   -- here columns Id, Name will be respectively assign to ProductId, Name variables   
+>     
+>     While(@@FETCH_SATUS = 0)      -- This function returns the status of the last cursor FETCH statement  
+>       Begin                       -- issued against any cursor currently opened by the connection.    
+>           Select @ProductName = Name from tblProducts Where Id = @ProductId   
+>           
+>           if(@ProductName = 'Product - 55')  
+>           Begin  
+>               Update tblProductSales set UnitPrice = 55 Where ProductId = @ProductId   
+>           End
+>           else if(@ProductName = 'Product - 65')   
+>           Begin  
+>               Update tblProductSales set UnitPrice = 65 Where ProductId = @ProductId   
+>           End
+>           else if(@ProductName LIKE 'Product - 100%')   
+>           Begin  
+>               Update tblProductSales set UnitPrice = 1000 Where ProductId = @ProductId   
+>           End    
+>           
+>           Fetch Next from ProductCursor into @ProductId   
+>       End    
+>       
+>       CLOSE ProductCursor   
+>       DEALLOCATE ProductCursor            
+> ``` 
+> **FYI:**   FETCH_STATUS() return values: 0, -1, -2, -9   
+>    0 (The FETCH statement was successful.)   
+>   -1 (The FETCH statement failed or the row was beyond the result set.)   
+>   -2 (The row fetched is missing.)     
+>   -9 (The cursor is not performing a fetch operation.)   
+> **Note:**  The cursors will loop thorugh each row in tblProductSales table. As there are 600,000 rows, to be processed on a row-by-row basis, it takes around 40-45 seconds on my machine. We can achieve this very easily using a join, and this will significantly increase the performance. We will discuss about this in our next video session.      
+>        
+
+
+
 ### Replacing cursors using joins in SQL Server
 ### List all tables in a SQL Server database using a query
 ### Writing a runnable SQL Server scripts
