@@ -2611,7 +2611,19 @@ The following repacement query for cursors will be executed in 2 seconds only in
 > 
 
 
-### After database table columns without dropping table
+### After database table columns without dropping table     
+> **How to alter the database table definition** without the need to drop, re-create and again populate the table with data? 
+> **Option 1:** Use a SQL query to alter the column as shown below   
+> ```sql     
+>     ALTER TABLE tblEmployee   
+>     ALTER COLUMN Salary INT   
+> ```    
+> **Option 2:**  Disable "Prevent" saving changes that require table re-creation "option"   
+> ![image](https://user-images.githubusercontent.com/58625165/211928830-6c047eb3-67f9-413f-96b2-af02bddee120.png)    
+> 
+      
+
+
 ### Optional parameters in SQL SERVER stored procedures
 ### Merge in SQL Server
 ### SQL SERVER concurrent transactions
