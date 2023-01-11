@@ -2622,9 +2622,38 @@ The following repacement query for cursors will be executed in 2 seconds only in
 > ![image](https://user-images.githubusercontent.com/58625165/211928830-6c047eb3-67f9-413f-96b2-af02bddee120.png)    
 > 
       
+      
+### Optional parameters in SQL SERVER stored procedures   
+> _**Parameters of a SQL Server stored procedure can be made optional by specifying default values.**_   
+> Name, Email, Age and Gender parameters of spSearchEmployees stored procedure are optional. We have set defaults for all the parameters, and in the "WHERE" clause we are checking if the respective parameters IS NULL.   
+> ```sql   
+>      Create Proc spSearchEmployees    
+>      @Name nvarchar(50) = NULL,     -- note NULL is specified as a default value, so if you execute SP without suppliying params it won't     
+>      @Email nvarchar(50) = NULL,    -- throw any errors     
+>      @Age int = NULL,    
+>      @Gender nvarchar(50) = NULL   
+>      as    
+>      Begin   
+>         Select * from tblEmployee Where  
+>         (Name = @Name or @Name = IS NULL) AND   -- so, if supplied param or not it will show proper output    
+>         (Email = @Email or @Email IS NULL)  AND  
+>         (Age = @Age or @Age IS NULL) AND  
+>         (Gender = @Gender or @Gender IS NULL)     
+>      End        
+> ```     
+> Testing the stored procedure   
+> ```sql   
+>      Execute spSearchEmployees    --return all the rows   
+>      Execute spSearchEmployees @Gender = 'Male'  -- see the output below       
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/211930300-c1ba0d5e-6925-4e7b-9967-a16851b63fa4.png)    
+> ```sql     
+>      Execute spSearchEmployees @Gender = 'Male', @Age = 29   -- see the output below   
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/211930393-a68b45b4-2430-4da0-bad6-ef0bc46d0b71.png)    
+> 
 
 
-### Optional parameters in SQL SERVER stored procedures
 ### Merge in SQL Server
 ### SQL SERVER concurrent transactions
 ### SQL SERVER dirty read example
