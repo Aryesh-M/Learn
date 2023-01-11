@@ -2110,11 +2110,133 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >      Else   
 >          Print 'No errors'         
 > ```    
+> Let's see the @@ERROR in action:   
+> ```sql    
+>     Create Procedure spSellProduct 1, 100    
+>     @ProductId int,  
+>     @QuantityToSell int    
+>     as   
+>     Begin    
+>         -- Check the stock available, for the product we want to sell    
+>         Declare   @StockAvailable int    
+>         Select    @StockAvailable = QuantityAvailable   
+>         from      tblProduct   
+>         Where     ProductId = @ProductId   
+>         
+>         -- Throw an error to the calling application, if enough stock   
+>         -- is not available   
+>         if(@StockAvailable < @QuantityToSell)  
+>           Begin   
+>               Raiserror('Not enough stock available', 16, 1)     
+>           End       
+>         -- If enough stock available   
+>         Else   
+>           Begin   
+>            Begin Try  -- try block   
+>             Begin Transaction   
+>               -- First reduce the quantity available   
+>               Update  tblProduct set QtyAvailable = (QtyAvailable - @QuanitityToSell)   
+>               Where   ProductId = @ProductId   
+>             
+>               Declare @MaxProductSalesId int    
+>               -- Calculate MAX ProductSalesId    
+>               Select @MaxProductSalesId = Case When   
+>                                              MAX(ProductSalesId) IS NULL   
+>                                              Then 0 else MAX(ProductSalesId) end    
+>               from tblproducts     
+>               -- Increment @MaxProductSalesId by 1, so we don't get a primary key violation   
+>               Set @MaxProductSalesId = @MaxProductSalesId + 1   
+>               Insert into tblProductSales values(@MaxProductSalesId, @ProductId, @QuantityToSell)  
+>             Commit Transaction
+>            End Try  
+>            Begin Catch  
+>              Rollback Transaction  
+>               Select   
+>                 ERROR_NUMBER() as ErrorNumber,   
+>                 ERROR_MESSAGE() as ErrorMessage,   
+>                 ERROR_PROCEDURE() as ErrorProcedure,   
+>                 ERROR_STATE() as ErrorState,   
+>                 ERROR_SEVERITY() as ErrorSeverity,  
+>                 ERROR_LINE() as ErrorLine,   
+>            End Catch             
+>           End    
+>     End               
+> ```   
+> Try/ Catch Syntax   
+> -- Syntax:   
+> ```sql     
+>     BEGIN TRY   
+>       { Any set of SQL Statements }   
+>     END TRY  
+>     BEGIN CATCH  
+>         [ Optional: Any set of SQL Statements ]     
+>     END CATCH   
+>         [ Optional: Any other SQL Statements ]    
+> ```   
+>     
+> ```sql   
+>     -- System Functions to retieve error information:   
+>     ERROR_NUMBER()   
+>     ERROR_MESSAGE()   
+>     ERROR_PROCEDURE()   
+>     ERROR_STATE()  
+>     ERROR_SEVERITY()   
+>     ERROR_LINE()   
+> ```    
+> * **Any set of SQL statements,** that can possibly throw an exception are wrapped between BEGIN TRY and END TRY blocks. If there is an exception in the TRY block, the control immediately, jumps to the CATCH block. If there is no exception, CATCH block will be skipped, and the statements, after the CATCH block are executed.   
 > 
+> * **Error trapped by a CATCH block are not returned to the calling application.**  
+>    If any part of the error information must be returned to the application, the code in the CATCH block must do so by using RAISERROR() function.    
+>    
+> * **In the scope of the CATCH block,**  
+>     there are several system functions, that are used to retrieve more information about the error that occured. These functions return NULL if they are executed outside the scope of the CATCH block. TRY/CATCH cannot be used in a user-defined functions.   
+>      
+
+
+### Transactions in SQL Server      
+> ```sql    
+>     Create Procedure spSellProduct 1, 100    
+>     @ProductId int,  
+>     @QuantityToSell int    
+>     as   
+>     Begin    
+>         -- Check the stock available, for the product we want to sell    
+>         Declare   @StockAvailable int    
+>         Select    @StockAvailable = QuantityAvailable   
+>         from      tblProduct   
+>         Where     ProductId = @ProductId   
+>         
+>         -- Throw an error to the calling application, if enough stock   
+>         -- is not available   
+>         if(@StockAvailable < @QuantityToSell)  
+>           Begin   
+>               Raiserror('Not enough stock available', 16, 1)     
+>           End       
+>         -- If enough stock available   
+>         Else   
+>           Begin   
+>             Begin Tran   
+>               -- First reduce the quantity available   
+>               Update  tblProduct set QtyAvailable = (QtyAvailable - @QuanitityToSell)   
+>               Where   ProductId = @ProductId   
+>             
+>               Declare @MaxProductSalesId int    
+>               -- Calculate MAX ProductSalesId    
+>               Select @MaxProductSalesId = Case When   
+>                                              MAX(ProductSalesId) IS NULL   
+>                                              Then 0 else MAX(ProductSalesId) end    
+>               from tblproducts     
+>               -- Increment @MaxProductSalesId by 1, so we don't get a primary key violation   
+>               Set @MaxProductSalesId = @MaxProductSalesId + 1   
+>               Insert into tblProductSales values(@MaxProductSalesId, @ProductId, @QuantityToSell)  
+>             Commit Tran  
+>           End    
+>     End               
+> ```   
 
 
 
-### Transactions in SQL Server
+
 ### Transactions in SQL Server and ACID Tests
 ### Subqueries in SQL Server
 ### Correlated subquery in SQL Server
