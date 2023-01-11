@@ -2277,7 +2277,35 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 >       End                    
 >  ```
 >              
-  
+* **Transaction ACID Test**   
+> **A Transaction is a group of database commands that are treated as a single unit.** A successful transaction must pass the 'ACID' test, that is, it must be:   
+>    **1. Atomic:**  All Statements in the transaction either completed successfully or they were all rolled back. The task that set of operations represents is either accomplished or not, but in any case not left half-done.   
+>    
+>    **2. Consistent:**  All data touched by the transaction is left in a logically consistent state. For example, if stock available numbers are decrememented from **tblProductTable**, then, there has to be a related entry in **tblProductSales** table. The inventory can't just dissapear.  
+>    ![image](https://user-images.githubusercontent.com/58625165/211892511-e0b87984-6d6f-4f4c-a85d-02de5fbaae64.png)   
+> ```sql   
+>      Create Procedure spUpdateInventory_and_Sell    
+>      as   
+>      Begin  
+>        Begin Try   
+>           Begin Transaction   
+>              Update   tblProduct   
+>              set      QtyAvailable =  (QtyAvailable -10)   
+>              Where    ProductId = 1   
+>              
+>              Insert  into tblProductSales values (3, 1, 10)     
+>           Commit Transaction    
+>        End Try   
+>        Begin Catch   
+>            Rollback Transaction         
+>        End Catch    
+>      End     
+> ```    
+>    **3. Isolated:**  The transaction must affect data without interfering with other concurrent transactions, or being interered with by them. This prevents transactions from making changes to data based on uncommitted information, for example changes to a record that are subsequently rolled back. Most databases use locking to maintain transaction isolation.   
+>    
+>    **4. Durable:**  Once a change is made, it is permanent. If a system error or power failure occurs before a set of commands is complete, those commands are undone and the data is restored to its original state once the system begins running again.   
+>     
+    
   
 ### Subqueries in SQL Server
 ### Correlated subquery in SQL Server
