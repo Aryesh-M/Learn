@@ -2850,9 +2850,34 @@ Note: we have this syntax to add any isolation level to a transaction:
 > 
 
 
+### Phantom reads example in SQL Server    
+**Phantom read happens when one transaction executes a query twice and it gets a different number of rows in the result set each time.**  This happends when a second transaction inserts a new record that matches the WHERE clause of the query executed by the first transaction.   
+![image](https://user-images.githubusercontent.com/58625165/212519968-0ca3bd7e-e642-4522-9a17-51a21930c1cb.png)   
+>  ```sql   
+>   -- Transaction 1   
+>   Begin Transaction    
+>   
+>   Select * from tblEmployees Where Id between 1 and 3       
+>   
+>   -- Do some work   
+>   waitfor delay '00:00:10'    
+>   
+>   Select * from tblEmployees Where Id between 1 and 3   
+>   Commit Transaction    
+>  ```  
+>  
+>  ```sql   
+>     -- Transaction 2    
+>     Insert into tblEmployees values (2, 'Marcus')     
+>  ```     
+>  **To fix the phantom read problem, set transaction isolation level of Transaction 1 to serializable.** This will place a range lock on rows between 1 and 3, which prevents any other transaction from inserting new rows in that range.   
+>  
+>  **Repeatable read prevents only non-repeatable read.** Repeatable read isolation level ensures that the data that one transaction has read, will be prevented from being updated by any other transaction, but it does not prevent new rows from being inserted by other transactions resulting in phantom read concurrency problem.   
+>  
+>  **Serializable prevents both non-repeatable read and phantom read problems.**  Serializable isolation level ensures that the data that one transaction has read, will be prevented from being updated or deleted by any other transaction. It also prevents new rows from being inserted by other transactions, so this isolation level prevents both non-repeatable read and phantom read problems.   
+>  
 
 
-### Phantom reads example in SQL Server
 ### Snapshot isolation level in SQL Server
 ### Read committed snapshot isolation level in SQL Server
 ### Difference between snapshot isolation and read committed
