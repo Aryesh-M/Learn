@@ -2754,7 +2754,7 @@ _In most cases this would not cause a problem. However, if the transaction is ro
 >    -- Transaction 2    
 >    Select * from tblInventory Where Id = 1     
 > ```      
-> So, the Transaction 2 will execute just 15 seconds after Transaction 1 has been executed    
+> So, the Transaction 1 will wait/delay for 15 seconds and then transaction 2 will get executed           
 > If we want to the Transaction 2 to read the uncommitted data, then we can include a script like this with Transaction 2    
 > ```sql     
 >     Set Transaction isolation level read uncommitted     
@@ -2767,7 +2767,66 @@ _In most cases this would not cause a problem. However, if the transaction is ro
 > 
 
 
-### SQL SERVER lost update
+### SQL SERVER lost update    
+> _Lost update problem happens when 2 transactions read and update the same data._    
+> ![image](https://user-images.githubusercontent.com/58625165/212511494-512662ec-081e-4e0b-8d65-6b4e3fdbff84.png)     
+> ```sql    
+>     -- Transaction 1    
+>     Begin Transaction   
+>     Declare @ItemsInStock int    
+>     
+>     Select @ItemsInStock = ItemsInStock   
+>     from   tblInventory Where Id = 1   
+>     
+>     Waitfor Delay '00:00:10'    
+>     Set @ItemsInStock = @ItemsInStock - 1   
+>     
+>     Update tblInventory   
+>     Set ItemsInStock = @ItemsInStock Where Id = 1    
+>     
+>     Print @ItemsInStock   
+>     Commit Transaction     
+> ```   
+>  ```sql     
+>     -- Transaction 2    
+>     Begin Transaction   
+>     Declare @ItemsInStock int    
+>     
+>     Select @ItemsInStock = ItemsInStock   
+>     from   tblInventory Where Id = 1   
+>     
+>     Waitfor Delay '00:00:1'    
+>     Set @ItemsInStock = @ItemsInStock - 2   
+>     
+>     Update tblInventory   
+>     Set ItemsInStock = @ItemsInStock Where Id = 1    
+>     
+>     Print @ItemsInStock   
+>     Commit Transaction    
+>  ```    
+>  So, let's say Transaction 1 has started and immediately after that Transaction 2 has also started executing. Transaction 1 has delay time for 10 seconds while Transaction 2 has the same for 1 second. So, the order will be like this"    
+>  1. Transaction 1 started   
+>  2. Transaction 2 started   
+>  3. Transaction 2 finished (it deducts 2 items)   
+>  4. Transaction 1 finished (it deducts 1 item)   
+>  So, in total 3 items should be deducted from the table, At the both end of the transactions ItemInStock must be 7, but we ave a value of 9. This is because Transaction 1 silently overwrites the update of Transaction 2. This is called the lost update problem.       
+>  **How to overcome it?**  
+>  ```sql     
+>     Set Transaction Isolation Level Repeatable Read    
+>     Begin  Tran ....   
+>     Commit Tran ...    
+>  ```        
+>  Note, this statement should be used in both of the transactions - Transaction 1 and Transaction 2    
+>  **Both Read Uncommitted and Read Committed transaction isolation levels have the lost update side effect.**   
+>  
+>  **Repeatable Read, Snapshot, and Serializable isolation levels** does not have this side effect.   
+>  
+>  **The repeatable read isolcation level** uses additional locking on rows that are read by the current transaction, and prevents them from being updated or deleted elsewhere. This solves the lost update problem.   
+>     
+
+
+
+
 ### Non repeatable read example in SQL Server
 ### Phantom reads example in SQL Server
 ### Snapshot isolation level in SQL Server
