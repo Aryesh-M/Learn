@@ -2734,7 +2734,39 @@ The following repacement query for cursors will be executed in 2 seconds only in
 | Serializable     |     No      |     No      |     No              |     No        |
 
 
-### SQL SERVER dirty read example
+### SQL SERVER dirty read example   
+**A dirty read happens when one transaction is permitted to read data that has been modified by another transaction that has not yet been committed.**  
+_In most cases this would not cause a problem. However, if the transaction is rolled back for the second reads the data, the second transaction has dirty data that does not exist anymore._   
+![image](https://user-images.githubusercontent.com/58625165/212505626-79f81b67-3a97-4f5e-a5b7-32b41835fef6.png)    
+> ```sql   
+>    -- Transaction 1   
+>    Select * from tblInventory   
+>    
+>    Begin Tran   
+>    Update tblInventory set ItemsInStock = 9    
+>    Where  Id = 1      
+>    
+>    -- Bill the Customer   
+>    Waitfor Delay '00:00:15'     
+>    -- Insufficient Funds. Rollback transaction   
+>    Rollback Transaction         
+>    
+>    -- Transaction 2    
+>    Select * from tblInventory Where Id = 1     
+> ```      
+> So, the Transaction 2 will execute just 15 seconds after Transaction 1 has been executed    
+> If we want to the Transaction 2 to read the uncommitted data, then we can include a script like this with Transaction 2    
+> ```sql     
+>     Set Transaction isolation level read uncommitted     
+>     Select * from tblInventory Where Id = 1       
+> ```         
+> **Read Uncommitted transaction isolation level is the only isolation level that has dirty read side effect.** This is the least restrictive of all the isolation levels. When this transaction isolation level is set, it is possible to read uncommitted or dirty read. Another option to read dirty data is by using NOLOCK table hint. The query below is equivalent to the query in Transaction 2.    
+> ```sql  
+>     Select * from tblInventory (NOLOCK) Where Id = 1       
+> ```       
+> 
+
+
 ### SQL SERVER lost update
 ### Non repeatable read example in SQL Server
 ### Phantom reads example in SQL Server
