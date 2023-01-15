@@ -2825,9 +2825,33 @@ _In most cases this would not cause a problem. However, if the transaction is ro
 >     
 
 
+### Non repeatable read example in SQL Server    
+**Non repeatable read happens where one transaction reads the same data twice and another transaction updates that data in between the first and second read of transaction one.**    
+![image](https://user-images.githubusercontent.com/58625165/212519646-e3855c42-c6ad-48a2-954b-342cf594e085.png)    
+Note: we have this syntax to add any isolation level to a transaction:    
+```sql     
+  Set transaction isolation level [isolation_name]   
+```    
+> So, here is the example:    
+> ```sql    
+>     -- Transaction 1   
+>     Set transaction isolation level repeatable read   
+>     Begin transaction    
+>      Select ItemsInStock from tblInventory   
+>      Where Id = 1     
+>      
+>      Waitfor Delay '00:00:10'    
+>      
+>      Select ItemsInStock from tblInventory   
+>      Where Id = 1     
+>     Commit transaction   
+> ```   
+> **Repeatable read or any other higher isolation level should solve the non-repeatable read problem.**  To fix the non-repeatable read problem, set transaction isolation level of Transaction 1 to repeatable read. This will ensure that the data the Transaction 1 has read, will be prevented from being update or deleted elsewhere. This solves the non-repeatable read problem.   
+> 
 
 
-### Non repeatable read example in SQL Server
+
+
 ### Phantom reads example in SQL Server
 ### Snapshot isolation level in SQL Server
 ### Read committed snapshot isolation level in SQL Server
