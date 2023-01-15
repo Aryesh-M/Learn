@@ -2694,6 +2694,44 @@ The following repacement query for cursors will be executed in 2 seconds only in
 
 
 ### SQL SERVER concurrent transactions   
+> **What is a transaction?**     
+> _A transaction is a group of commands that change the data stored in a database. A transaction, is treated as a single unit of work_   
+> ![image](https://user-images.githubusercontent.com/58625165/212502576-9d3d3a93-dfc2-45a0-8019-e296f2b8bfc9.png)    
+> ```sql   
+>      -- Transfer $100 from Mark to Mary's Account     
+>      BEGIN TRY   
+>           BEGIN TRANSACTION 
+>                  UPDATE Accounts SET Balance =  Balance - 100 WHERE Id = 1      
+>                  UPDATE Accounts SET Balance =  Balance + 100 WHERE Id = 2     
+>           COMMIT TRANSACTION   
+>           PRINT  'Transaction Committed' 
+>       END TRY   
+>       BEGIN CATCH     
+>           ROLLBACK TRANSACTION   
+>           PRINT  'Transaction Rolled Back'       
+>       END CATCH         
+> ```    
+> **Common concurrency problems**     
+> * Dirty Reads   
+> * Lost Updates  
+> * Nonrepeatable Reads      
+> * Phantom Reads   
+>  
+
+> **SQL Server Transaction Isolation Levels**    
+> * Read Uncommitted      
+> * Read Comiitted     
+> * Repeatable Read     
+> * Snapshot     
+> * Serializable   
+> 
+| Isolation Level  | Dirty Reads | Lost Update | Nonrepeatable Reads | Phantom Reads | 
+| ---------------- | ----------- | ----------- | ------------------- | ------------- |
+| Read Uncommitted |     Yes     |     Yes     |     Yes             |     Yes       |
+| Read Committed   |     No      |     Yes     |     Yes             |     Yes       |
+| Repeatable Read  |     No      |     No      |     No              |     Yes       |
+| Snapshot         |     No      |     No      |     No              |     No        |  
+| Serializable     |     No      |     No      |     No              |     No        |
 
 
 ### SQL SERVER dirty read example
