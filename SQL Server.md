@@ -2654,8 +2654,48 @@ The following repacement query for cursors will be executed in 2 seconds only in
 > 
 
 
-### Merge in SQL Server
-### SQL SERVER concurrent transactions
+### Merge in SQL Server   
+>  **What is the use of MERGE statement in SQL Server**    
+>  _Merge statement introduced in SQL Server 2008 allows us to perform Inserts, Updates and Delelets in one statement. This means we no longer have to use multiple statements for performing Insert, Update and Delete_     
+>  
+>  **With merge statement we require 2 tables**     
+>  _**1. Source Table-**_ _Contains the changes that needs to be applied to the target table_   
+>  _**2. Target Table-**_ _The table requires changes(Inserts, Updates, and Deletes)_    
+>  
+>  Merge statement joins the target table to the source table by using a common column in both the tables. Based on how the rows match up, we can perform insert, update, and delete on the target table.   
+>  
+>  ```sql   
+>     MERGE     [TARGET]  AS T    
+>     USING     [SOURCE]  AS S    
+>           ON  [JOIN_CONDITIONS]    
+>       WHEN    MATCHED THEN   
+>               [UPDATE STATEMENT]    
+>       WHEN    NOT MATCHED BY TARGET THEN   
+>               [INSERT STATEMENT]   
+>       WHEN    NOT MATCHED BY SOURCE THEN   
+>               [DELETE STATEMENT]                       
+>  ```    
+>  ![image](https://user-images.githubusercontent.com/58625165/212499358-0af54cf5-d61f-457f-841d-51ac49689d20.png)    
+>  ![image](https://user-images.githubusercontent.com/58625165/212499372-89ffea57-b15b-4a3d-9af6-7c284844eca6.png)      
+>  ```sql   
+>     MERGE     StudentMerge  AS T    
+>     USING     StudentSource  AS S    
+>     ON        T.ID = S.ID        
+>     WHEN      MATCHED THEN   
+>               UPDATE SET T.NAME = S.NAME       
+>     WHEN      NOT MATCHED BY TARGET THEN   
+>               INSERT (ID, NAME) VALUES (S.ID, S.NAME)       
+>     WHEN      NOT MATCHED BY SOURCE THEN   
+>               DELETE;   --merge statement must be end by a semi-colon.                              
+>  ```       
+>  ![image](https://user-images.githubusercontent.com/58625165/212502514-e5f19d1f-48c5-4067-93b9-44d3e1d9a6a3.png)   
+>  
+>  
+
+
+### SQL SERVER concurrent transactions   
+
+
 ### SQL SERVER dirty read example
 ### SQL SERVER lost update
 ### Non repeatable read example in SQL Server
