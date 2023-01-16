@@ -3155,7 +3155,33 @@ _Trace status will output the above_ :)
 > 
 
 
-### Capturing deadlocks in SQL Server
+### Capturing deadlocks in SQL Profiler    
+**To capture deadlock graph, add Deadlock graph event to the trace in SQL profiler**    
+![image](https://user-images.githubusercontent.com/58625165/212766833-1d3369c7-a304-4bcd-9eaa-8374077bac07.png)    
+**The deadlock graph data is captured in XML format which can be extracted to a physical file for later analysis. This is similar to data captured using trace flag 1222.**    
+![image](https://user-images.githubusercontent.com/58625165/212767006-547109fa-14ed-4a0d-94d0-137804623ee5.png)    
+In trace properties window, in "General" tab, select **Use the template:** _Blank_ and in "Event Selection" tab, Events > Locks > (select/check) Deadlock graph> (button) Run  ====> This will start trace.    
+![image](https://user-images.githubusercontent.com/58625165/212767501-f86d212a-9be1-45a5-9001-d9a3d2afd74c.png)    
+
+* Analyzing Deadlock Graph   
+> 1. The oval on the graph, with the blue cross, represents the transaction that was chosen as the deadlock victim by SQL Server.   
+> 2. The oval on the graph without blue corss represents the transaction that completed successfully.  
+> 3. When you move the mouse pointer over the oval, you can see the SQL code that was running that caused the deadlock.   
+> 4. The oval symbols represents the process nodes   
+>   - Server Process Id: If you are using SQL Server Management Studio you can see the server process id on information bar at the bottom   
+>   - Deadlock Priority: If you have not set DEADLOCK_PRIORITY explicitly using SETDEADLOCK_PRIORITY statement, then both the processes should have the same default deadlock priority NORMAL(0)    
+> 5. The rectangles represents the resources nodes.   
+>     **a) HoBt ID**: Heap or Binary Tree ID. Using this ID query sys. partitions view to find the database objects involved in the deadlock.  
+>     ```sql   
+>          SELECT object_name( [ojbect_id] )  
+>          FROM   sys.partitions   
+>          WHERE  hobt_id = 72057594041663488     
+>     ```      
+> 6. The arrows represents types of locks each process has on each resources node.   
+> ![image](https://user-images.githubusercontent.com/58625165/212769058-3b3741f9-7b1f-4344-a895-c4061ad84c71.png)     
+> 
+
+
 ### SQL SERVER deadlock error handling
 ### Handling deadlocks in ADO NET
 ### Retry logic for deadlock exceptions
