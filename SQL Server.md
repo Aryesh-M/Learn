@@ -3247,9 +3247,15 @@ Note: the code is not written here because can be googled and it's not that much
 
 
 ### How to find blocking queries in SQL Server    
-
-
-
+* Blocking occurs if there are open transactions   
+>  **DBCC OpenTran** will display only the oldest active transaction. It is not going to show you all the open transactions.  
+>  
+>  **SQL Server processes can be killed using**   
+>    1. SQL Server Activity Montitor   
+>    2. Using SQL command  ```sql   KILL Process_ID ```   
+>    
+>  **What happens when you kill a session**   
+>  _All the work that the transaction has done will be rolled back. The database must be put back in the state it was in, before the transaction started._    
 
 ### SQL SERVER except operator
 ### Difference between EXCEPT and NOT in SQL Server
