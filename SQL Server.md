@@ -3274,8 +3274,27 @@ Note: the code is not written here because can be googled and it's not that much
 ![image](https://user-images.githubusercontent.com/58625165/212773926-824383dd-1fd2-4803-94f8-c807942ce288.png)    
 
 
-### Difference between EXCEPT and NOT in SQL Server
-### Intsect operator in SQL Server
+### Difference between EXCEPT and NOT in SQL Server   
+**EXCEPT operator returns all the rows from the left query that aren't in the right query's results. NOT IN operator also does the same.**    
+> ![image](https://user-images.githubusercontent.com/58625165/212774262-5aba36e8-7717-4060-8414-afb253831f3a.png)    
+> So, after applying the queries we should get the following outputs:   
+> ![image](https://user-images.githubusercontent.com/58625165/212774305-e96ce707-fe86-48c4-af3a-80b7ecefcba4.png)   
+> ```sql  
+>     Select Id, Name, Gender From TableA   
+>     Except  
+>     Select Id, Name, Gender From TableB       
+>     
+>     Select Id, Name, Gender From TableA  
+>     Where Id NOT IN(Select Id From TableB)   
+> ```      
+> Note, both the queries will output the same result/output.     
+
+* Difference between EXCEPT and NOT IN:    
+   **1. EXCEPT filters duplicates and retuns only DISTINCT rows** from the left query that aren't in the right query's results, where as NOT IN does not filter the duplicates.   
+   **2. EXCEPT opertor expects the same number of columns in both the queries,** where as NOT IN, compares a single column from the outer query with a single column from the sub-query.   
+   
+   
+### Intersect operator in SQL Server
 ### Difference between UNION, INTERSECT, and EXCEPT in SQL Server
 ### Cross apply and outer apply in SQL Server
 ### DDL Triggers in SQL Server
