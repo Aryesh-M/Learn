@@ -3182,7 +3182,34 @@ In trace properties window, in "General" tab, select **Use the template:** _Blan
 > 
 
 
-### SQL SERVER deadlock error handling
+### SQL SERVER deadlock error handling    
+```sql   
+    Alter procedure spTransaction1    
+    as    
+    Begin   
+      Begin Tran   
+        Begin Try 
+           Update TableA Set Name = 'Mark Transaction 1' Where Id = 1   
+           Waitfor Delay '00:00:05'    
+           Update TableB Set Name = 'Mary Transaction 1' Where Id = 2     
+           -- If both the update statements succeeded.    
+           -- No deadlock occured. So commit the transaction   
+           Commit Transaction   
+           Select 'Transaction Successful'   
+        End Try    
+        Begin Catch  
+           -- Check if the error is deadlock error   
+           If(ERROR_NUMBER()  = 1205)   
+           Begin    
+              Select 'Deadlock. Transaction failed. Please retry'
+           End              
+           -- Rollback the transaction   
+           Rollback   
+        End Catch     
+    End       
+```    
+
+
 ### Handling deadlocks in ADO NET
 ### Retry logic for deadlock exceptions
 ### How to find blocking queries in SQL Server
