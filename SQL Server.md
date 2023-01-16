@@ -3257,7 +3257,23 @@ Note: the code is not written here because can be googled and it's not that much
 >  **What happens when you kill a session**   
 >  _All the work that the transaction has done will be rolled back. The database must be put back in the state it was in, before the transaction started._    
 
-### SQL SERVER except operator
+### SQL SERVER except operator     
+**EXCEPT operator returns unique rows from the left query that aren't in the right query's results**   
+- Introduced in SQL Server 2005   
+- The number and the order of the columns must be the same in both the queries  
+- The data types must be same or compatible  
+- This is similar to minus operator in oracle   
+ ![image](https://user-images.githubusercontent.com/58625165/212773596-b79e4322-02df-486f-9792-56d748c7a466.png)    
+ 
+ ![image](https://user-images.githubusercontent.com/58625165/212773772-8f25c0fe-4ea7-443b-93a3-776694db159c.png)   
+ 
+* We can also use **Except** operator on a single table   
+![image](https://user-images.githubusercontent.com/58625165/212773866-566b0500-a900-417d-b954-cd9d0e1f2c9b.png)    
+
+* Order By Clause should be used only once after the right query   
+![image](https://user-images.githubusercontent.com/58625165/212773926-824383dd-1fd2-4803-94f8-c807942ce288.png)    
+
+
 ### Difference between EXCEPT and NOT in SQL Server
 ### Intsect operator in SQL Server
 ### Difference between UNION, INTERSECT, and EXCEPT in SQL Server
