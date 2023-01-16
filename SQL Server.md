@@ -3215,7 +3215,7 @@ In trace properties window, in "General" tab, select **Use the template:** _Blan
    1. Catch the SqlException object  
    2. Check if the error is deadlock error using the Number property of the SqlException object   
 
-```dotnet   
+```csharp 
    try {
       // ADO.NET Code to call stored procedure   
    }  
