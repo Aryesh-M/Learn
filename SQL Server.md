@@ -3342,11 +3342,9 @@ Let's see the results for different queries using UINION, UNION ALL, INTERSECT, 
    Select Id, Name, Gender from TableA   
 ```   
 
+### Cross apply and outer apply in SQL Server    
 
 
-
-
-### Cross apply and outer apply in SQL Server
 ### DDL Triggers in SQL Server
 ### Server scoped DDL triggers
 ### SQL SERVER trigger execution order
