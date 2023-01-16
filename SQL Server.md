@@ -3139,7 +3139,22 @@ Note: we have this syntax to add any isolation level to a transaction:
 _Trace status will output the above_ :)   
 
 
-### SQL SERVER deadlock analysis and prevention
+### SQL SERVER deadlock analysis and prevention   
+> **The deadlock information in the error log has three sections:**   
+> ![image](https://user-images.githubusercontent.com/58625165/212765524-bebbb999-b8d6-4d9d-9625-51703731e677.png)   
+
+> Process List Section:   
+> ![image](https://user-images.githubusercontent.com/58625165/212765673-342f445f-bee0-45d8-8261-e31e6807a251.png)    
+
+> Resource List Section:   
+> ![image](https://user-images.githubusercontent.com/58625165/212766238-8d333883-f558-4181-99b8-97d030eeabb0.png)    
+> 
+> **To prevent the deadlock we have in our case,** we need to ensure that database objects(TableA & TableB) are accessed in the same order every time.   
+> ![image](https://user-images.githubusercontent.com/58625165/212766541-1a6b1ae8-f21f-468e-b06b-70123ce769f6.png)   
+> Note, in above queries we have changed the order and make them same in both the transactions: first TableA and then TableB   
+> 
+
+
 ### Capturing deadlocks in SQL Server
 ### SQL SERVER deadlock error handling
 ### Handling deadlocks in ADO NET
