@@ -3328,7 +3328,24 @@ The output for both the queries will be:
 >    ```   
 
 
-### Difference between UNION, INTERSECT, and EXCEPT in SQL Server
+### Difference between UNION, INTERSECT, and EXCEPT in SQL Server   
+
+![image](https://user-images.githubusercontent.com/58625165/212777786-31a7a9a5-dad7-4f25-a28d-a7dc90e35ac7.png)    
+
+![image](https://user-images.githubusercontent.com/58625165/212777905-6be35a4f-6347-4674-b4c9-38b219ae37a4.png)   
+
+Let's see the results for different queries using UINION, UNION ALL, INTERSECT, and EXCEPT:    
+![image](https://user-images.githubusercontent.com/58625165/212777960-8caa2342-1c57-4d46-8294-2460b5726551.png)    
+```sql   
+   Select Id, Name, Gender from TableA  
+   [Operator] -- UNION, UNION ALL, INTERSECT or EXCEPT   
+   Select Id, Name, Gender from TableA   
+```   
+
+
+
+
+
 ### Cross apply and outer apply in SQL Server
 ### DDL Triggers in SQL Server
 ### Server scoped DDL triggers
