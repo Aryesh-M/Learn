@@ -2917,7 +2917,32 @@ Note: we have this syntax to add any isolation level to a transaction:
 > **From the first window execute Transaction 1 code and from the second window, execute Transaction 2 code.** Notice that Transaction 2 is not blocked and returns the data from the database as it was before Transaction 1 has started    
 > 
 
-### Read committed snapshot isolation level in SQL Server
+
+### Read committed snapshot isolation level in SQL Server    
+> **Read committed snapshot isolation level is not a different isolation level.** It is different way of implementing Read committed isolation level. One problem we have with Read committed isolation level is that, it blocks the transaction if it is trying to read the data, that another transaction is updating at the same time.    
+> 
+> **To use READ_COMMITTED_SNAPSHOT isolation, enable it at the database level**   
+> ```sql   
+>     Alter database SampleDB SET READ_COMMITTED_SNAPSHOT ON      -- note, that 
+> ```     
+> ```sql  
+>    -- Transacition 1   
+>    Set transaction isolation level Read Committed   
+>    Begin trasaction   
+>     Udpate tblInventory set ItemsInStock = 5 Where Id = 1   
+>     waitfor delay '00:00:10'    
+>     Commit trasaction        
+> ```    
+> ```sql   
+>     Set transaction isolation level read committed   
+>     Begin trasaction   
+>        Select ItemsInStock from tblInventory Where Id = 1    
+>     Commit trasaction      
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/212749696-bba7944b-a908-4a84-a699-23bb80b57817.png)    
+> 
+
+
 ### Difference between snapshot isolation and read committed
 ### SQL Server deadlock example
 ### SQL SERVER Deadlock victim selection
