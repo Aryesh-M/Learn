@@ -3234,8 +3234,23 @@ In trace properties window, in "General" tab, select **Use the template:** _Blan
 ```   
 
 
-### Retry logic for deadlock exceptions
-### How to find blocking queries in SQL Server
+### Retry logic for deadlock exceptions    
+**When a transaction fails due to deadlocks,** we can write some logic so the system can resubmit the transaction. The deadlocks usually last for a very short duration. So upon resubmitting the transaction it may complete successfully. This is much better from user experience standpoint.   
+
+* To achieve this we will be using the following technologies:   
+  - C#   
+  - ASP.NET   
+  - SQL Server    
+  - jQuery AJAX  
+
+Note: the code is not written here because can be googled and it's not that much of importance.   
+
+
+### How to find blocking queries in SQL Server    
+
+
+
+
 ### SQL SERVER except operator
 ### Difference between EXCEPT and NOT in SQL Server
 ### Intsect operator in SQL Server
