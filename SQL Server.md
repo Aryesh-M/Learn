@@ -2943,7 +2943,63 @@ Note: we have this syntax to add any isolation level to a transaction:
 > 
 
 
-### Difference between snapshot isolation and read committed
+### Difference between snapshot isolation and read committed    
+| Read Committed Snapshot Isolation | Snapshot Isolation |
+| --------------------------------- | ------------------ |
+| No update conflicts | Vulnerable to update conflicts   |
+| Works with existing applications without requiring any change to the application | Application change may be required to use with an existing application |
+| Can be used with distributed applications | Cannot be used with distributed applications |   
+| Provides statement-level read constistency | Provides transaction-level read consistency |     
+> ```sql   
+>   -- Transaction 1   
+>   Set transactoin isolation level snapshot   
+>   Begin transaction   
+>     Update tblInventory    
+>     set ItemsInStock = 8 Where Id = 1   
+>     --- 1 . First we will execute the above part only      
+>   Commit transaction     
+>     --- 3. Then we will commit first transaction   
+> ```   
+> ```sql     
+>    Set transaction isolation level snapshot   
+>    Begin transaction    
+>       Select * from tblInventory Where Id = 1  -- 10    
+>       -- 2. then will execute above part 
+>       -- 4. then will execute the below rest of the part of 2nd transaction   
+>       Select * from tblInventory Where Id = 1  -- 10       
+>       -- so, "snapshot" provides transaction-level read consistency   
+>    Commit transaction   
+>    
+>    Select * from tblInventory where Id = 1    -- 8   
+> ```  
+> The above code was for **snapshot** and now we will see **read committed** below:   
+> ```sql   
+>   -- Transaction 1   
+>   Set transactoin isolation level read committed   
+>   Begin transaction   
+>     Update tblInventory    
+>     set ItemsInStock = 8 Where Id = 1   
+>     --- 1 . First we will execute the above part only      
+>   Commit transaction     
+>     --- 3. Then we will commit first transaction   
+> ```   
+> ```sql     
+>    Set transaction isolation level read committed   
+>    Begin transaction    
+>       Select * from tblInventory Where Id = 1  -- 10    
+>       -- 2. then will execute above part 
+>       -- 4. then will execute the below rest of the part of 2nd transaction   
+>       Select * from tblInventory Where Id = 1  -- 8       
+>       -- so, "read committed" provides statement-level read consistency   
+>    Commit transaction         
+> ```    
+> Read Committed Snapshot isolation level:   
+> ![image](https://user-images.githubusercontent.com/58625165/212757162-4ce18e6a-b364-450e-bfb8-dcf2c2bef413.png)    
+> Snapshot isolation:   
+> ![image](https://user-images.githubusercontent.com/58625165/212757201-0daafde4-860f-45a9-8b07-8a3a4291b781.png)    
+> 
+
+
 ### SQL Server deadlock example
 ### SQL SERVER Deadlock victim selection
 ### Logging deadlocks in SQL Server
