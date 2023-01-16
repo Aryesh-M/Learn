@@ -2878,7 +2878,45 @@ Note: we have this syntax to add any isolation level to a transaction:
 >  
 
 
-### Snapshot isolation level in SQL Server
+### Snapshot isolation level in SQL Server   
+**Just like serializable isolation level, snapshot isolation level does not have any concurrency side effects**    
+| Isolation Level   | Dirty Reads | Lost Update | Nonrepeatable Reads | Phantom Reads | 
+| ----------------- | ----------- | ----------- | ------------------- | ------------- |
+| Read Uncommitted  |     Yes     |     Yes     |        Yes          |     Yes       |
+| Read Committed    |     No      |     Yes     |        Yes          |     Yes       |  
+| Repeatable Read   |     No      |     No      |        No           |     Yes       |
+| Snapshot          |     No      |     No      |        No           |     No        |
+| Serializable      |     No      |     No      |        No           |     No        |   
+
+> **Difference between serializable and snapshot isolation levels**    
+> _Serializable isolation is implemented by acquiring locks which means the resources are locked for the duration of the current transaction. This isolation level does not have any cocurrency side effects but at the cost of significant reduction in concurrency._    
+> 
+> _Snapshot isolation doesn't acquires locks, it maintains versioning in TempDb. Since, snapshot isolation does not lock resources, it can significantly increase the number of concurrent transactions while providing the same level of data consistency as serializable isolation does._    
+> 
+> **Example: Reading data with Snapshot Isolation Level**    
+> ```sql   
+>      -- Transaction 1    
+>      Set transaction isolation level serializable    
+>      Begin Transaction    
+>        Update tblInventory set ItemsInStock= 5 Where Id = 1  
+>        waitfor delay '00:00:10'   
+>      Commit Transaction       
+> ```    
+> 
+> ```sql      
+>      -- Transaction 2   
+>      -- Enable snapshot isolation for the database           
+>      Alter database SampleDB SET ALLOW_SNAPSHOT_ISOLATION ON    
+>      -- Set the transaction isolation level to snapshot   
+>      Set transaction isolation level snapshot         
+>      
+>      Select ItemsInStock from tblInventory Where Id = 1    --- The select (to read data) is allowed but if T2 updates database while T1 is not committed   
+>                                                            --- then T2 will be blocked until the T1 is committed or rollback.    
+> ```    
+>      
+> **From the first window execute Transaction 1 code and from the second window, execute Transaction 2 code.** Notice that Transaction 2 is not blocked and returns the data from the database as it was before Transaction 1 has started    
+> 
+
 ### Read committed snapshot isolation level in SQL Server
 ### Difference between snapshot isolation and read committed
 ### SQL Server deadlock example
