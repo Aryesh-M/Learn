@@ -3294,7 +3294,40 @@ Note: the code is not written here because can be googled and it's not that much
    **2. EXCEPT opertor expects the same number of columns in both the queries,** where as NOT IN, compares a single column from the outer query with a single column from the sub-query.   
    
    
-### Intersect operator in SQL Server
+### Intersect operator in SQL Server   
+**Intersect operator retrieves the common records from both the left and right query of the Interect operator**   
+- Introduced in SQL Server 2005   
+- The number and the order of the columns must be same in both the queries    
+- The data types must be same or at least compatible   
+
+![image](https://user-images.githubusercontent.com/58625165/212775903-c0e448ff-5d65-4c06-8b59-202afa10f855.png)    
+```sql  
+    Select Id, Name, Gender from TableA   
+    Intersect  
+    Select Id, Name, Gender from TableB   
+    
+    Select TableA.Id, TableA.Name, TableA.Gender   
+    From TableA Inner Join TableB   
+    On   TableA.Id = TableB.Id   
+```
+The output for both the queries will be:   
+![image](https://user-images.githubusercontent.com/58625165/212776026-bd7ae2fc-d0e7-4ad5-acdb-2eb53704bc3b.png)    
+
+* INTERSECT v/s INNER JOIN:   
+>  **INTERSECT filters duplicates and returns only DISTINCT rows** that are common between the LEFT and RIGHT query, where as INNER JOIN does not filter the duplicates   
+>  **To make INNER JOIN behave like INTERSECT operator use the DISTINCT operator**   
+>  **INNER JOIN treats two NULLs as two diffrent values.** So if you are joining two tables based on a nullable column and if both tables have NULLs in that joining column then, INNER JOIN will not include those rows in the result-set, where as INTERSECT treats two NULLs as a same value and it returns all matching rows.   
+>    ```sql    
+>        Select Id, Name, Gender from TableA   
+>        INTERSECT   
+>        Select Id, Name, Gender from TableB     
+>        
+>        Select DISTINCT TableA.Id, TableA.Name, TableA.Gender from TableA   -- not if we ommit DISTINCT then it will return duplicates as well    
+>        INNER JOIN TableB  
+>        ON TableA.Id = TableB.Id   
+>    ```   
+
+
 ### Difference between UNION, INTERSECT, and EXCEPT in SQL Server
 ### Cross apply and outer apply in SQL Server
 ### DDL Triggers in SQL Server
