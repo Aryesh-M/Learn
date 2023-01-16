@@ -3210,7 +3210,30 @@ In trace properties window, in "General" tab, select **Use the template:** _Blan
 ```    
 
 
-### Handling deadlocks in ADO NET
+### Handling deadlocks in ADO NET   
+* To handle deadlock in ADO.NET   
+   1. Catch the SqlException object  
+   2. Check if the error is deadlock error using the Number property of the SqlException object   
+
+```dotnet   
+   try {
+      // ADO.NET Code to call stored procedure   
+   }  
+   catch(SQLException ex)  
+   {   
+      if(ex.Number = 1205) 
+      {   
+         Label1.Text = "Deadlock. Please retry";   
+      }  
+      else   
+      {   
+        Label1.Text = ex.Message;   
+      }    
+      Label1.ForeColor = System.Drawing.Color.Red;   
+   }   
+```   
+
+
 ### Retry logic for deadlock exceptions
 ### How to find blocking queries in SQL Server
 ### SQL SERVER except operator
