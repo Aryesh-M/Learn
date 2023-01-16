@@ -3033,7 +3033,91 @@ Note: we have this syntax to add any isolation level to a transaction:
 >  ```
 
 
-### SQL SERVER Deadlock victim selection
+### SQL SERVER Deadlock victim selection    
+> **How SQL Server detects deadlocks**    
+> _Lock monitor thread in SQL Server, runs every 5 seconds by default to detect if there are any deadlocks. If the lock monitor thread finds deadlocks, the deadlock detection interval will drop from 5 seconds to as low as 100 milliseconds depending on the frequency of the deadlocks. If the lock monitor thread stop finding deadlocks, the Database Engine increase the intervals between searches to 5 seconds._    
+> 
+> **What happens when a deadlock is detected**   
+> _When a deadlock is detected, the Database Engine ends the deadlock by choosing one of the database as the deadlock victim a 1205 error to the application. Rolling back the transaction of the deadlock victim releases all locks held by that transaction. This allows the other transactions to become unblocked and move forward._   
+> 
+* **What is DEADLOCK_PRIORITY**   
+> _By default, SQL Server chooses a transaction as the deadlock victim that is least expensive to roll back. However, a user can specify the priority of sessions in a deadlock situations using the SETDEADLOCK_PRIORITY_ statement. The session with the lowest deadlock priority is chosen as the deadlock victim.   
+> **Example:**    
+> ```sql    
+>     SET DEADLOCK_PRIORITY NORMAL       
+> ```    
+
+> **DEADLOCK_PRIORITY**   
+> 1. The default is Normal   
+> 2. Can be set to LOW, NORMAL, or HIGH     
+> 3. Can also be set to a integer value in the range of -10 to 10    
+> - Low:   -5     
+> - NORMAL: 0    
+> - HIGH:   5    
+
+> * **What is the deadlock victim selection criteria**   
+> 1. If the DEADLOCK_PRIORITY is different, the session with the lowest priority is selected as the victim   
+> 2. If both the sessions have the same deadlock priority, the transaction that is least expensive to rollback is selected as the victim     
+> 3. If both the sessions have the same deadlock priority and the same cost, a vitim is chosen randomly     
+
+```sql     
+-- Transaction 1   
+   Begin Tran   
+   Update TableA set Name = Name + ' Transaction 1' Where Id IN (1, 2, 3, 4, 5)   
+   
+   --From Transaction 2 window execute the first update statement   
+    
+   Update TableB Set Name = Name + ' Transaction 1' Where Id = 1   
+   
+   -- From Transaction 2 window execute the second update statement   
+   Commit Transaction 
+```   
+
+```sql
+ -- Transaction 2   
+   Begin Tran   
+   Update TableB set Name = Name + ' Transaction 2' Where Id = 1      
+   
+   --From Transaction 2 window execute the first update statement   
+    
+   Update TableA Set Name = Name + ' Transaction 2' Where Id IN (1, 2, 3, 4, 5)      
+   
+   -- After a few seconds notice that this transaction will be chosen as the deadlock  
+   -- victim as it is less expensive to rollback this transaction than Transaction 1    
+   Commit Transaction    
+```     
+**Let's see the example after setting priority:**    
+```sql     
+-- Transaction 1   
+   Begin Tran   
+   Update TableA set Name = Name + ' Transaction 1' Where Id IN (1, 2, 3, 4, 5)   
+   
+   --From Transaction 2 window execute the first update statement   
+    
+   Update TableB Set Name = Name + ' Transaction 1' Where Id = 1   
+   
+   -- From Transaction 2 window execute the second update statement   
+   Commit Transaction 
+```   
+
+```sql
+ -- Transaction 2   
+ SET DEADLOCK_PRIORITY HIGH   
+ GO   
+   Begin Tran   
+   Update TableB set Name = Name + ' Transaction 2' Where Id = 1      
+   
+   -- From Transaction 2 window execute the first update statement   
+    
+   Update TableA Set Name = Name + ' Transaction 2' Where Id IN (1, 2, 3, 4, 5)      
+   
+   -- After a few seconds notice that this Transaction 2 will be chosen as the deadlock  
+   -- victim as it's DEADLOCK_PRIORITY (Normal) is lower than the DEADLOCK_PRIORITY  
+   -- this transaction (HIGH)   
+   Commit Transaction    
+```     
+
+
 ### Logging deadlocks in SQL Server
 ### SQL SERVER deadlock analysis and prevention
 ### Capturing deadlocks in SQL Server
