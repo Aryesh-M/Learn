@@ -3118,7 +3118,27 @@ Note: we have this syntax to add any isolation level to a transaction:
 ```     
 
 
-### Logging deadlocks in SQL Server
+### Logging deadlocks in SQL Server    
+**When deadlocks occur, SQL Server chooses one of the transactions as the deadlock victim and rolls it back.**  There are several SQL Server to track down the queries that are causing deadlocks. One of the options is to use SQL Server **trace flag 1222** to write the deadlock information to the SQL Server error log.   
+```sql    
+  -- Set SQL Server trace flag 1222   
+  DBCC Traceon(1222, -1)   
+  
+  -- Check the status of the trace flag   
+   DBCC TraceStatus(1222, -1)  
+   
+   -- Turn off the trace flag   
+   DBCC Traceoff(1222, -1)      
+```   
+```sql   
+    -- To read the error log   
+    execute sp_readerrorlog   
+```   
+**Please note:** -1 parameter indicates that the trace flag must be set at the global level. If you omit -1 parameter the trace flag will be set only at the session level    
+![image](https://user-images.githubusercontent.com/58625165/212763213-c9093f7b-880d-4772-a267-05eae7954cbe.png)   
+_Trace status will output the above_ :)   
+
+
 ### SQL SERVER deadlock analysis and prevention
 ### Capturing deadlocks in SQL Server
 ### SQL SERVER deadlock error handling
