@@ -3000,7 +3000,39 @@ Note: we have this syntax to add any isolation level to a transaction:
 > 
 
 
-### SQL Server deadlock example
+### SQL Server deadlock example    
+**In a database, a deadlock occurs when two or more processes have a resource locked,** and each process requests a lock on the resources that another process had already locked. Neither of the transactions here can move forward, as each one is waiting for the other to release the lock.   
+![image](https://user-images.githubusercontent.com/58625165/212757785-cba8601f-480c-4956-b902-401b98601c72.png)    
+**When deadlocks occur,** SQL Server will choose one of processes as the deadlock victim and rollback that processes, so the other process can move forward.   
+>  ![image](https://user-images.githubusercontent.com/58625165/212758289-54bcef43-c9a6-4743-82b7-fd79736f97e8.png)   
+>  ```sql   
+>     -- Transaction 1   
+>     Begin tran   
+>        Update TableA set Name = 'Mark Transaction 1' Where Id = 1   
+>        
+>        -- From Transaction 2 window execute the first update statement    
+>        
+>        Update TableB set Name = 'Mary Transaction 1' Where Id = 1    
+>        
+>        -- From Transaction 2 window execute the second update statement   
+>     Commit Transaction     
+>  ```  
+>  
+>  ```sql   
+>     -- Transaction 2   
+>     Begin tran   
+>        Update TableB set Name = 'Mark Transaction 2' Where Id = 1   
+>        
+>        -- From Transaction 1 window execute the second update statement    
+>        
+>        Update TableA set Name = 'Mary Transaction 2' Where Id = 1    
+>        
+>        -- After a few seconds notice that one of the transactions completed   
+>        -- successfully while the other transaction is made the deadlock victim      
+>     Commit Transaction      
+>  ```
+
+
 ### SQL SERVER Deadlock victim selection
 ### Logging deadlocks in SQL Server
 ### SQL SERVER deadlock analysis and prevention
