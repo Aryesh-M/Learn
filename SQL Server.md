@@ -3467,7 +3467,37 @@ Let's see the results for different queries using UINION, UNION ALL, INTERSECT, 
 > 
 
 
-### Server scoped DDL triggers
+### Server-scoped DDL triggers   
+
+> ```sql      
+>    -- Database scoped trigger   
+>    CREATE TRIGGER tr_DatabaseScopeTrigger   
+>    ON     DATABASE   -- database scoped  
+>    FOR    CREATE_TABLE, ALTER_TABLE, DROP_TABLE   
+>    AS   
+>    BEGIN   
+>        ROLLBACK   
+>        Print  'You cannot create, alter or drop a table in the current database'    
+>    END      
+> ```      
+
+> ```sql      
+>    -- Server scoped trigger   
+>    CREATE TRIGGER tr_ServerScopeTrigger   
+>    ON     ALL SERVER  --here is the difference- Server scope     
+>    FOR    CREATE_TABLE, ALTER_TABLE, DROP_TABLE   
+>    AS   
+>    BEGIN   
+>        ROLLBACK   
+>        Print  'You cannot create, alter or drop a table in any database on the server'       
+>    END      
+> ```      
+
+> **Why we use server scope?**  
+> - for a database scope it can be used only in that database scope, but for creating trigger for all the databases then create a server scoped trigger   
+>  
+
+
 ### SQL SERVER trigger execution order
 ### Audit table changes in SQL Server
 ### Logon Triggers in SQL Server
