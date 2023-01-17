@@ -3344,6 +3344,38 @@ Let's see the results for different queries using UINION, UNION ALL, INTERSECT, 
 
 ### Cross apply and outer apply in SQL Server    
 
+![image](https://user-images.githubusercontent.com/58625165/212780664-db75d4b6-b150-455f-b70a-74ebe2af0c7c.png)   
+- **The APPLY operator introduction in SQL Server 2005, is used to join a table to a table-valued function.**   
+- _The Table Valued Function_ on the right hand side of the APPLY operator gets called for each row from the left (also called outer table) table  
+- **Cross Apply** returns only matching rows (semantically equivalent to Inner Join)   
+- **Outer Apply** returns matching + non-matching rows (semantically equivalent to Left Outer Join). The unmatched columns of the table valued function will be set to NULL    
+
+> ```sql   
+>  Create Function fn_GetEmployeesByDepartmentId(@Department int)     
+>  returns table    
+>  as    
+>  Return    
+>  (  
+>    Select * from Employee   
+>    Where  DepartmentId = @DepartmentId    
+>  )   
+> ```   
+> ```sql   
+>    Select D.DepartmentName, E. Name, E.Gender, E.Salary   
+>    from   Department D   
+>    Inner Join fn_GetEmployeesByDepartmentId(D.Id) E  -- just change "Inner Join" with "Cross Apply"      
+>    On    D.Id = E.DepartmentId     
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/212781576-37fa5442-ba2b-4171-8938-4663db72dced.png)    
+> Cross apply will give following output:    
+> 
+> ![image](https://user-images.githubusercontent.com/58625165/212782591-656f0d75-ca5e-4c7f-abcd-feaf57b96258.png)        
+> 
+> Outer apply will give following output:    
+> 
+> ![image](https://user-images.githubusercontent.com/58625165/212782637-3514295e-d114-4d27-9ea0-31b0c2b0519f.png)    
+> 
+
 
 ### DDL Triggers in SQL Server
 ### Server scoped DDL triggers
