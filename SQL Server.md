@@ -3377,7 +3377,96 @@ Let's see the results for different queries using UINION, UNION ALL, INTERSECT, 
 > 
 
 
-### DDL Triggers in SQL Server
+### DDL Triggers in SQL Server    
+> **What are DDL triggers**   
+> DDL triggers fire in response to DDL events - CREATE, ALTER, and DROP (Table, Function, Index, Stored Procedure etc...). For the list of all DDL events please visit [MSDN Docs](https://msdn.microsoft.com/en-us/library/bb522542.aspx)        
+>  Certain system stored procedures that perform DDL-like operations can also fire DDL triggers.       
+>  **Example-** sp_rename system stored procedure   
+
+>  **What is the use of DDL triggers**   
+> - If you want to execute some code in response to a specific DDL event  
+> - To prevent certain changes to your database schema   
+> - Audit the changes that are the users are making to the database structure   
+
+> **DDL trigger syntax**   
+> ```sql   
+>    CREATE TRIGGER [Trigger_Name]   
+>    ON    [Scope (Server|Database)]    
+>    FOR   [EventType1, EventType2, EventType3, ...],   
+>    AS    
+>    BEGIN   
+>        --- Trigger Body   
+>    END          
+> ```   
+ 
+ **DDL triggers scope:** DDL triggers can be created in a specific database or the server level    
+> This trigger fires in response to a single DDL event   
+> ```sql   
+>    CREATE TRIGGER trMyFirstTrigger    
+>    ON     Database   
+>    FOR    CREATE_TABLE    
+>    AS     
+>    BEGIN  
+>       Print 'New table created'      
+>    END       
+> ```    
+
+> This trigger fires whenever a table is created, altered or dropped    
+> ```sql   
+>     -- Trigger that fires in response to a multiple DDL events   
+>     ALTER TRIGGER trMyFirstTrigger    
+>     ON    Database   
+>     FOR   CREATE_TABLE, ALTER_TABLE, DROP_TABLE    
+>     AS   
+>     BEGIN   
+>        Print 'You just created, modified or deleted a table'     
+>     END      
+> ```   
+
+> Trigger can rollback the changes as well:   
+> ```sql   
+>     -- Trigger that fires in response to a multiple DDL events   
+>     ALTER TRIGGER trMyFirstTrigger    
+>     ON    Database   
+>     FOR   CREATE_TABLE, ALTER_TABLE, DROP_TABLE    
+>     AS   
+>     BEGIN   
+>        Rollback   
+>        Print 'You cannot create, alter or drop a table'         
+>     END       
+> ```     
+> The above query will output the following:   
+> ![image](https://user-images.githubusercontent.com/58625165/212784575-05f798f1-1be0-4573-8416-1cec8bab9996.png)     
+
+> We can also disable and delete the database:    
+> ```sql     
+>     Disable Trigger trMyFirstTrigger ON Database  -- note, we also have to specifiy the scope (here is Database) 
+>     Enable Trigger trMyFirstTrigger ON Database   -- can enable the trigger by replacing "Disable" with "Enable"    
+>     Drop Trigger trMyFirstTrigger ON Database     -- delete the trigger                                               
+> ```     
+
+> Certain system stored procedures that perform DDL-like operations can also fire DDL triggers   
+> ```sql    
+>     CREATE TRIGGER trRenameTable    
+>     ON     DATABASE   
+>     FOR    RENAME   
+>     AS   
+>     BEGIN 
+>        Print 'You just renamed something'    
+>     END   
+> ```   
+
+> **The trigger will be fired** when ever you rename a database object using sp_rename system stored procedure   
+> ```sql   
+>     -- Renaming table - Fires the trigger   
+>     sp_rename  'TestTable', 'NewTestTable'  
+>     
+>     -- Renaming table column - Fires the trigger   
+>     sp_rename 'NewTestTable.Id', 'NewId', 'column'     
+> ```    
+> 
+
+
 ### Server scoped DDL triggers
 ### SQL SERVER trigger execution order
 ### Audit table changes in SQL Server
