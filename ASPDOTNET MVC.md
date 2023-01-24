@@ -1,7 +1,75 @@
 #### Controllers   
-#### Views     
-#### ViewData and ViewBag   
-#### Models    
+> ![image](https://user-images.githubusercontent.com/58625165/214377336-fa3c689d-818f-45f7-89e4-680451c27a40.png)    
+> **So, how are the URL's mapped to Controller Action Methods?**    
+> _The answert is ASP.NET Routing. Notice that in Global.asax we have RegisterRoutes()._   
+> ![image](https://user-images.githubusercontent.com/58625165/214377838-f03e4e49-f9ca-4ba2-b535-940a33516004.png)    
+> For Example, http://localhost/MVCDemo/home/index/10?name=Pragim   
+> ASP.NET MVC will automatically pass any query string or from post parameters named "name" to "index" action method when it is invoked.   
+> ```c#     
+>   public string Index(string id, string name)    
+>   {      
+>         return "The value of Id= " + id + " and Name = " + name;    
+>   }       
+> ```    
+> ```c#      
+>   public string Index(string id)    
+>   {      
+>         return "The value of Id= " + id + " and Name = " + Request.QueryString["name"];    
+>   }       
+> ```   
+
+#### Views  
+> **ViewBag & ViewData** is a mechanism to pass data from controller to view    
+> **Note:**  To pass data from controller to a view, it's always a good practice to use strongly typed view models   
+> We use **"@"** symbol to switch between **html and C# code**     
+> ```csharp    
+>       public ActionResult Index(string id, string name)   
+>       {      
+>         ViewBag.Countries = new List< string >()    
+>         {    
+>           "India",    
+>           "US",    
+>           "UK",      
+>           "Canada"              
+>         }       
+>       };    
+>      return View();     
+> ```      
+>```csharp    
+>      @{     
+>           ViewBag.Title = "Countries List";     
+>      }         
+>      < h2>Countries List</h2>    
+>      < ul>  
+>         @foreach (string strCountry in ViewBag.Countries)   
+>         {   
+>             < li>@strCountry </li>
+>         }    
+>      </ul>  
+>```  
+
+
+#### ViewData and ViewBag      
+![image](https://user-images.githubusercontent.com/58625165/214386118-e7469d2c-f5ce-4fc6-980b-7a5f56a96dc6.png)     
+> Both **ViewData** and **ViewBag** are used to pass data from a **controller** to a **view**. ViewData is a dictionary of objects that are stored and retrived using strings as keys.    
+> ![image](https://user-images.githubusercontent.com/58625165/214386349-db8adf18-b0d8-4f09-a8db-3bf66f82e6af.png)    
+> ![image](https://user-images.githubusercontent.com/58625165/214386372-025310e3-8e3e-40c7-a41f-a1cbaee4700e.png)    
+> **ViewBag** uses the dynamic feature that was introduced into C# 4. It allows an object to have properties dynamically added to it.    
+> 
+> **Both ViewData & ViewBag does not provide compile time error checking.** For example, if you miss-spell keys or property names, you wouldn't get any compile time error. You get to know about the error only at runtime. Internally ViewBag properties are stored as name/value pairs in the ViewData dictionary.    
+> 
+> To pass data from controller to a view, **It's always a good practice to use strongly typed view models** over ViewBag & ViewData. Strongly typed view models provide compile time error checking.   
+> 
+
+
+#### Models   
+![image](https://user-images.githubusercontent.com/58625165/214391018-df9a3016-a4e8-4021-944c-a70031d63fde.png)   
+> **We want to retrieve an employee information from tblEmployee** table and display it as shown below:    
+> ![image](https://user-images.githubusercontent.com/58625165/214391141-c08bc6c8-d8ec-4f27-a096-315f08627f63.png)     
+> The controller responds to URL request, gets data from a model and hands it over to the view. The view then renders the data. Model can be entities or business objects.    
+> 
+
+
 #### Data access in MVC using entity framework    
 #### Generate hyperlinks using actionlink HTML helper  
 #### Working with multiple tables in MVC     
