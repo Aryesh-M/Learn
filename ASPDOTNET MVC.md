@@ -70,7 +70,29 @@
 > 
 
 
-#### Data access in MVC using entity framework    
+#### Data access in MVC using entity framework      
+> **The controller responds to URL request,** gets data from a model and hands it over to the view. The view then renders the data. Model can be entities or business objects.   
+> We will focus on **retrieving data from a database table tblEmployee using entity framework**. In a later video, we will discuss using business objects as our model.  
+> **Step 1:**  Install entity framework using nuget package manager   
+> **Step 2:**  Add EmployeeContext.cs class file to the Models folder   
+> **Step 3:**  Add a connection string, to the web.config file, in the root directory   
+> **Step 4:**  Map "Employee" model class to the database table, tblEmployee using "Table" attribute   
+> **Step 5:**  Make the required changes to "Details()" action method in "EmployeeController"    
+> ```csharp    
+>         public ActionResult Details(int id)    
+>         {    
+>             EmployeeContext employeeContext = new EmployeeContext();    
+>             Employee employee = employeeContext.Employees.Single(x=>x.EmployeeId == id);   
+>             return View(employee);   
+>         }        
+> ```    
+> **Step 6:**  Paste the following code in **Application_Start()** function, in **Global.asax** file. Existing databases do not need, database initializer so it can be turned off.   
+> ```csharp   
+>       Database.SetInitializer<MvcApplication1.Models.EmployeeContext>(null);      
+> ```       
+>
+
+
 #### Generate hyperlinks using actionlink HTML helper  
 #### Working with multiple tables in MVC     
 #### Using business objects as model in MVC     
