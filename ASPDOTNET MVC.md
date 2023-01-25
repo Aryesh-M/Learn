@@ -93,7 +93,17 @@
 >
 
 
-#### Generate hyperlinks using actionlink HTML helper  
+#### Generate hyperlinks using actionlink HTML helper    
+> ```c#    
+>     public ActionResult Index()   
+>     {   
+>         EmployeeContext employeeContext = new EmployeeContext();   
+>         List< Employee> employees = employeeContext.Employees.ToList();  
+>         return View(employees);   
+>     }       
+> ```
+
+
 #### Working with multiple tables in MVC     
 #### Using business objects as model in MVC     
 #### Creating a view to insert data 
