@@ -321,20 +321,131 @@
 > The model class can be used **in the view to populate the data**, as well as **sending data to the controller**.    
 >            
 
-##### 5. View in MVC  
-##### 6. Razor View Syntax  
-##### 7. Integrate Model, View & Controller  
-##### 8. Binding Model to View & Controller  
-##### 9. Create View To Edit Data  
-##### 10. What is Layout View?   
-##### 11. Create Layout View in ASP.NET MVC  
-##### 12. What is Partial View?  
-##### 13. What is a ViewBag?  
-##### 14. What is ViewData?  
-##### 15. What is TempData?  
-##### 16. Implement Validations in ASP.NET MVC Form  
-##### 17. Use Validationsummary to Display Error Summary  
-##### 18. Exception Handling in ASP.NET MVC  
+##### 5. View in MVC    
+> A controller can have one or more action methods, and each action method can return a different view.  
+> In short, a controller can render one or more views. So, for easy maintenance, the MVC framework requires a separate sub-folder for each controller with the same name as a controller, under the Views folder.    
+> For example, all the views rendered from the HomeController will resides in the Views > Home folder. In the same way, views for StudentController will resides in Views > Student folder, as shown below.   
+> ![image](https://user-images.githubusercontent.com/58625165/214950463-e1688c36-232f-4ad3-be71-9953e5bf1c20.png)    
+> **Note:** The **Shared** folder contains views, layout views, and partial views, which will be shared among multiple controllers.   
+
+##### 6. Razor View Syntax   
+> **Razor View Engine:**     
+> Microsoft introduced the razor view engine to compile a view with a mix of HTML tags and server-side code.   
+> The special syntax for razor view maximizes the speed of writing code by minimizing the number of characters and keystrokes required when writing a view.   
+> The razor view uses @ character to include the server-side code instead of the traditional <% %> of ASP.   
+> ASP.NET MVC supports the following types of razor view files:   
+| File extension | Description |
+| -------------- | ----------- | 
+| .cshtml	| C# Razor view. Supports C# code with html tags. |
+| .vbhtml	| Visual Basic Razor view. Supports Visual Basic code with html tags. |
+| .aspx	| ASP.Net web form |
+| .ascx	| ASP.NET web control |     
+> ![image](https://user-images.githubusercontent.com/58625165/214954036-a8dce8c1-10ed-466a-886d-cad430fb7988.png)   
+> **Note:** Every view in the ASP.NET MVC is derived from WebViewPage class included in System.Web.Mvc namespace.   
+> 
+
+
+##### 9. Binding Model to View & Controller   
+> The model binding refers to converting the HTTP request data (from the query string or form collection) to an action method parameters.   
+> These parameters can be of primitive type or complex type.   
+
+ > **Binding to Primitive Type:**   
+ > For example, the query string parameters of an HTTP request http://localhost/Student/Edit?id=1&name=John would map to id and name parameters of the following Edit() action method.   
+ > ```c#    
+ >  public ActionResult Edit(int id, string name)
+>  {            
+>   // do something here
+>           
+>   return View();
+>  }
+ > ```
+
+> **Binding to Complex Type:**    
+> ```c#    
+> public class Student
+> {
+>   public int StudentId { get; set; }
+>   public string StudentName { get; set; }
+>   public int Age { get; set; }
+>   public Standard standard { get; set; }
+> }
+> 
+> public class Standard
+> {
+>   public int StandardId { get; set; }
+>   public string StandardName { get; set; }
+> }  
+> ```   
+> Now, you can create an action method which includes the Student type parameter.   
+> In the following example, Edit action method (HttpPost) includes Student type parameter:    
+> ```c#    
+>  [HttpPost]
+>  public ActionResult Edit(Student std)
+>  {
+>   var id = std.StudentId;
+>   var name = std.StudentName;
+>   var age = std.Age;
+>   var standardName = std.standard.StandardName;
+>  
+>   //update database here..
+>  
+>   return RedirectToAction("Index");
+>  } 
+> ```   
+> Thus, the MVC framework will automatically map Form collection values to the Student type parameter when the form submits an HTTP POST request to the Edit() action method, as shown below:   
+> ![image](https://user-images.githubusercontent.com/58625165/214963149-c7234c61-5a3c-44a2-ac69-28100de73e8c.png)    
+
+> **FormCollection:**   
+> You can also include the FormCollection type parameter in the action method instead of a complex type to retrieve all the values from view form fields, as shown below:    
+> ![image](https://user-images.githubusercontent.com/58625165/214963367-f9c490e4-b831-4452-af96-3e311ed3bba4.png)    
+
+> **Bind Attribute:**   
+> ASP.NET MVC framework also enables you to specify which properties of a model class you want to bind.  
+> The [Bind] attribute will let you specify the exact properties of a model should include or exclude in binding.   
+> In the following example, the Edit() action method will only bind StudentId and StudentName properties of the Student model class:     
+> ```c#    
+>  [HttpPost]
+>  public ActionResult Edit([Bind(Include = "StudentId, StudentName")] Student std)
+>  {
+>   var name = std.StudentName;
+>             
+>   //write code to update student 
+>           
+>   return RedirectToAction("Index");
+>  }         
+> ```   
+> 
+> You can also exclude the properties, as shown below:   
+> 
+> ```c#    
+>  [HttpPost]
+> public ActionResult Edit([Bind(Exclude = "Age")] Student std)
+> {
+>   var name = std.StudentName;
+>          
+>   //write code to update student 
+>           
+>   return RedirectToAction("Index");
+> } 
+> ```   
+> Model binding is a two-step process.   
+> First, it collects values from the incoming HTTP request.      
+> Second, it populates primitive type or a complex type with these values.      
+> Value providers are responsible for collecting values from requests, and Model Binders are responsible for populating values.    
+> ![image](https://user-images.githubusercontent.com/58625165/214964437-2f99daf2-26cc-4292-81e7-196f7206ccf2.png)    
+>      
+
+
+##### 10. Create View To Edit Data  
+##### 11. What is Layout View?   
+##### 12. Create Layout View in ASP.NET MVC  
+##### 13. What is Partial View?  
+##### 14. What is a ViewBag?  
+##### 15. What is ViewData?  
+##### 16. What is TempData?  
+##### 17. Implement Validations in ASP.NET MVC Form  
+##### 18. Use Validationsummary to Display Error Summary  
+##### 19. Exception Handling in ASP.NET MVC  
 
 
 ### ASP.NET MVC Articles   
