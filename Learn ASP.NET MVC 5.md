@@ -30,7 +30,79 @@
 > **10. Packages.config:**  Packages.config file is managed by NuGet to track what packages and versions you have installed in the application.   
 > **11. Web.config:**    Web.config file contains application-level configurations.   
 
-##### 5. Routing in ASP.NET MVC
+##### 5. Routing in ASP.NET MVC   
+> In the ASP.NET Web Forms application, every URL must match with a specific .aspx file.   
+> e.g., a URL http://domain/studentsinfo.aspx must match with the file studentsinfo.aspx that contains code and markup for rendering a response to the browser.   
+> _ASP.NET introduced Routing to eliminate the needs of mapping each URL with a physical file._   
+> Route defines the URL pattern and handler information. All the configured routes of an application stored in RouteTable and will be used by the Routing engine to determine appropriate handler class or file for an incoming request.   
+> The following figure illustrates the Routing process.   
+> ![image](https://user-images.githubusercontent.com/58625165/214934605-5e0369ad-968f-49f0-b55c-2e268a4f8e33.png)   
+
+> **Configure a Route:**     
+> he following figure illustrates how to configure a route in the RouteConfig class:       
+> ![image](https://user-images.githubusercontent.com/58625165/214935031-76eb27f4-aa60-43df-8e0c-0ea7d2b70a7f.png)    
+
+> **URL Pattern:**    
+> ![image](https://user-images.githubusercontent.com/58625165/214935544-dab418ef-74e3-4d5e-b100-d2028353608f.png)    
+
+> **Multiple Routes:**   
+> You can also configure a custom route using the MapRoute extension method.    
+> You need to provide at least two parameters in MapRoute, route name, and URL pattern. The Defaults parameter is optional.    
+> ```c#      
+>     public class RouteConfig
+> {
+>    public static void RegisterRoutes(RouteCollection routes)
+>    {
+>        routes.IgnoreRoute("{resource}.axd/{* pathInfo}");
+>
+>        routes.MapRoute(
+>            name: "Student",
+>            url: "students/{id}",
+>            defaults: new { controller = "Student", action = "Index"}
+>        );
+>
+>        routes.MapRoute(
+>            name: "Default",
+>            url: "{controller}/{action}/{id}",
+>            defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+>        );
+>    }
+> } 
+> ```   
+> The following shows how different URLs will be mapped to the Student route with Student(as a Controller), Index(as an Action), and 123(as an Id):      
+> http://localhost/student/123	  
+> http://localhost/student/index/123	  
+> http://localhost/student?Id=123	   
+
+> **Route Constraints:**   
+> You can also apply restrictions on the value of the parameter by configuring route constraints. For example, the following route applies a limitation on the id parameter that the id's value must be numeric:    
+> ```c#    
+> routes.MapRoute(
+>  name: "Student",
+>  url: "student/{id}/{name}/{standardId}",
+>  defaults: new { controller = "Student", action = "Index", id = UrlParameter.Optional, name = UrlParameter.Optional, standardId = UrlParameter.Optional },
+>  constraints: new { id = @"\d+" }
+> );   
+> ```     
+> _So if you give non-numeric value for id parameter, then that request will be handled by another route or, if there are no matching routes, then "The resource could not be found" error will be thrown._    
+
+> **Register Routes:**   
+> Now, after configuring all the routes in the RouteConfig class, you need to register it in the Application_Start() event in the Global.asax so that it includes all your routes into the RouteTable:    
+> ```c#     
+>   public class MvcApplication : System.Web.HttpApplication
+> {
+>   protected void Application_Start()
+>   {
+>       RouteConfig.RegisterRoutes(RouteTable.Routes);
+>   }
+> }
+> ```   
+> The following figure illustrate Route registration process:    
+> ![image](https://user-images.githubusercontent.com/58625165/214937926-0efcee94-80a8-480c-a7e6-14ffe5c4b9c4.png)   
+> So, Route must be registered in Application_Start event in Global.ascx.cs file.   
+> 
+
+
 ##### 6. Filters in ASP.NET MVC
 ##### 7. ActionFilter Attributes
 ##### 8. What is Bundling in ASP.NET MVC?   
