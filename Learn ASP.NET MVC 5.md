@@ -102,14 +102,92 @@
 > So, Route must be registered in Application_Start event in Global.ascx.cs file.   
 > 
 
+##### 6. Razor Syntax     
+> **Inline expression:**   @Variable_Name   
+> 
+> **Multi-statement Code block:**  @{ ... }   
+> 
+> **Display Text from Code Block:**   Use @: or < text>/< text> to display texts within code block:    
+> ```c#   
+>  @{
+>   var date = DateTime.Now.ToShortDateString();
+>   string message = "Hello World!";
+>   @:Today's date is: @date <br />
+>   @message                               
+> }
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/214968951-79c2e439-4ab8-44df-9ae1-baa0688d73fe.png)    
+> Display text using < text> within a code block, as shown below:   
+> ```c#    
+>  @{
+>   var date = DateTime.Now.ToShortDateString();
+>   string message = "Hello World!";
+>   <text>Today's date is:</text> @date <br />
+>   @message                               
+> }
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/214969080-5a4af4f9-a645-4f7f-b45d-9c7273c94a2b.png)   
+> 
+> **if-else condition:**   
+> Write if-else condition starting with @ symbol. The if-else code block must be enclosed in braces { }, even for a single statement:   
+> ```c#    
+>  @if(DateTime.IsLeapYear(DateTime.Now.Year) )
+> {
+>   @DateTime.Now.Year @:is a leap year.
+> }
+> else { 
+>   @DateTime.Now.Year @:is not a leap year.
+> }
+> ```     
+> 
+> **for loop:**   
+> ```c#     
+>  @for (int i = 0; i < 5; i++) { 
+>   @i.ToString() <br />
+> }
+> ```    
+> 
+> **Model:**   
+> Use @model to use model object anywhere in the view:   
+> ```c#   
+>  @model Student
+> 
+> <h2>Student Detail:</h2>
+> <ul>
+>   <li>Student Id: @Model.StudentId</li>
+>   <li>Student Name: @Model.StudentName</li>
+>   <li>Age: @Model.Age</li>
+> </ul>  
+> ```   
+> 
+> **Declare Variables:**   
+> Declare a variable in a code block enclosed in brackets and then use those variables inside HTML with @ symbol:    
+> ```c#     
+>  @{ 
+>   string str = "";
+>  
+>   if(1 > 0)
+>   {
+>       str = "Hello World!";
+>   }
+>  }
+>  
+>  <p>@str</p>
+> ```    
+> 
 
-##### 6. Filters in ASP.NET MVC
-##### 7. ActionFilter Attributes
-##### 8. What is Bundling in ASP.NET MVC?   
-##### 9. ScriptBundle  
-##### 10. StyleBundle  
-##### 11. Area in ASP.NET MVC  
-##### 12. ASP.NET MVC Learning Resources   
+  
+      
+   
+ 
+
+##### 7. Filters in ASP.NET MVC
+##### 8. ActionFilter Attributes
+##### 9. What is Bundling in ASP.NET MVC?   
+##### 10. ScriptBundle  
+##### 11. StyleBundle  
+##### 12. Area in ASP.NET MVC  
+##### 13. ASP.NET MVC Learning Resources   
 
 ### Create HTML Controls in MVC
 ##### 1. What is HTML Helper?  
@@ -445,7 +523,6 @@
 > 3. The user can edit the data and click on the Save button in the Edit view. The Save button will send a HttpPOST request http://localhost/Student/Edit with the Form data collection.   
 > 4. The HttpPOST Edit action method in StudentController will finally update the data into the database and render an Index page with the refreshed data using the RedirectToAction method as a fourth step.    
 > 
-
 
 
 ##### 11. What is Layout View?   
