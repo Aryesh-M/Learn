@@ -436,7 +436,18 @@
 >      
 
 
-##### 10. Create View To Edit Data  
+##### 10. Create View To Edit Data     
+> The following figure describes how the edit functionality would work in ASP.NET MVC application:    
+> ![image](https://user-images.githubusercontent.com/58625165/214966663-f7722573-15fd-4d37-8087-5e69cb02d488.png)    
+> The above figure illustrates the following steps:   
+> 1. The user clicks on the Edit link in the student list view, which will send the HttpGET request http://localhost/student/edit/{Id} with corresponding Id parameter in the query string. This request will be handled by the HttpGET action method Edit(). (by default action method handles the HttpGET request if no attribute specified)   
+> 2. The HttpGet action method Edit() will fetch student data from the database, based on the supplied Id parameter and render the Edit view with that particular Student data.   
+> 3. The user can edit the data and click on the Save button in the Edit view. The Save button will send a HttpPOST request http://localhost/Student/Edit with the Form data collection.   
+> 4. The HttpPOST Edit action method in StudentController will finally update the data into the database and render an Index page with the refreshed data using the RedirectToAction method as a fourth step.    
+> 
+
+
+
 ##### 11. What is Layout View?   
 ##### 12. Create Layout View in ASP.NET MVC  
 ##### 13. What is Partial View?  
