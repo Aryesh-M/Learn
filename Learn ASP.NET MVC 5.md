@@ -304,22 +304,37 @@
 > ```   
 >       
 
-##### 4. HttpGet, HttpPost, HttpPut  
-##### 5. Model in MVC  
-##### 6. View in MVC  
-##### 7. Razor View Syntax  
-##### 8. Integrate Model, View & Controller  
-##### 9. Binding Model to View & Controller  
-##### 10. Create View To Edit Data  
-##### 11. What is Layout View?   
-##### 12. Create Layout View in ASP.NET MVC  
-##### 13. What is Partial View?  
-##### 14. What is a ViewBag?  
-##### 15. What is ViewData?  
-##### 16. What is TempData?  
-##### 17. Implement Validations in ASP.NET MVC Form  
-##### 18. Use Validationsummary to Display Error Summary  
-##### 19. Exception Handling in ASP.NET MVC  
+##### 4. Model in MVC    
+> The model classes represents domain-specific data and business logic in the MVC application.    
+> It represents the shape of the data as public properties and business logic as methods.   
+
+> **Adding a Model Class:**    
+> ```c#    
+> public class Student
+> {
+>   public int StudentId { get; set; }
+>   public string StudentName { get; set;  }
+>   public int Age { get; set;  }
+> }
+> ```   
+> We have added **public properties** for Id, Name, and Age, as shown above.   
+> The model class can be used **in the view to populate the data**, as well as **sending data to the controller**.    
+>            
+
+##### 5. View in MVC  
+##### 6. Razor View Syntax  
+##### 7. Integrate Model, View & Controller  
+##### 8. Binding Model to View & Controller  
+##### 9. Create View To Edit Data  
+##### 10. What is Layout View?   
+##### 11. Create Layout View in ASP.NET MVC  
+##### 12. What is Partial View?  
+##### 13. What is a ViewBag?  
+##### 14. What is ViewData?  
+##### 15. What is TempData?  
+##### 16. Implement Validations in ASP.NET MVC Form  
+##### 17. Use Validationsummary to Display Error Summary  
+##### 18. Exception Handling in ASP.NET MVC  
 
 
 ### ASP.NET MVC Articles   
