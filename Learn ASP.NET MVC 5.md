@@ -185,9 +185,125 @@
 > **Note:**  The Action method can include Nullable type parameters.   
 
 
+##### 3. Action Selector Attributes    
+> Action selector is the attribute that can be applied to the action methods.  
+> It helps the routing engine to select the correct action method to handle a particular request.  
+> MVC 5 includes the following action selector attributes:    
+> 1. ActionName   
+> 2. NonAction   
+> 3. ActionVerbs   
 
+> **1. ActionName:**    
+> ```c#     
+> public class StudentController : Controller
+> {
+>   public StudentController()
+>   {
+>   }
+>      
+>   [ActionName("Find")]
+>   public ActionResult GetById(int id)
+>   {
+>       // get student from the database 
+>       return View();
+>   }
+> }
+> ```   
+> Note, above we have applied ActioName("find") attribute to the GetById() action method.   
+> So now, the action method name is Find instead of the GetById. So now, it will be invoked on http://localhost/student/find/1 request instead of http://localhost/student/getbyid/1 request.   
 
-##### 3. Action Selector Attributes  
+> **2. NonAction:**   
+> Use the NonAction attribute when you want public method in a controller but do not want to treat it as an action method.  
+> In the following example, the Index() method is an action method, but the GetStudent() is not an action method:   
+> ```c#    
+>     public class StudentController : Controller
+> {
+>   public string Index()
+>   {
+>           return "This is Index action method of StudentController";
+>   }
+>  
+>   [NonAction]
+>   public Student GetStudent(int id)
+>   {
+>       return studentList.Where(s => s.StudentId == id).FirstOrDefault();
+>   }
+> }  
+> ```   
+
+> **3. ActionVerbs: HttpGet, HttpPost, HttpPut:**   
+> The ActionVerbs selector is to handle different type of Http requests.  
+> Includes: HttpGet, HttpPost, HttpPut, HttpDelete, HttpOptions, and HttpPatch      
+> You can apply **one or more action verbs** to an action method to handle different HTTP requests.   
+> If you don't apply any action verbs to an action method, then it will handle HttpGet request by default.    
+> The following table lists the usage of HTTP methods:   
+> 
+| Http method |	Usage | 
+| ----------- | ----- |   
+| GET |	To retrieve the information from the server. Parameters will be appended in the query string. |
+| POST |	To create a new resource. |
+| PUT	| To update an existing resource. |
+| HEAD	| Identical to GET except that server do not return the message body. |
+| OPTIONS	| It represents a request for information about the communication options supported by the web server. |
+| DELETE	| To delete an existing resource. |
+| PATCH	| To full or partial update the resource. |
+> The following example shows how to handle different types of HTTP requests in the Controller using ActionVerbs:    
+> ```c#   
+> public class StudentController : Controller
+> {
+>   public ActionResult Index() // handles GET requests by default
+>   {
+>       return View();
+>   }
+> 
+>   [HttpPost]
+>   public ActionResult PostAction() // handles POST requests by default
+>   {
+>       return View("Index");
+>   }
+> 
+> 
+>   [HttpPut]
+>   public ActionResult PutAction() // handles PUT requests by default
+>   {
+>       return View("Index");
+>   }
+> 
+>   [HttpDelete]
+>   public ActionResult DeleteAction() // handles DELETE requests by default
+>   {
+>       return View("Index");
+>   }
+> 
+>   [HttpHead]
+>   public ActionResult HeadAction() // handles HEAD requests by default
+>   {
+>       return View("Index");
+>   }
+>      
+>   [HttpOptions]
+>   public ActionResult OptionsAction() // handles OPTION requests by default
+>   {
+>       return View("Index");
+>   }
+>      
+>   [HttpPatch]
+>   public ActionResult PatchAction() // handles PATCH requests by default
+>   {
+>       return View("Index");
+>   }
+> }
+> ```   
+> You can also apply multiple action verbs using the **AcceptVerbs** attribute, as shown below:    
+> ```c#     
+>   [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
+> public ActionResult GetAndPostAction()
+> {
+>   return RedirectToAction("Index");
+> }  
+> ```   
+>       
+
 ##### 4. HttpGet, HttpPost, HttpPut  
 ##### 5. Model in MVC  
 ##### 6. View in MVC  
