@@ -125,8 +125,68 @@
 ##### 11. Create Editor field  
 
 ### Model, View, & Controller    
-##### 1. Controllers in ASP.NET MVC  
-##### 2. Action Methods in Controller  
+##### 1. Controllers in ASP.NET MVC      
+> The Controller is a class, derived from the base class System.Web.Mvc.Controller  
+> Controller class contains public methods called **Action methods**.    
+> **Role:**   Controller and its action method handles incoming browser requests, retrieves necessary model data and returns appropriate responses.   
+> **FYI:** _MVC will throw "The resource cannot be found" error when you do not append "Controller" to the controller class name._       
+> **Note:**  _Scaffolding is an automatic code generation framework for ASP.NET web applications. Scaffolding reduces the time taken to develop a controller, view, etc. in the MVC framework. You can develop a customized scaffolding template using T4 templates as per your architecture and coding standards._    
+> You can create a custom scaffolding template also.    
+> 
+
+##### 2. Action Methods in Controller     
+> All the public methods of the Controller class are called Action methods. They are like any other normal methods with the following restrictions:    
+> 1. Action Method must be public. It cannot be private or protected.  
+> 2. Action method cannot be overloaded.    
+> 3. Action method cannot be a static method.    
+> The following illustrates the Index() action method in the StudentController class:       
+> ![image](https://user-images.githubusercontent.com/58625165/214940323-d59fc6d3-ef88-429c-996c-5cfd309188d1.png)   
+
+> **ActionResult:**      
+> MVC framework includes various Result classes, which can be returned from an action method.   
+> The result classes represent different types of responses, such as HTML, file, string, JSON, javascript, etc.   
+> The following table lists all the result classes available in ASP.NET MVC:    
+>   
+| Result Class  | Description   | Base Controller Method | 
+| ------------- | ------------- | ---------------------- |
+| ViewResult  |  Represents HTML and markup. | View() |
+| EmptyResult  |  Represents No response. |  |  
+| ContentResult | Represents string literal. | Content() |
+| FileContentResult/ FilePathResult/ FileStreamResult | Represents the content of a file. | File() | 
+| JavaScriptResult | Represent a JavaScript script. | JavaScript() |
+| JsonResult | Represent JSON that can be used in AJAX. | Json() |
+| RedirectResult | Represents a redirection to a new URL. | Redirect() |
+| RedirectToRouteResult | Represent another action of same or other controller. | RedirectToRoute() |
+| PartialViewResult | Returns HTML from Partial view. | PartialView() |
+| HttpUnauthorizedResult | Returns HTTP 403 status. |  |
+>
+>**Note:**  The ActionResult class is a base class of all the above result classes, so it can be the return type of action method that returns any result listed above.   
+
+> **Action Method Parameters:**   
+> Every action methods can have input parameters as normal methods.   
+> Action Parameters can be primitive data type or complex type parameters, as shown below.    
+> ```c#     
+> [HttpPost]
+> public ActionResult Edit(Student std)
+> {
+>   // update student to the database
+>   
+>   return RedirectToAction("Index");
+> }
+> 
+> [HttpDelete]
+> public ActionResult Delete(int id)
+> {
+>   // delete student from the database whose id matches with specified id
+> 
+>   return RedirectToAction("Index");
+> }
+> ```     
+> **Note:**  The Action method can include Nullable type parameters.   
+
+
+
+
 ##### 3. Action Selector Attributes  
 ##### 4. HttpGet, HttpPost, HttpPut  
 ##### 5. Model in MVC  
