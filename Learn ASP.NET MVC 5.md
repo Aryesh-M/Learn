@@ -243,9 +243,75 @@
     
 
 ##### 3. Create TextArea  
-##### 4. Create CheckBox  
-##### 5. Create Radio Button   
-##### 6. Create DropDownList  
+> TextArea() and TextAreaFor<TModel, TProperty>()   
+> By default, it creates a textarea with rows=2 and cols=20.   
+> ```c#   
+>  @model Student
+>  
+>  @Html.TextArea("Description", "This is dummy description.", new { @class = "form-control" })    
+> ```   
+> HTML Result:  
+> ```html   
+>  <textarea class="form-control" id="Description" name="Description" rows="2"cols="20">This is dummy description.</textarea>      
+> ```        
+> 
+
+
+##### 4. Create CheckBox   
+> ```c#    
+>  @model Student
+>  
+>  @Html.CheckBoxFor(m => m.isActive)  
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/215164660-f5ff72bc-6bf7-40bc-b727-5f66305125e4.png)   
+> Notice that it has generated an additional hidden field with the same name and value=false.   
+> When you submit a form with a checkbox, the value is posted only if a checkbox is checked.    
+> So, if you leave the checkbox unchecked, then nothing will be sent to the server.   
+> Sometimes, you would want false to be sent to the server.   
+> Because, an hidden input has the same name, it will send false to the server if checkbox is unchecked.   
+> 
+> **Html.CheckBox():**   
+> The Html.CheckBox() is a loosely typed method which generates a <input type="checkbox" > with the specified name, isChecked boolean, and HTML attributes.   
+> ```c#    
+> @Html.CheckBox("isActive", true)     
+> ```    
+> ![image](https://user-images.githubusercontent.com/58625165/215166627-2c484bd1-0463-440d-85c4-199fe6e90b6b.png)    
+>  
+   
+
+##### 5. Create Radio Button    
+>  **Html.RadioButtonFor():**   
+> ```c#   
+>  @model Student
+>  
+>  @Html.RadioButtonFor(m => m.Gender,"Male")
+>  @Html.RadioButtonFor(m => m.Gender,"Female")       
+> ```     
+> ![image](https://user-images.githubusercontent.com/58625165/215166945-87338ea5-b62c-4047-a028-69d80569f7a0.png)    
+> 
+> **RadioButton():**  
+> ```c#    
+>  Male:   @Html.RadioButton("Gender","Male")  
+>  Female: @Html.RadioButton("Gender","Female")    
+> ```   
+> ![image](https://user-images.githubusercontent.com/58625165/215167270-d09cf7e3-712e-4cf9-9d12-6a3aa1f21413.png)   
+> 
+
+
+##### 6. Create DropDownList     
+> **Html.DropDownListFor():**   
+> ```c#    
+> @using MyMVCApp.Models
+> 
+> @model Student
+> 
+> @Html.DropDownListFor(m => m.StudentGender, 
+>             new SelectList(Enum.GetValues(typeof(Gender))), 
+>             "Select Gender")  
+> ```      
+> ![image](https://user-images.githubusercontent.com/58625165/215167513-3073dbc6-7549-424c-9cd2-9fe61d32dd31.png)   
+> 
+
 ##### 7. Create Hidden field  
 ##### 8. Create Password field  
 ##### 9. Create Display field  
