@@ -176,12 +176,10 @@
 > ```    
 > 
 
-  
-      
-   
  
+##### 7. Filters in ASP.NET MVC   
 
-##### 7. Filters in ASP.NET MVC
+
 ##### 8. ActionFilter Attributes
 ##### 9. What is Bundling in ASP.NET MVC?   
 ##### 10. ScriptBundle  
@@ -190,8 +188,60 @@
 ##### 13. ASP.NET MVC Learning Resources   
 
 ### Create HTML Controls in MVC
-##### 1. What is HTML Helper?  
-##### 2. Create TextBox  
+##### 1. What is HTML Helper?    
+> The difference between calling the HtmlHelper methods and using an HTML tags is that the HtmlHelper method is designed to make it easy to bind to view data or model data  
+| Extension Method | Strongly Typed Method | Html Control | 
+| ---------------- | --------------------- | ------------ |
+| Html.ActionLink() |	NA | <a></a> |
+| Html.TextBox() | Html.TextBoxFor() | < input type="textbox"> |
+| Html.TextArea() | Html.TextAreaFor( | < input type="textarea"> |
+| Html.CheckBox() | Html.CheckBoxFor() | < input type="checkbox"> |
+| Html.RadioButton() | Html.RadioButtonFor() | < input type="radio"> |
+| Html.DropDownList() | Html.DropDownListFor() | < select> <option> </select> |
+| Html.ListBox() | Html.ListBoxFor() | multi-select list box: < select> |
+| Html.Hidden() | Html.HiddenFor() | < input type="hidden"> |
+| Html.Password() | Html.PasswordFor() | < input type="password"> |
+| Html.Display() | Html.DisplayFor() | HTML text: "" |
+| Html.Label() | Html.LabelFor() | < label> |
+| Html.Editor() | Html.EditorFor() | Generates Html controls based on data type of specified model property e.g. textbox for string property, numeric field for int, double or other numeric type. |  
+> 
+
+
+##### 2. Create TextBox    
+> two extension methods: TextBox(), TextBoxFor<TModel, TProperty>()   
+> It is recommended to use the generic TextBoxFor<TModel, TProperty>() method, which is less error prons and performs fast.   
+> 
+> **Html.TextBoxFor():**   
+> The TextBoxFor<TModel, TProperty>() is the generic extension method that creates <input type="text"> control.      
+> The first type parameter is for the model class, and second type parameter is for the property.   
+> ```c#     
+>  @model Student
+>  
+>  @Html.TextBoxFor(m => m.StudentName)  
+> ```   
+> In the above example, the lambda expression m => m.StudentName specifies the StudentName property to bind with a textbox.   
+> It generates an input text element with id and name attributes, as shown below:   
+> ![image](https://user-images.githubusercontent.com/58625165/214980798-64626dda-f5d8-4f7d-a8c9-de7aefa85c8f.png)    
+> The following example renders a textbox with the class attribute:   
+> ```c#   
+>  @model Student
+>  
+>  @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control" })   
+> ```   
+>  ![image](https://user-images.githubusercontent.com/58625165/214980912-067e5dde-6f01-4524-942f-e92acb84b5fd.png)   
+>  
+>  **Html.TextBox():**  
+>  The TextBox() method is a loosely typed method because the name parameter is a string.  
+>  ```c#    
+>  @model Student
+>  
+>  @Html.TextBox("StudentName")     
+>  ```   
+>  ![image](https://user-images.githubusercontent.com/58625165/214981297-85a928c5-5228-4c6d-9482-aac2e74737f4.png)    
+>    
+  
+    
+
 ##### 3. Create TextArea  
 ##### 4. Create CheckBox  
 ##### 5. Create Radio Button   
