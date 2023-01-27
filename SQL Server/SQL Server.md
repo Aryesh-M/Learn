@@ -90,9 +90,9 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
 
 > **Altering an existing column to add a default constraint:**
 > ```sql
-> ALTER TABLE _tablename_  
-> ADD CONSTRAINT _constraint_name_  
-> DEFAULT _default_value_ FOR _existing_column_value_
+> ALTER TABLE tablename  
+> ADD CONSTRAINT constraint_name  
+> DEFAULT default_value FOR existing_column_value
 > ```
 > E.g.,
 > ```sql
@@ -103,15 +103,15 @@ From GUI we can do it by checking _Close existing connections_ checkbox while de
  
 > **Altering an new column, with default value, to an existing table:**
 > ```sql
-> ALTER TABLE _tablename_  
-> ADD _column_name_ _data_type_ _NULL | NOT NULL_  
-> CONSTRAINT _constraint_name_ DEFAULT _default_value_
+> ALTER TABLE tablename  
+> ADD column_name data_type NULL | NOT NULL  
+> CONSTRAINT constraint_name DEFAULT default_value
 > ```
 
 > **Dropping a constraint:**
 > ```sql
-> ALTER TABLE _tablename_  
-> DROP CONSTRAINT _constraint_name_
+> ALTER TABLE tablename  
+> DROP CONSTRAINT constraint_name
 > ```
 > E.g.,
 > ```sql
