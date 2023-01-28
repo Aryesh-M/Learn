@@ -1,3 +1,5 @@
+_Reference_: [.NET Tricks](https://youtu.be/hxIb99-Z8_I) 
+
 #### OOP Concepts:   
 > ![image](https://user-images.githubusercontent.com/58625165/215205861-8dd5adad-97bb-4d7f-bba0-4c159e099ff4.png)  
 > **TR:** A PIE (🥧) - Abstraction, Polymorphism, Inheritance, and Encapsulation   
