@@ -16,11 +16,21 @@
 
 #### Variables and Constants  
 > ![image](https://user-images.githubusercontent.com/58625165/215615958-775ccd8a-af2b-40c0-928a-5224957db8dc.png)    
-> 
+> ```c#    
+>    float number = 1.2f;   // note here we have added "f" and 
+>    decimal number = 1.2m; //  "m" as suffix for float and decimal values.     
+> ```   
 
 #### Overflowing  
-#### Scope  
-#### Demo of Variables and Constants  
-#### Type Conversion   
-#### Demo of type conversion   
-#### Operators   
+> ```c#    
+>     byte number = 255; //255 is the largest value which can be stored in a byte variable.  
+>     number = number + 1;   // 0     
+> ```    
+> to resolve this we can use "checked":   
+> ```c#    
+>     checked  
+>     {     
+>       byte number = 255;   
+>       number = number + 1;  
+>     }    
+> ```   
