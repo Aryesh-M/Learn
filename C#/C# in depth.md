@@ -963,7 +963,45 @@ lock,
 >   
 
 
-#### Anonymous types in C#
+#### Anonymous types in C#  
+> _In C#, an anonymous type is a type (class) without any name that can contain public read-only properties only._   
+> - It cannot contain other members, such as fields, methods, events, etc.   
+> - You create an anonymous type using the new operator with an object initializer syntax.   
+> ```c#    
+> var student = new { Id = 1, FirstName = "James", LastName = "Bond" };    
+> ```     
+> - The properties of anonymous types are read-only and cannot be initialized with a null, anonymous function, or a pointer type:   
+> ```c#    
+> var student = new { Id = 1, FirstName = "James", LastName = "Bond" };
+> Console.WriteLine(student.Id); //output: 1
+> Console.WriteLine(student.FirstName); //output: James
+> Console.WriteLine(student.LastName); //output: Bond
+> 
+> student.Id = 2;//Error: cannot chage value
+> student.FirstName = "Steve";//Error: cannot chage value   
+> ```     
+> - An anonymous type's property can include another anonymous type:   
+> ```c#     
+> var students = new[] {
+>           new { Id = 1, FirstName = "James", LastName = "Bond" },
+>           new { Id = 2, FirstName = "Steve", LastName = "Jobs" },
+>           new { Id = 3, FirstName = "Bill", LastName = "Gates" }
+>   };
+> 
+> ```     
+> 
+> - Internally, all the anonymous types are directly derived from the System.Object class.   
+> - Example: Internal Name of an Anonymous Type:   
+> ```c#    
+>  static void Main(string[] args)
+>  {
+>   var student = new { Id = 1, FirstName = "James", LastName = "Bond" };
+>   Console.WriteLine(student.GetType().ToString()); // Use GetType() method to see the name.   
+>  }    
+> ```     
+>   
+
+
 #### Dynamic type in C#?
 #### Nullable types in C#
 #### Value types & Reference types
