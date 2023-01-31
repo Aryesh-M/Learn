@@ -458,11 +458,167 @@ lock,
 >  Console.WriteLine(hex);
 >  Console.WriteLine(binary); 
 >  ```   
->      
+>  
+>  The decimal type has more precision and a smaller range than both float and double, and so it is appropriate for financial and monetary calculations.   
+>  
+>  **Scientific Notation:**    
+>  _Use e or E to indicate the power of 10 as exponent part of scientific notation with float, double or decimal._   
+>  ```c#    
+>  double d = 0.12e2;
+>  Console.WriteLine(d);  // 12;
+>  
+>  float f = 123.45e-2f;
+>  Console.WriteLine(f);  // 1.2345
+>  
+>  decimal m = 1.2e6m;
+>  Console.WriteLine(m);// 1200000  
+>  ```          
   
 
-#### Strings in C#
+#### Strings in C#  
+>  _The maximum size of a String object in memory is 2GB or about 1 billion characters. However, practically it will be less depending upon CPU and memory of the computer._   
+>  There two ways to declare a string variable in C#. Using System.String class and using string keyword. Both are same and make no difference:    
+> ```c#   
+> string str1 = "Hello"; // uses string keyword
+> 
+> String str2 = "Hello"; // uses System.String class  
+> ```   
+> In C#, a string is a collection or an array of characters. So, string can be created using a char array or accessed like a char array:   
+> ```c#   
+> char[] chars = {'H','e','l','l','o'};
+> 
+> string str1 = new string(chars);  
+> String str2 = new String(chars); 
+> 
+> foreach (char c in str1)
+> {
+>   Console.WriteLine(c);
+> }
+> 
+> ```   
+> **Verbatim Strings:**   
+> - It is tedious to prefix \ to include every special characters.  
+> - Verbatim string in C# allows a special characters and line brakes.   
+> - Verbatim string can be created by prefixing @ symbol before double quotes.   
+> ```c#    
+> string str = @"xyzdef\rabc";
+> string path = @"\\mypc\shared\project";
+> string email = @"test@test.com";  
+> ```   
+> The @ symbol can also be used to declare a multi-line string:   
+> ```c#     
+> string str1 = "this is a \n" + 
+>       "multi line \n" + 
+>       "string";
+> 
+> // Verbatim string
+> string str2 = @"this is a 
+>       multi line 
+>       string";     
+> ```   
+> Please note that you cannot use a backslash to allow " in a varbatim string. If you wish to include @, then use double double-quotes "" to include " in a verbatim string.    
+> ```c#    
+>  string text = "This is a \"string\" in C#."; // valid
+>  string text = @"This is a "string." in C#."; // error
+>  string text = @"This is a \"string\" in C#."; // error
+>  string text = @"This is a ""string"" in C#."; // valid   
+> ```   
+> - Each time you concatenate strings, .NET CLR will create a new memory location for the concatenated string.    
+> - So, it is recommended to use StringBuilder instead of string if you concatenate more than five strings. (know more about it in the following sections)    
+> 
+> **String Interpolation:**   
+> - C# 6 includes a special character $ to identify an interpolated string.  
+> - An interpolated string is a mixture of static string and string variable where string variables should be in {} brackets.   
+> ```c#   
+> string firstName = "James";
+> string lastName = "Bond";
+> string code = "007";
+> 
+> string fullName = $"Mr. {firstName} {lastName}, Code: {code}";   
+> ```     
+> 
+
+
 #### Working with Date and Time in C#
+> - The default and the lowest value of a DateTime object is January 1, 0001 00:00:00 (midnight).   
+> - The maximum value can be December 31, 9999 11:59:59 P.M.   
+> ```c#    
+> //assigns year, month, day, hour, min, seconds, UTC timezone
+> DateTime dt4 = new DateTime(2015, 12, 31, 5, 10, 20, DateTimeKind.Utc);  
+> ```      
+> - Setting any other value out of these ranges will result in a run-time exception.   
+> 
+> **Ticks:**   
+> - Ticks is a date and time expressed in the number of 100-nanosecond intervals that have elapsed since January 1, 0001, at 00:00:00.000 in the Gregorian calendar.    
+> ```c#    
+> DateTime dt = new DateTime(636370000000000000); 
+> Console.WriteLine(DateTime.MinValue.Ticks);  //min value of ticks => 3155378975999999999   
+> Console.WriteLine(DateTime.MaxValue.Ticks); // max value of ticks => 0    
+> ```    
+> 
+> **DateTime Static Fields:**   
+> _The DateTime struct includes static fields, properties, and methods_:    
+> ```c#    
+> DateTime currentDateTime = DateTime.Now;  //returns current date and time
+> DateTime todaysDate = DateTime.Today; // returns today's date
+> DateTime currentDateTimeUTC = DateTime.UtcNow;// returns current UTC date and time
+> 
+> DateTime maxDateTimeValue = DateTime.MaxValue; // returns max value of DateTime
+> DateTime minDateTimeValue = DateTime.MinValue; // returns min value of DateTime  
+> ```   
+> 
+> **TimeSpan:**   
+> _TimeSpan is a struct that is used to represent time in days, hour, minutes, seconds, and milliseconds._       
+> ```c#     
+> DateTime dt = new DateTime(2015, 12, 31);
+>          
+> TimeSpan ts = new TimeSpan(25,20,55);
+>  
+> DateTime newDate = dt.Add(ts);
+> 
+> Console.WriteLine(newDate);//1/1/2016 1:20:55 AM 
+> ```    
+> - Subtraction of two dates results in TimeSpan:   
+> ```c#    
+> DateTime dt1 = new DateTime(2015, 12, 31); 
+> DateTime dt2 = new DateTime(2016, 2, 2);
+> TimeSpan result = dt2.Subtract(dt1);//33.00:00:00  
+> ```   
+> 
+> **Operators:**   
+> The DateTime struct overloads +, -, ==, !=, >, <, <=, >= operators to ease out addition, subtraction, and comparison of dates:   
+> ```c#   
+>  DateTime dt1 = new DateTime(2015, 12, 20);
+>  DateTime dt2 = new DateTime(2016, 12, 31, 5, 10, 20); 
+>  TimeSpan time = new TimeSpan(10, 5, 25, 50);
+>  
+>  Console.WriteLine(dt2 + time); // 1/10/2017 10:36:10 AM
+>  Console.WriteLine(dt2 - dt1); //377.05:10:20
+>  Console.WriteLine(dt1 == dt2); //False
+>  Console.WriteLine(dt1 != dt2); //True
+>  Console.WriteLine(dt1 > dt2); //False
+>  Console.WriteLine(dt1 < dt2); //True
+>  Console.WriteLine(dt1 >= dt2); //False
+>  Console.WriteLine(dt1 <= dt2);//True  
+> ```   
+> **Convert String to DateTime:**   
+> - A valid date and time string can be converted to a DateTime object using Parse(), ParseExact(), TryParse() and TryParseExact() methods.   
+> - The Parse() and ParseExact() methods will throw an exception if the specified string is not a valid representation of a date and time.   
+> - So, it's recommended to use TryParse() or TryParseExact() method because they return false if a string is not valid.      
+> ```c#    
+> var str = "5/12/2020";
+> DateTime dt;
+>             
+> var isValidDate = DateTime.TryParse(str, out dt);
+> 
+> if(isValidDate)
+>   Console.WriteLine(dt);
+> else
+>   Console.WriteLine($"{str} is not a valid date string");   
+> ```  
+>     
+
+
 #### Struct type in C#
 #### Enum type in C#
 #### StringBuilder over String in C#
