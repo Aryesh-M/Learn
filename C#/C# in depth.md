@@ -312,23 +312,84 @@ lock,
             <th>bit length</th>
             <th>signed/unsigned</th>
             <th>data type</th>
+            <th>suffix</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td rowspan=4>L1 Name</td>
-            <td rowspan=2>L2 Name A</td>
-            <td>L3 Name A</td>
+            <td rowspan=3>8-bit</td>
+            <td>unsigned</td>
+            <td>byte</td>
+            <td></td>
         </tr>
         <tr>
-            <td>L3 Name B</td>
+            <td>signed</td>
+            <td>sbyte</td>
+            <td></td>         
         </tr>
         <tr>
-            <td rowspan=2>L2 Name B</td>
-            <td>L3 Name C</td>
+            <td></td>
+             <td>bool</td>
+            <td></td>         
+        </tr> 
+        <tr>
+            <td rowspan=3>16-bit</td>
+            <td>signed</td>
+            <td>short</td>
+            <td></td>         
         </tr>
         <tr>
-            <td>L3 Name D</td>
+            <td>unsigned</td>
+            <td>ushort</td>
+            <td></td>         
+        </tr>
+        <tr>
+            <td></td>
+            <td>char</td>
+            <td></td>         
+        </tr>
+      <tr>
+            <td rowspan=3>32-bit</td>
+            <td>signed</td>
+            <td>int</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>unsigned</td>
+            <td>uint</td>
+            <td>u</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>float</td>
+            <td>f</td>
+        </tr> 
+      <tr>
+            <td rowspan=3>64-bit</td>
+            <td>signed</td>
+            <td>long</td>
+            <td>l</td>
+        </tr>
+        <tr>
+            <td>unsigned</td>
+            <td>ulong</td>
+            <td>ul</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>double</td>
+            <td>d</td>
+        </tr>
+      <tr>
+            <td>128-bit</td>
+            <td></td>
+            <td>decimal</td>
+            <td>m</td>
+        </tr>
+        <tr>
+            <td>unsigned</td>
+            <td>uint</td>
+            <td>u</td>
         </tr>
     </tbody>
 </table>
