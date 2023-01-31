@@ -386,11 +386,6 @@ lock,
             <td>decimal</td>
             <td>m</td>
         </tr>
-        <tr>
-            <td>unsigned</td>
-            <td>uint</td>
-            <td>u</td>
-        </tr>
     </tbody>
 </table>
 
