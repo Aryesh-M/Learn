@@ -303,6 +303,36 @@ lock,
   
   
 #### Data Types in C#  
+> C# mainly categorized data types in two types: Value types and Reference types:    
+> ![image](https://user-images.githubusercontent.com/58625165/215862575-07c7cbc3-ae93-4136-8a4e-046600fef5bc.png)   
+> 
+<table>
+    <thead>
+        <tr>
+            <th>bit length</th>
+            <th>signed/unsigned</th>
+            <th>data type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=4>L1 Name</td>
+            <td rowspan=2>L2 Name A</td>
+            <td>L3 Name A</td>
+        </tr>
+        <tr>
+            <td>L3 Name B</td>
+        </tr>
+        <tr>
+            <td rowspan=2>L2 Name B</td>
+            <td>L3 Name C</td>
+        </tr>
+        <tr>
+            <td>L3 Name D</td>
+        </tr>
+    </tbody>
+</table>
+
 
 #### Working with Numbers in C#
 #### Strings in C#
