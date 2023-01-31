@@ -229,14 +229,81 @@ lock,
 > 
 > }
 > ```    
->             
-
-   
+>           
 
 
-#### Variables in C#
-#### Create Variables using var
-#### Data Types in C#
+#### Variables in C#   
+> **Conventions:**   
+> - Variable names must be unique.
+> - Variable names can contain letters, digits, and the underscore _ only.
+> - Variable names must start with a letter.
+> - Variable names are case-sensitive, num and Num are considered different names.
+> - Variable names cannot contain reserved keywords. Must prefix @ before keyword if want reserve keywords as identifiers.   
+> **Note:** A value must be assigned to a variable before using it.   
+> 
+
+#### Create Variables using var   
+> In C#, variables must be declared with the data type. These are called **explicitly typed variables**.   
+> ```c#   
+> int i = 100;// explicitly typed variable      
+> ```      
+> C# 3.0 introduced var keyword to declare method level variables without specifying a data type explicitly:      
+> ```c#    
+> var j = 100; // implicitly typed local variable    
+> ```     
+> The compiler will infer the type of a variable from the expression on the right side of the = operator. Above, var will be compiled as int.    
+> ```c#   
+> int i = 10;
+> var j = i + 1; // compiles as int   
+> ```    
+> Implicitly-typed variables must be initialized at the time of declaration; otherwise C# compiler would give an error: Implicitly-typed variables must be initialized.   
+> ```c#    
+> var i; // Compile-time error: Implicitly-typed variables must be initialized:   
+> i = 100;   
+> ```        
+> Multiple declarations of var variables in a single statement are not allowed:     
+> ```c#     
+>   var i = 100, j = 200, k = 300; // Error: cannot declare var variables in a single statement    
+>   //The followings are also valid
+>   var i = 100; 
+>   var j = 200; 
+>   var k = 300;   
+> ```   
+> var cannot be used for function parameters:    
+> ```c#     
+> void Display(var param) //Compile-time error
+> {
+>   Console.Write(param);
+> }
+> ```   
+> var can be used in for, and foreach loops:   
+> ```c#    
+> for(var i = 0; i < 10; i++)
+> {
+>   Console.WriteLine(i);
+> }  
+> ```   
+> var can also be used with LINQ queries:    
+> ```c#   
+>  // string collection
+>  IList< string> stringList = new List< string>() { 
+>   "C# Tutorials",
+>   "VB.NET Tutorials",
+>   "Learn C++",
+>   "MVC Tutorials" ,
+>   "Java" 
+>  };
+>  
+>  // LINQ Query Syntax
+>  var result = from s in stringList
+>           where s.Contains("Tutorials") 
+>           select s;   
+> ```   
+> 
+  
+  
+#### Data Types in C#  
+
 #### Working with Numbers in C#
 #### Strings in C#
 #### Working with Date and Time in C#
