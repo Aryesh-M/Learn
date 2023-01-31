@@ -8,10 +8,80 @@
 * [C# Articles](#c-articles)    
 
 ## C# Fundamentals
-#### C# Versions till date  
-#### Create Console Program in C#
-#### Reserved Keywords in C#
-#### Classes in C#
+#### Reserved Keywords in C#  
+> _Note_: this section is not much of importance (try not to memorize all this instead visit [Tutorials Teacher](https://www.tutorialsteacher.com/csharp/csharp-keywords))   
+> **Modifier Keywords:**   
+> _Modifier keywords are specific keywords that indicate who can modify types and type members._  
+> abstract, async,   
+> const,    
+> event, extern,  
+> new,     
+> override,   
+> partial,   
+> readonly,   
+> sealed,  static,      
+> unsafe,   
+> virtual, volatile   
+ 
+> **Access Modifier Keywords:**   
+> _They define the accessibility of the class and its members._   
+> 
+| Access Modifiers  |    Usage      |
+| ----------------- | ------------- |
+| public    | The Public modifier allows any part of the program in the same assembly or another assembly to access the type and its members. |
+| private   | The Private modifier restricts other parts of the program from accessing the type and its members. Only code in the same class or struct can access it. |
+| internal  | The Internal modifier allows other program code in the same assembly to access the type or its members. This is default access modifiers if no modifier is specified. |
+| protected | The Protected modifier allows codes in the same class or a class that derives from that class to access the type or its members. |   
+
+> **Statement Keywords:**   
+> _Statement keywords are related to program flow._    
+> if, else, switch, case, do, for, foreach, in, while, break, continue, default, goto, return, yield, throw, try, catch, finally, checked, unchecked, fixed, 
+lock,   
+
+> **Method Parameter Keywords:**   
+> _These keywords are applied to the parameters of a method._    
+> params, ref, out    
+
+> **Namespace Keywords:**   
+> _These keywords are applied with namespace and related operators._    
+> using, . (operator), :: (operator), "extern alias"    
+
+> **Operator Keywords:**   
+> _Operator keywords perform miscellaneous actions._   
+> as, await, is, new, sizeof, typeof, stackalloc, checked, unchecked    
+
+> **Access Keywords:**  
+> _Access keywords are used to access the containing class or the base class of an object or class._   
+> base, this   
+
+> **Literal Keywords:**   
+> _Literal keywords apply to the current instance or value of an object._   
+> null,    
+> false,    
+> true,    
+> value,    
+> void    
+
+> **Type Keyword:**   
+> _Type keywords are used for data types._    
+> bool, byte, char, class, decimal, double, enum, float, int, long, sbyte, short, string, struct, uint, ulong, ushort    
+
+> **Contextual Keywords:**   
+> _Contextual keywords are considered as keywords, only if used in specific contexts. They are not reserved and so can be used as names or identifiers._   
+> add, var, dynamic, global, set, value   
+> ![image](https://user-images.githubusercontent.com/58625165/215641595-7abefee8-b00e-4232-8c13-5398dca423f2.png)    
+
+
+> **Query Keywords:**   
+> _Query keywords are contextual keywords used in LINQ queries._   
+>  from, where, select, group, into, orderby, join, let, in, on, equals, by, ascending, descending    
+> ![image](https://user-images.githubusercontent.com/58625165/215641842-6aa343d7-c148-4fd5-93fa-fc809f9e17e6.png)    
+> Note, here "class" is used as an identifier (name of the variable, **class**, interface, etc.)    
+
+
+
+#### Classes in C#   
+
 #### Namespaces in C#
 #### Variables in C#
 #### Create Variables using var
