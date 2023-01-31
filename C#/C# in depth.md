@@ -1,6 +1,6 @@
 [ Reference: [Tutorials Teacher](https://www.tutorialsteacher.com/csharp)    ]    
 ## Index:
-* [C# Fundamentals](#C#-Fundamentals)
+* [C# Fundamentals](#c-fundamentals)
 * [C# Conditions & Loops](#C#-Conditions-&-Loops)  
 * [C# Collections](#C#-Collections)  
 * [C# Exception Handling, File Operation](#C#-Exception-Handling,-File-Operation)
