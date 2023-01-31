@@ -619,7 +619,159 @@ lock,
 >     
 
 
-#### Struct type in C#
+#### Struct type in C#   
+> - In C#, **_struct_** is the value type data type that represents data structures.    
+> - It can contain a parameterized constructor, static constructor, constants, fields, methods, properties, indexers, operators, events, and nested types.   
+> - struct can be used to hold small data values that do not require inheritance, e.g. coordinate points, key-value pairs, and complex data structure.   
+> **Structure Declaration:**   
+> - A structure is declared using struct keyword.   
+> - The default modifier is **internal** for the struct and its members.   
+> ```c#   
+> struct Coordinate
+> {
+>   public int x;
+>   public int y;
+> }  
+> ```   
+> - A struct object can be created with or without the new operator, same as primitive type variables.    
+> ```c#    
+> struct Coordinate
+> {
+>   public int x;
+>   public int y;
+> }
+> 
+> Coordinate point = new Coordinate();
+> Console.WriteLine(point.x); //output: 0  
+> Console.WriteLine(point.y); //output: 0    
+> ```   
+> - Above, an object of the Coordinate structure is created using the new keyword. It calls the default parameterless constructor of the struct, which initializes all the members to their default value of the specified data type.   
+> - If you declare a variable of struct type without using new keyword, it does not call any constructor, so all the members remain unassigned. Therefore, you must assign values to each member before accessing them, otherwise, it will give a compile-time error:      
+> ```c#   
+> struct Coordinate
+> {
+>   public int x;
+>   public int y;
+> }
+> 
+> Coordinate point;
+> Console.Write(point.x); // Compile time error  
+> 
+> point.x = 10;
+> point.y = 20;
+> Console.Write(point.x); //output: 10  
+> Console.Write(point.y); //output: 20     
+> ```    
+> 
+> **Constructors in Structure:**   
+> - A struct cannot contain a parameterless constructor.   
+> - It can only contain parameterized constructors or a static constructor.        
+> ```c#    
+> struct Coordinate
+> {
+>   public int x;
+>   public int y;
+> 
+>   public Coordinate(int x, int y)
+>   {
+>       this.x = x;
+>       this.y = y;
+>   }
+> }
+> 
+> Coordinate point = new Coordinate(10, 20);
+> 
+> Console.WriteLine(point.x); //output: 10  
+> Console.WriteLine(point.y); //output: 20   
+> ```   
+> **Note:**  _You must include all the members of the struct in the parameterized constructor and assign parameters to members; otherwise C# compiler will give a compile-time error if any member remains unassigned._    
+> 
+> **Methods and Properties in Structure:**   
+> - A struct can contain properties, auto-implemented properties, methods, etc., same as classes.   
+> ```c#    
+> struct Coordinate
+> {
+>   public int x { get; set; }
+>   public int y { get; set; }
+> 
+>   public void SetOrigin()
+>   {
+>       this.x = 0;
+>       this.y = 0;
+>   }
+> }
+> 
+> Coordinate point = Coordinate();
+> point.SetOrigin();
+> 
+> Console.WriteLine(point.x); //output: 0  
+> Console.WriteLine(point.y); //output: 0    
+> ```   
+> 
+> **Events in Structure:**   
+> A struct can contain events to notify subscribers about some action:    
+> ```c#   
+> struct Coordinate
+> {
+>   private int _x, _y;
+> 
+>   public int x 
+>   {
+>       get{
+>           return _x;
+>       }
+> 
+>       set{
+>           _x = value;
+>           CoordinatesChanged(_x);
+>       }
+>   }
+> 
+>   public int y
+>   {
+>       get{
+>           return _y;
+>       }
+> 
+>       set{
+>           _y = value;
+>           CoordinatesChanged(_y);
+>       }
+>   }
+> 
+>   public event Action< int> CoordinatesChanged;
+> }  
+> ```   
+> - The above structure contains CoordinatesChanged event, which will be raised when x or y coordinate changes.   
+> The following example demonstrates the handling of the CoordinatesChanged event:_
+>     
+> ```c#    
+> class Program
+> {
+>   static void Main(string[] args)
+>   {
+> 
+>       Coordinate point = new Coordinate();
+>       
+>       point.CoordinatesChanged += StructEventHandler;
+>       point.x = 10;
+>       point.y = 20;
+>   }
+> 
+>   static void StructEventHandler(int point)
+>   {
+>       Console.WriteLine("Coordinate changed to {0}", point);
+>   }
+> }  
+> ```   
+> - struct is a value type, so it is faster than a class object.   
+> - Generally, structs are good for game programming.   
+> - However, it is easier to transfer a class object than a struct.   
+> - So do not use struct when you are passing data across the wire or to other classes.    
+> - struct members cannot be specified as abstract, sealed, virtual, or protected.   
+>               
+
+
 #### Enum type in C#
 #### StringBuilder over String in C#
 #### Anonymous types in C#
