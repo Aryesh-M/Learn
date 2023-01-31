@@ -388,6 +388,7 @@ lock,
         </tr>
     </tbody>
 </table>   
+
 > - The predefined data types are alias to their .NET type (CLR class) name.   
 > - byte is an alias of System.Byte (.NET type), int (alias) of System.Int32 (.NET Type). So, both are same:    
 > ```c#    
