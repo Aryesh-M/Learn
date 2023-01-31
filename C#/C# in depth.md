@@ -81,7 +81,92 @@ lock,
 
 
 #### Classes in C#   
-
+> _A class is like a blueprint of a specific object that has certain attributes and features._    
+> - A class can contain one or more constructors, fields, methods, properties, delegates, and events. They are called **class members**.   
+> 
+> **Field:**   
+> - A class can have one or more fields.   
+> - It is a class-level variable that holds a value.  
+> ```c#          
+>  class Student
+> {
+>    public int id;
+>
+> }
+> ```   
+> 
+> **Property:**   
+> _A property encapsulates a private field using setter and getter to assign and retrieve underlying field value._    
+> ```c#    
+> class Student
+> {
+>   private int id;
+> 
+>   public int StudentId
+>   {
+>       get { return id; }
+>       set {
+>       if (value > 0)
+>           id = value;
+>   }
+>   }
+> } 
+> ```   
+> - In the above example, the id is a private field that cannot be accessed directly.    
+> - It will only be accessed using the StudentId property.    
+> - The get{ } returns the value of the underlying field and set{ } assigns the value to the underlying field id.   
+> - **Note:** set may or may not have additional logic.             
+> 
+> **Auto-implemented Property:**   
+> - From C# 3.0 onwards, property declaration has been made easy if you don't want to apply some logic in getter or setter.   
+> - Using auto-implemented property, you don't need to declare an underlying private field. C# compiler will automatically create it in IL code.   
+> ```c#    
+> class Student
+> {
+>   public string FirstName { get; set; }
+>   public string LastName { get; set; }
+> }  
+> ```   
+> **Note:** In the above example, backing private field for the FirstName and LastName will be created internally by the compiler. This speed up the development time and code readability.     
+> 
+> **Method:**   
+> - _A method can contain one or more statements to be executed as a single unit._    
+> - A method may or may not return a value.   
+> - A method can have one or more input parameters.    
+> Syntax:   
+> ```c#    
+>  [access-modifier] return-type MethodName(type parameterName1, type parameterName2,...)
+> {
+>   
+> 
+> }  
+> ```   
+> 
+> **Constructor:**   
+> _A constructor is a special type of method which will be called automatically when you create an instance of a class._    
+> A constructor is a special type of method which will be called automatically when you create an instance of a class.   
+> ```c#      
+> class Student
+> {
+>   public Student()
+>   {
+>       //constructor
+>   }
+> }
+> ```        
+> - A constructor name must be the same as a class name.
+> - A constructor can be public, private, or protected.   
+> - The constructor cannot return any value so cannot have a return type.    
+> - A class can have multiple constructors with different parameters but can only have one parameterless constructor.   
+> - If no constructor is defined, the C# compiler would create it internally.    
+> 
+> **Objects of a Class:**   
+> Create an object:   
+> ```c#    
+>  Student mystudent = new Student();      
+> ```   
+> 
+  
 #### Namespaces in C#
 #### Variables in C#
 #### Create Variables using var
