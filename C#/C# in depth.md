@@ -1002,7 +1002,10 @@ lock,
 >   
 
 
-#### Dynamic type in C#?
+#### Dynamic type in C#?   
+> - C# 4.0 (.NET 4.5) introduced a new type called dynamic that avoids compile-time type checking.   
+> - 
+
 #### Nullable types in C#
 #### Value types & Reference types
 #### Declare and implement interfaces in C#
