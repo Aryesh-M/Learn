@@ -862,7 +862,107 @@ lock,
 > - **Note:**  enum is an abstract class.    
 >           
 
-#### StringBuilder over String in C#
+#### StringBuilder over String in C#   
+> **Problem:**  
+> - In C#, the string type is immutable.  
+> - It means a string cannot be changed once created.    
+> - For example, a new string, "Hello World!" will occupy a memory space on the heap.   
+> - Now, by changing the initial string "Hello World!" to "Hello World! from Tutorials Teacher" will create a new string object on the memory heap instead of modifying an original string at the same memory address.      
+> - This behavior would hinder the performance if the original string changed multiple times by replacing, appending, removing, or inserting new strings in the original string.   
+> ![image](https://user-images.githubusercontent.com/58625165/215895414-23a17fbc-3658-4e4d-933d-30fe925750cc.png)   
+> 
+> **Solution:**   
+> - To solve this problem, C# introduced the StringBuilder in the System.Text namespace.   
+> - The StringBuilder doesn't create a new object in the memory but dynamically expands memory to accommodate the modified string.   
+> ![image](https://user-images.githubusercontent.com/58625165/215895607-813ddfba-16d5-4f44-a4dd-3b0b243a2cf7.png)    
+> 
+> **Creating a StringBuilder Object:**   
+> ```c#    
+> using System.Text; // include at the top
+>           
+> StringBuilder sb = new StringBuilder(); //string will be appended later
+> //or
+> StringBuilder sb = new StringBuilder("Hello World!");  
+> ```    
+> - Optionally, you can also specify the maximum capacity of the StringBuilder object using overloaded constructors, as shown below.    
+> ```c#    
+> StringBuilder sb = new StringBuilder(50); //string will be appended later
+> //or
+> StringBuilder sb = new StringBuilder("Hello World!", 50);  
+> ```   
+> - Above, C# allocates a maximum of 50 spaces sequentially on the memory heap.      
+> - This capacity will automatically be doubled once it reaches the specified capacity.   
+> - You can also use the capacity or length property to set or retrieve the StringBuilder object's capacity.   
+> - You can iterate the using for loop to get or set a character at the specified index:    
+> ```c#    
+> StringBuilder sb = new StringBuilder("Hello World!");
+> 
+> for(int i = 0; i < sb.Length; i++)
+>   Console.Write(sb[i]); // output: Hello World!  
+> ```   
+> 
+> **Retrieve String from StringBuilder:**   
+> - The StringBuilder is not the string.  
+> - Use the ToString() method to retrieve a string from the StringBuilder object:       
+> ```c#    
+>  StringBuilder sb = new StringBuilder("Hello World!");
+>  
+>  var greet = sb.ToString(); //returns "Hello World!"  
+> ```   
+> 
+> **Add/Append String to StringBuilder:**   
+> - Use the Append() method to append a string at the end of the current StringBuilder object.   
+> - If a StringBuilder does not contain any string yet, it will add it.   
+> - The AppendLine() method append a string with the newline character at the end.   
+> ```c#    
+>  StringBuilder sb = new StringBuilder();
+>  sb.Append("Hello ");
+>  sb.AppendLine("World!");
+>  sb.AppendLine("Hello C#");
+>  Console.WriteLine(sb);   
+> ```              
+> 
+> **Append Formated String to StringBuilder:**    
+> - Use the AppendFormat() method to format an input string into the specified format and append it:   
+> ```c#   
+> StringBuilder sbAmout = new StringBuilder("Your total amount is ");
+> sbAmout.AppendFormat("{0:C} ", 25);
+> 
+> Console.WriteLine(sbAmout);//output: Your total amount is $ 25.00    
+> ```      
+> 
+> **Insert String into StringBuilder:**    
+> - Use the Insert() method inserts a string at the specified index in the StringBuilder object:   
+> ```c#    
+> StringBuilder sb = new StringBuilder("Hello World!");
+> sb.Insert(5," C#"); 
+> 
+> Console.WriteLine(sb); //output: Hello C# World!  
+> ```   
+> 
+> **Remove String in StringBuilder:**   
+> - Use the Remove() method to remove a string from the specified index and up to the specified length:    
+> ```c#    
+> StringBuilder sb = new StringBuilder("Hello World!",50);
+> sb.Remove(6, 7);
+> 
+> Console.WriteLine(sb); //output: Hello   
+> ```   
+> 
+> **Replace String in StringBuilder:**   
+> - Use the Replace() method to replace all the specified string occurrences with the specified replacement string:   
+> ```c#    
+> StringBuilder sb = new StringBuilder("Hello World!");
+> sb.Replace("World", "C#");
+> 
+> Console.WriteLine(sb);//output: Hello C#!  
+> ```   
+> - StringBuilder is mutable.   
+> - StringBuilder performs faster than string when appending multiple string values.   
+> - Use StringBuilder when you need to append more than three or four strings.   
+>   
+
+
 #### Anonymous types in C#
 #### Dynamic type in C#?
 #### Nullable types in C#
