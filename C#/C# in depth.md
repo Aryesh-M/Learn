@@ -309,10 +309,10 @@ lock,
 <table>
     <thead>
         <tr>
-            <th>bit length</th>
-            <th>signed/unsigned</th>
-            <th>data type</th>
-            <th>suffix</th>
+            <th>Bit Length</th>
+            <th>Signed/Unsigned</th>
+            <th>Data Type</th>
+            <th>Suffix</th>
         </tr>
     </thead>
     <tbody>
@@ -387,10 +387,51 @@ lock,
             <td>m</td>
         </tr>
     </tbody>
-</table>
-
+</table>   
+> - The predefined data types are alias to their .NET type (CLR class) name.   
+> - byte is an alias of System.Byte (.NET type), int (alias) of System.Int32 (.NET Type). So, both are same:    
+> ```c#    
+>   int i = 345;
+>   Int32 i = 345;// same as above   
+> ```   
+> - Every data type has a default value. Numeric type is 0, boolean has false, and char has '\0' as default value.      
+> - Use the default(typename) to assign a default value of the data type or C# 7.1 onward, use default literal:   
+> ```c#   
+> int i = default(int); // 0
+> float f = default(float);// 0
+> decimal d = default(decimal);// 0
+> bool b = default(bool);// false
+> char c = default(char);// '\0'
+> 
+> // C# 7.1 onwards
+> int i = default; // 0
+> float f = default;// 0
+> decimal d = default;// 0
+> bool b = default;// false
+> char c = default;// '\0' 
+> ```   
+> 
+> **Conversions:**   
+> _The values of certain data types are automatically converted to different data types in C#. This is called an **implicit conversion**._   
+> ```c#    
+> int i = 345;
+> float f = i;
+> 
+> Console.WriteLine(f); //output: 345  
+> ```   
+> However, not all data types are implicitly converted to other data types. For example, int type cannot be converted to uint implicitly. It must be specified explicitly, as shown below:   
+> ```c#   
+>  public static void Main()
+>  {
+>      int i = 100;
+>      uint u = (uint) i;
+>      Console.Write(i);
+>  }   
+> ```   
+>                
 
 #### Working with Numbers in C#
+
 #### Strings in C#
 #### Working with Date and Time in C#
 #### Struct type in C#
