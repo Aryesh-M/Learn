@@ -34,3 +34,10 @@
 >       number = number + 1;  
 >     }    
 > ```   
+
+#### C# Events and Delegates   
+###### **Events:**   
+> - A mechanism for communication between objects.   
+> - Used in building Loosely Coupled Applications.   
+> - Helps extending applcations.   
+> 
