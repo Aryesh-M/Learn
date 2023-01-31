@@ -322,7 +322,7 @@ lock,
             <td>byte</td>
             <td></td>
         </tr>
-        <tr>
+        <tr> 
             <td>signed</td>
             <td>sbyte</td>
             <td></td>         
