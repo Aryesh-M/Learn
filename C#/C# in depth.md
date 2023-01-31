@@ -313,6 +313,7 @@ lock,
             <th>Signed/Unsigned</th>
             <th>Data Type</th>
             <th>Suffix</th>
+            <th>Alias of</th> 
         </tr>
     </thead>
     <tbody>
@@ -321,74 +322,88 @@ lock,
             <td>unsigned</td>
             <td>byte</td>
             <td></td>
+            <td>Byte</td>
         </tr>
         <tr> 
             <td>signed</td>
             <td>sbyte</td>
-            <td></td>         
+            <td></td>
+            <td>SByte</td>
         </tr>
         <tr>
             <td></td>
              <td>bool</td>
-            <td></td>         
+            <td></td>    
+            <td>Boolean</td>
         </tr> 
         <tr>
             <td rowspan=3>16-bit</td>
             <td>signed</td>
             <td>short</td>
-            <td></td>         
+            <td></td>  
+            <td>Int16</td>
         </tr>
         <tr>
             <td>unsigned</td>
             <td>ushort</td>
-            <td></td>         
+            <td></td>    
+            <td>UInt16</td>
         </tr>
         <tr>
             <td></td>
             <td>char</td>
-            <td></td>         
+            <td></td>   
+            <td>Char</td>
         </tr>
       <tr>
             <td rowspan=3>32-bit</td>
             <td>signed</td>
             <td>int</td>
             <td></td>
+            <td>Int32</td>
         </tr>
         <tr>
             <td>unsigned</td>
             <td>uint</td>
             <td>u</td>
+            <td>UInt32</td>
         </tr>
         <tr>
             <td></td>
             <td>float</td>
             <td>f</td>
+            <td>Single</td>
         </tr> 
       <tr>
             <td rowspan=3>64-bit</td>
             <td>signed</td>
             <td>long</td>
             <td>l</td>
+            <td>Int64</td>
         </tr>
         <tr>
             <td>unsigned</td>
             <td>ulong</td>
             <td>ul</td>
+            <td>UInt64</td>
         </tr>
         <tr>
             <td></td>
             <td>double</td>
             <td>d</td>
+            <td>Double</td>
         </tr>
       <tr>
             <td>128-bit</td>
             <td></td>
             <td>decimal</td>
             <td>m</td>
+            <td>Decimal</td>
         </tr>
     </tbody>
 </table>   
 
+> **Note:** Signed means having "-" sign as well and unsigned means 0 and non-negative.   
 > - The predefined data types are alias to their .NET type (CLR class) name.   
 > - byte is an alias of System.Byte (.NET type), int (alias) of System.Int32 (.NET Type). So, both are same:    
 > ```c#    
@@ -432,6 +447,19 @@ lock,
 >                
 
 #### Working with Numbers in C#
+> Numbers, in general, can be divided into two types: Integer type and floating-point types:   
+> ![image](https://user-images.githubusercontent.com/58625165/215872124-3086dc11-42d0-401e-bcec-a144a9f2742c.png)    
+>  - The int data type is also used for hexadecimal and binary numbers.     
+>  - A hexadecimal number starts with 0x or 0X prefix. C# 7.2 onwards, a binary number starts with 0b or 0B.    
+>  ```c#     
+>  int hex = 0x2F;
+>  int binary = 0b_0010_1111;
+>  
+>  Console.WriteLine(hex);
+>  Console.WriteLine(binary); 
+>  ```   
+>      
+  
 
 #### Strings in C#
 #### Working with Date and Time in C#
