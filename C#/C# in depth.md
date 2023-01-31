@@ -167,7 +167,73 @@ lock,
 > ```   
 > 
   
-#### Namespaces in C#
+#### Namespaces in C#   
+> _A namespace is a container for classes and namespaces._   
+> The namespace also gives unique names to its classes thereby you can have the same class name in different namespaces.   
+> In C#, a namespace can be defined using the namespace keyword.    
+> ```c#    
+>  namespace School
+> {
+>   // define classes here
+> 
+> }   
+> ```   
+> Classes under the same namespace can be referred to as namespace.classname syntax. For example, the Student class can be accessed as School.Student.    
+> ```c#    
+>  namespace CSharpTutorials
+> {
+>   class Program
+>   {
+>       static void Main(string[] args)
+>       {
+>           School.Student std = new School.Student();
+>       
+>           School.Course cs = new School.Course();
+>       }
+>   }
+> }   
+> ```   
+> To use classes under a namespace without the fully qualified name, import the namespace with the using keyword at the top of C# class file.   
+> ```c#    
+>  using System; //built-in namespace
+> using School;
+> 
+> namespace CSharpTutorials
+> {
+>   class Program
+>   {
+>       static void Main(string[] args)
+>       {
+>           Student std = new Student();
+>       }
+>   }
+> }  
+> ```   
+> A namespace can contain other namespaces. Inner namespaces can be separated using (.).   
+> ```c#  
+>  namespace School.Education
+> {
+>   class Student
+>   {
+> 
+>   }
+> } 
+> ```   
+> Beginning with C# 10, you can declare a namespace for all types defined in that file without wrapping classes inside curly braces { .. }, as shown below.     
+>      
+> ```c#   
+> namespace School.Education
+>   
+> class Student
+> {
+> 
+> }
+> ```    
+>             
+
+   
+
+
 #### Variables in C#
 #### Create Variables using var
 #### Data Types in C#
