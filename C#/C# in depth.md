@@ -772,7 +772,96 @@ lock,
 >               
 
 
-#### Enum type in C#
+#### Enum type in C#  
+> - Enumeration type (enum) is used to assign constant names to a group of numeric integer values.    
+> - It makes constant values more readable, for example, WeekDays.Monday is more readable then number 0 when referring to the day in a week.   
+> **Enum Values:**   
+> - If values are not assigned to enum members, then the compiler will assign integer values to each member starting with zero by default:   
+> ```c#    
+> enum WeekDays
+> {
+>   Monday,     // 0
+>   Tuesday,    // 1
+>   Wednesday,  // 2
+>   Thursday,   // 3
+>   Friday,     // 4
+>   Saturday,   // 5
+>   Sunday      // 6
+> }  
+> ```   
+> - You can assign different values to enum member.   
+> - A change in the default value of an enum member will automatically assign incremental values to the other members sequentially:    
+> ```c#    
+> enum Categories
+> {
+>   Electronics,    // 0
+>   Food,           // 1
+>   Automotive = 6, // 6
+>   Arts,           // 7
+>   BeautyCare,     // 8
+>   Fashion         // 9
+> }  
+> ```   
+> - The enum can be of any numeric data type such as byte, sbyte, short, ushort, int, uint, long, or ulong.   
+> - However, an enum cannot be a string type.  
+> - Specify the type after enum name as : type:    
+> ```c#    
+> enum Categories: byte
+> {
+>   Electronics = 1,  
+>   Food = 5, 
+>   Automotive = 6, 
+>   Arts = 10, 
+>   BeautyCare = 11, 
+>   Fashion = 15
+> }  
+> ```    
+>  
+> **Access an Enum:**   
+> An enum can be accessed using the dot syntax: enum.member:    
+> enum WeekDays
+> {
+>   Monday, 
+>   Tuesday,
+>   Wednesday,
+>   Thursday, 
+>   Friday, 
+>   Saturday,
+>   Sunday 
+> }
+> 
+> Console.WriteLine(WeekDays.Monday); // Monday
+> Console.WriteLine(WeekDays.Tuesday); // Tuesday       
+> Console.WriteLine(WeekDays.Wednesday); // Wednesday       
+> Console.WriteLine(WeekDays.Thursday); // Thursday       
+> Console.WriteLine(WeekDays.Friday); // Friday       
+> Console.WriteLine(WeekDays.Saturday); // Saturday       
+> Console.WriteLine(WeekDays.Sunday); // Sunday             
+> 
+> **Conversion:**   
+> Explicit casting is required to convert from an enum type to its underlying integral type:    
+> ```c#    
+> enum WeekDays
+> {
+>   Monday, 
+>   Tuesday,
+>   Wednesday,
+>   Thursday, 
+>   Friday, 
+>   Saturday,
+>   Sunday 
+> }
+> 
+> Console.WriteLine(WeekDays.Friday); //output: Friday 
+> int day = (int) WeekDays.Friday; // enum to int conversion
+> Console.WriteLine(day); //output: 4 
+> 		
+> var wd = (WeekDays) 5; // int to enum conversion
+> Console.WriteLine(wd);//output: Saturday   
+> ```   
+> - **Note:**  enum is an abstract class.    
+>           
+
 #### StringBuilder over String in C#
 #### Anonymous types in C#
 #### Dynamic type in C#?
