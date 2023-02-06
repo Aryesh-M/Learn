@@ -1055,6 +1055,14 @@ lock,
    
 
 #### Nullable types in C#
+> - a value type cannot be assigned a null value. e.g., int i = null will give you a compile time error.  
+> - C# 2.0 introduced nullable types that allow you to assign null to value type variables.
+> ```c#   
+>  Nullable< int> i = null;  // You can declare nullable types using Nullable< t> where T is a type.     
+> ```   
+>  
+
+
 #### Value types & Reference types
 #### Declare and implement interfaces in C#
 #### Operators in C#
