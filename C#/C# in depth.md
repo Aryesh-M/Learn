@@ -1004,7 +1004,55 @@ lock,
 
 #### Dynamic type in C#?   
 > - C# 4.0 (.NET 4.5) introduced a new type called dynamic that avoids compile-time type checking.   
-> - 
+> -  A dynamic type escapes type checking at compile-time; instead, it resolves type at run time.   
+> ```c#   
+>    dynamic MyDynamicVar = 1; // A dynamic type variable is defined using the dynamic keyword.       
+> ```    
+> ```c#   
+> static void Main(string[] args)
+> {
+>   dynamic MyDynamicVar = 100;
+>   Console.WriteLine("Value: {0}, Type: {1}", MyDynamicVar, MyDynamicVar.GetType());
+> 
+>   MyDynamicVar = "Hello World!!";
+>   Console.WriteLine("Value: {0}, Type: {1}", MyDynamicVar, MyDynamicVar.GetType());
+> 
+>   MyDynamicVar = true;
+>   Console.WriteLine("Value: {0}, Type: {1}", MyDynamicVar, MyDynamicVar.GetType());
+> 
+>   MyDynamicVar = DateTime.Now;
+>   Console.WriteLine("Value: {0}, Type: {1}", MyDynamicVar, MyDynamicVar.GetType());
+> }  
+> ```  
+> ![image](https://user-images.githubusercontent.com/58625165/217104860-fd0c9b76-b32d-48dd-a642-f76638f8835d.png)   
+> 
+> **Methods and Parameters:**  
+> ```c#    
+> class Program
+> {
+>   static void Main(string[] args)
+>   {
+>       dynamic stud = new Student(); // note, here class object is assigned to a dynamic type.   
+> 
+>       stud.DisplayStudentInfo(1, "Bill");// run-time error, no compile-time error
+>       stud.DisplayStudentInfo("1");// run-time error, no compile-time error
+>       stud.FakeMethod();// run-time error, no compile-time error
+>   }
+> }
+> 
+> public class Student
+> {
+>   public void DisplayStudentInfo(int id)
+>   {
+>   }
+> }  
+> ```  
+> - In the above example, the C# compiler does not check for the number of parameters, parameters type, or non-existent.   
+> - It validates these things at run-time, and if it is not valid, then throws a run-time exception.  
+> - Note that Visual Studio IntelliSense is not supported for the dynamic types.
+> - The dynamic language runtime (DLR) API provides the infrastructure that supports the dynamic type in C#.
+>    
+   
 
 #### Nullable types in C#
 #### Value types & Reference types
