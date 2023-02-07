@@ -641,7 +641,12 @@
 > 
 
 
-##### 11. What is Layout View?   
+##### 11. What is Layout View?    
+> - An application may contain a specific UI portion that remains the same throughout the application, such as header, left navigation bar, right bar, or footer section. 
+> - ASP.NET MVC introduced a Layout view which contains these common UI portions so that we don't have to write the same code in every page.
+> - 
+
+
 ##### 12. Create Layout View in ASP.NET MVC  
 ##### 13. What is Partial View?  
 ##### 14. What is a ViewBag?  
