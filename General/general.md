@@ -16,6 +16,7 @@
 > 
 
 ##### information hiding
+> 
 
 ##### method overloading
 
@@ -68,3 +69,5 @@
 ##### reflection
 
 ##### n-layer
+
+##### Caching
