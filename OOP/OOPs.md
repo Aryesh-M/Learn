@@ -25,6 +25,25 @@
 > - A ready to use third party object can be called as a Component. It can be replaced without any changes in the application. A component generally used by a programmer as an object.
 > 
 
+> ```c#
+>  Account a; // a is a reference variable of type Account
+>  a = null; 
+>  a = new Account(); // 1. Account object is created on heap
+>                     // 2. All members of the account class are allocated memory as one unit
+>                     // 3. All members are by default initialized based on datatype
+>                     // 4. "new" operator it return the reference to the account object
+>                     // 5. assigned to "a" 
+> // Hence, a is reference to Account object.                                                                                       
+> ```
+> **Heap** 
+> Id = 0
+> Name = null
+> Balance = 0
+
+
+
+
+
 ##### Use Principles & Patterns:  
 ##### Define a relationship
 ##### Abstraction  
