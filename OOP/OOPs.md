@@ -10,14 +10,15 @@
 > - It keeps the data safe from the outside world.
 > - This encapsulation principle is used to implement the information hiding i.e., data abstraction.
 > 
-> **3. Define relationship:** 
->  
+> **3. Inheritance:** 
+> - The process of acquiring the existing functionality of the parent and with new added feature and functionality by a child oject is called inheritance.
+> - The advantages of inheritance are Generalization, Extensibility, and Reusabiltiy.
+> 
 > **4. Use Principles & Patterns:**  
-
+##### Define a relationship
 ##### Abstraction  
 ##### Encapsulation  
 ##### Association, Composition, & Aggregation   
-##### Inheritance  
 ##### Polymorphism   
 ##### Method Hiding in C#  
 
