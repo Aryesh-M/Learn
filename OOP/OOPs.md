@@ -14,12 +14,20 @@
 > - The process of acquiring the existing functionality of the parent and with new added feature and functionality by a child oject is called inheritance.
 > - The advantages of inheritance are Generalization, Extensibility, and Reusabiltiy.
 > 
-> **4. Use Principles & Patterns:**  
+> **4. Polymorphism:**
+> - An object in different forms and in each form it exhibits the same functionality but implemented in different ways.
+
+
+> **Object Oriented Application:**
+> - It's a collection of **related** objects, **communicating** with each other, exchanging **messages** with each other in a **controlled** environment as per the **rules** of the busines.
+
+
+##### Use Principles & Patterns:  
 ##### Define a relationship
 ##### Abstraction  
 ##### Encapsulation  
 ##### Association, Composition, & Aggregation   
-##### Polymorphism   
+   
 ##### Method Hiding in C#  
 
 ### SOLID Principles  
