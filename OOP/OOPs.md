@@ -3,6 +3,7 @@
 > The followings are overall steps to develop an object-oriented application:   
 > **1. Abstraction:**  
 > **2. Encapsulation:**  
+> - The process of binding data and behaviour i.e. functionality of an object within a secured and controlled environment is called as encapsulation.
 > **3. Define relationship:**  
 > **4. Use Principles & Patterns:**  
 
