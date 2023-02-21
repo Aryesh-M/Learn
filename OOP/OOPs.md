@@ -3,8 +3,13 @@
 > The followings are overall steps to develop an object-oriented application:   
 > **1. Abstraction:** 
 > - The process of exposing the essential data of an object to the outside of the world and hiding the low level data of that object is called as data abstraction. 
+> - This principle of data hiding helps the programmer to build secure programs that do not disturb the code in other parts of program.
+> 
 > **2. Encapsulation:**  
 > - The process of binding data and behaviour i.e. functionality of an object within a secured and controlled environment is called as encapsulation.
+> - It keeps the data safe from the outside world.
+> - This encapsulation principle is used to implement the information hiding i.e., data abstraction.
+> 
 > **3. Define relationship:** 
 >  
 > **4. Use Principles & Patterns:**  
