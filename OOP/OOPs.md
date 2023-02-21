@@ -21,6 +21,9 @@
 > **Object Oriented Application:**
 > - It's a collection of **related** objects, **communicating** with each other, exchanging **messages** with each other in a **controlled** environment as per the **rules** of the busines.
 
+> **Component:**
+> - A ready to use third party object can be called as a Component. It can be replaced without any changes in the application. A component generally used by a programmer as an object.
+> 
 
 ##### Use Principles & Patterns:  
 ##### Define a relationship
